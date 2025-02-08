@@ -64,7 +64,7 @@ const Layout = () => {
     <>
       {/* Header */}
       <header className="navbar">
-        <h2>My Blog</h2>
+        <h2>My Dossier</h2>
         <nav>
           {isLogin ? (
             <ul>
@@ -83,7 +83,7 @@ const Layout = () => {
                   className="bnt"
                   onClick={() => navigate("/blog/create")}
                 >
-                  Create New blog
+                  Create New Dossier
                 </button>
               </li>
               <li>
@@ -142,7 +142,7 @@ const Layout = () => {
 
       {/* Footer */}
       <footer className="footer">
-        <p>&copy; {new Date().getFullYear()} My Blog. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} My Dossier. All rights reserved.</p>
       </footer>
     </>
   );

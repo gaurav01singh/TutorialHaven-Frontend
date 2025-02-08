@@ -49,11 +49,11 @@ const ProfileLayout = ({ children }) => {
         { username: newUsername, password: newPassword },
         { headers: { Authorization: token } }
       );
-      alert("Profile updated successfully!");
+      alert("Profile Updated Successfully!");
       setNewUsername("");
       setNewPassword("");
     } catch (error) {
-      console.error("Error updating profile:", error);
+      console.error("Error Updating Profile:", error);
     }
   };
 
