@@ -1,0 +1,97 @@
+/* login.css */
+
+/* Login Container */
+.login-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #0d1117; /* GitHub dark background */
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    color: #c9d1d9; /* Light text color */
+  }
+  
+  /* Title */
+  .login-container h2 {
+    font-size: 2rem;
+    color: #f0f6fc; /* Light header color */
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Input fields */
+  .login-container input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1.5rem;
+    background-color: #161b22; /* Dark input background */
+    color: #c9d1d9; /* Light text */
+    border: 1px solid #30363d; /* Dark border color */
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  .login-container input:focus {
+    border-color: #8543dc; /* Blue border on focus */
+  }
+  
+  /* Error message */
+  .login-container p {
+    text-align: center;
+    font-size: 0.9rem;
+    color: red;
+    margin-bottom: 1rem;
+  }
+  
+  /* Login button */
+  .login-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #8543dc; /* GitHub blue color */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-button:hover {
+    background-color: #1f6feb; /* Darker blue on hover */
+  }
+  
+  /* Toggle Button (for Sign Up) */
+  .toggle-button {
+    background: none;
+    color: #8543dc; /* GitHub link color */
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+  }
+  
+  .toggle-button:hover {
+    color: #1f6feb; /* Darker blue on hover */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 480px) {
+    .login-container {
+      padding: 1.5rem;
+    }
+  
+    .login-container h2 {
+      font-size: 1.6rem;
+    }
+    
+    .login-container input {
+      font-size: 0.95rem;
+    }
+  
+    .login-button {
+      font-size: 0.9rem;
+    }
+  }
+  

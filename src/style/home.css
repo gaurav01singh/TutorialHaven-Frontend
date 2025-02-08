@@ -1,0 +1,189 @@
+/* home.css */
+.search-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #161b22;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-input{
+  padding: 10px;
+  font-size: 16px;
+  background:transparent;
+  border: 1px solid #ccc;
+  color: #888;
+  border-radius: 4px;
+  width: 75%; 
+  transition: all 0.3s ease;
+}
+.date-input {
+  padding: 10px;
+  font-size: 16px;
+  background:transparent;
+  border: 1px solid #ccc;
+  color: #888;
+  border-radius: 4px;
+  width: 23%;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus,
+.date-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.search-input::placeholder,
+.date-input::placeholder {
+  color: #888;
+}
+
+.search-input {
+  margin-right: 10px;
+}
+
+.date-input {
+  margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+  .search-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search-input,
+  .date-input {
+    width: 100%;
+    margin: 5px 0;
+  }
+}
+
+/* Blog List Container */
+.blog-container {
+  padding: 2rem 0;
+  width: 100%;
+}
+
+/* Blog List */
+.blog-container ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 2rem;
+  margin: 0 auto;
+  max-width: 1600px;
+  box-sizing: border-box; /* Added box-sizing */
+}
+
+/* Blog Item Card */
+.blog-item {
+  background: #161b22; /* GitHub dark background for card */
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid #30363d; /* GitHub card border */
+  box-sizing: border-box; /* Added box-sizing */
+}
+
+.blog-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Blog Title */
+.blog-title {
+  color: #f0f6fc; /* GitHub light title color */
+  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Blog Description */
+.blog-small-description {
+  color: #c9d1d9; /* GitHub description text color */
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Read More Button */
+.blog-item button {
+  background-color: #8543dc; /* GitHub link button color */
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease;
+  width: 15%;
+  margin-top: 1rem;
+}
+
+.blog-item button:hover {
+  background-color: #1f6feb; /* Lighter blue for hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .blog-container ul {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 0 1rem;
+    max-width: 750px;
+  }
+
+  .blog-item {
+    padding: 1.25rem;
+  }
+
+  .blog-item button {
+    width: 75%;
+  }
+
+  .blog-title {
+    font-size: 1.3rem;
+  }
+
+  .blog-small-description {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-container ul {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .blog-item {
+    padding: 1rem;
+  }
+
+  .blog-title {
+    font-size: 1.2rem;
+  }
+
+  .blog-small-description {
+    -webkit-line-clamp: 2;
+  }
+
+  .blog-item button {
+    width: 75%;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+}

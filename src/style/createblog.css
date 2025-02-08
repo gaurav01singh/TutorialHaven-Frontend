@@ -1,0 +1,155 @@
+/* createblog.css */
+
+.create-blog-layout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #0d1117;
+  color: #c9d1d9;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  flex-direction: row-reverse;
+}
+
+.create-blog-container {
+  background-color: #161b22;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 75%;
+}
+
+.create-blog-container h1 {
+  color: #58a6ff;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.create-blog-container form{
+  height: 75%;
+}
+.create-blog-container input,
+.create-blog-container textarea,
+.create-blog-container select {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 10px 0;
+  background-color: #0d1117;
+  color: #c9d1d9;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  font-size: 16px;
+}
+.create-blog-container textarea{
+  height: 500px;
+}
+.create-blog-container input:focus,
+.create-blog-container textarea:focus,
+.create-blog-container select:focus {
+  outline: none;
+  border-color: #58a6ff;
+  box-shadow: 0 0 5px rgba(88, 166, 255, 0.5);
+}
+
+.create-blog-container select option {
+  background-color: #0d1117;
+  color: #c9d1d9;
+}
+
+.create-blog-container button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background-color: #238636;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-blog-container button:disabled {
+  background-color: #30363d;
+  cursor: not-allowed;
+}
+
+.create-blog-container button:hover:not(:disabled) {
+  background-color: #2ea043;
+}
+
+.error-message {
+  background-color: #da3633;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.gallery-section {
+  width: 100%;
+  max-width: 300px;
+  background-color: #161b22;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Floating Message Styles */
+.floating-message {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 14px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+}
+
+.floating-message.success {
+  background-color: #238636;
+}
+
+.floating-message.error {
+  background-color: #da3633;
+}
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .create-blog-container {
+      padding: 1rem;
+    }
+  
+    .create-blog-container h1 {
+      font-size: 1.8rem;
+    }
+  
+    .create-blog-container input,
+    .create-blog-container textarea {
+      font-size: 0.95rem;
+    }
+  
+    .create-blog-container button {
+      font-size: 0.95rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .create-blog-container h1 {
+      font-size: 1.6rem;
+    }
+  
+    .create-blog-container input,
+    .create-blog-container textarea {
+      font-size: 0.9rem;
+    }
+  
+    .create-blog-container button {
+      font-size: 0.9rem;
+    }
+  }

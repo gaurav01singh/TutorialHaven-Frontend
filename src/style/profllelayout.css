@@ -1,0 +1,82 @@
+/* profileLayout.css */
+
+.profile-layout-container {
+    display: flex;
+    gap: 2rem;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #0d1117cb;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Left Section: Profile Data */
+  .left-section {
+    flex: 1;
+    padding: 1rem;
+    border-right: 1px solid #ddd;
+  }
+  
+  .left-section h1 {
+    font-size: 2rem;
+    color: #d9e6f8;
+    margin-bottom: 1.5rem;
+  }
+  
+  .left-section p {
+    font-size: 1.1rem;
+    color: #c2c2c2;
+    margin-bottom: 1rem;
+  }
+  
+  .left-section h2 {
+    font-size: 1.5rem;
+    color: #d8ecff;
+    margin-bottom: 1rem;
+  }
+  
+  .left-section input {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    width: 80%;
+  }
+  
+  .left-section button {
+    padding: 0.75rem 1.5rem;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 80%;
+  }
+  
+  .left-section button:hover {
+    background-color: #219653;
+    transform: translateY(-2px);
+  }
+  
+  /* Right Section: Dynamic Content */
+  .right-section {
+    flex: 2;
+    padding: 1rem;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .profile-layout-container {
+      flex-direction: column;
+    }
+  
+    .left-section {
+      border-right: none;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 2rem;
+    }
+  }

@@ -1,0 +1,80 @@
+/* editBlog.css */
+
+.edit-blog-layout {
+  display: flex;
+  width: 100%;
+  flex-direction: row-reverse;
+}
+
+.edit-blog-container {
+  flex: 3;
+  max-width: 75%; /* 3/4 of the screen */
+  min-height: 1400px;
+  margin: 2rem;
+  padding: 1.5rem;
+  background-color: #0d111771;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+}
+
+.gallery-section {
+  flex: 1;
+  max-width: 25%; /* 1/4 of the screen */
+  padding: 1.5rem;
+  background-color: #0d111771;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+  
+  .edit-blog-container h1 {
+    font-size: 2rem;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .edit-blog-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .edit-blog-container input,
+  .edit-blog-container textarea {
+    padding: 0.75rem;
+    color: white;
+    border: 1px solid #000000;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #0d1017;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .edit-blog-container input:focus,
+  .edit-blog-container textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  }
+  
+  .edit-blog-container textarea {
+    resize: vertical;
+    min-height: 800px;
+  }
+  
+  .edit-blog-container button {
+    padding: 0.75rem 1.5rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .edit-blog-container button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+  }

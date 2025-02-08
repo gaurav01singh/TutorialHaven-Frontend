@@ -1,0 +1,97 @@
+/* signup.css */
+
+/* Signup Container */
+.signup-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #0d1117; /* GitHub dark background */
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    color: #c9d1d9; /* Light text color */
+  }
+  
+  /* Title */
+  .signup-container h2 {
+    font-size: 2rem;
+    color: #f0f6fc; /* Light header color */
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Input fields */
+  .signup-container input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1.5rem;
+    background-color: #161b22; /* Dark input background */
+    color: #c9d1d9; /* Light text */
+    border: 1px solid #30363d; /* Dark border color */
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  .signup-container input:focus {
+    border-color: #8543dc; /* Blue border on focus */
+  }
+  
+  /* Error message */
+  .signup-container p {
+    text-align: center;
+    font-size: 0.9rem;
+    color: red;
+    margin-bottom: 1rem;
+  }
+  
+  /* Sign Up button */
+  .signup-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #8543dc; /* GitHub blue color */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signup-btn:hover {
+    background-color: #1f6feb; /* Darker blue on hover */
+  }
+  
+  /* Toggle Button (for Login) */
+  .toggle-btn {
+    background: none;
+    color: #8543dc; /* GitHub link color */
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+  }
+  
+  .toggle-btn:hover {
+    color: #1f6feb; /* Darker blue on hover */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 480px) {
+    .signup-container {
+      padding: 1.5rem;
+    }
+  
+    .signup-container h2 {
+      font-size: 1.6rem;
+    }
+  
+    .signup-container input {
+      font-size: 0.95rem;
+    }
+  
+    .signup-btn {
+      font-size: 0.9rem;
+    }
+  }
+  

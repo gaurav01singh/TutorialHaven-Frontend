@@ -1,0 +1,220 @@
+/* profile.css */
+
+/* Profile Container */
+.profile-container {
+  display: flex;
+  gap: 2rem;
+  max-width: 1600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #0d1117; /* Dark background */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #c9d1d9; /* Light text color */
+}
+
+/* Left Section: User Data */
+.user-section {
+  flex: 1;
+  padding: 1.5rem;
+  border-right: 1px solid #30363d; /* Dark border */
+}
+
+.user-section h1 {
+  font-size: 2rem;
+  color: #f0f6fc; /* Light header color */
+  margin-bottom: 1.5rem;
+}
+.profile-photo-upload{
+  display: flex;
+  flex-direction: column;
+    align-items: center;
+}
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.user-section p {
+  font-size: 1.1rem;
+  color: #d0d7de; /* Light gray color */
+  margin-bottom: 1rem;
+}
+
+.user-section h2 {
+  font-size: 1.5rem;
+  color: #f0f6fc;
+  margin-bottom: 1rem;
+}
+
+.user-section input {
+  padding: 0.75rem;
+  border: 1px solid #30363d; /* Dark border */
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  background-color: #161b22; /* Dark background for inputs */
+  color: #c9d1d9;
+}
+
+.user-section input:focus {
+  border-color: #8543dc; /* Light blue border on focus */
+}
+
+.user-section button {
+  padding: 0.75rem 1.5rem;
+  background-color: #8543dc; /* GitHub blue color */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
+}
+
+.user-section button:hover {
+  background-color: #1f6feb; /* Darker blue on hover */
+  transform: translateY(-2px);
+}
+
+/* Right Section: Blog Functions */
+.blog-section {
+  flex: 2;
+  padding: 1.5rem;
+}
+
+.blog-handle{
+  display: flex;
+  justify-content: space-between;
+}
+
+.blog-section .create-button {
+  padding: 0.75rem 1.5rem;
+  background-color: #8543dc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-bottom: 2rem;
+}
+
+.blog-section .create-button:hover {
+  background-color: #1f6feb;
+  transform: translateY(-2px);
+}
+
+.blog-section h2 {
+  font-size: 1.5rem;
+  color: #f0f6fc;
+  margin-bottom: 1rem;
+}
+
+.blog-section .blog-items {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  flex-direction: column;
+}
+
+.blog-section .blog-item {
+  background-color: #161b22;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-height: 150px; /* Limit the height of each blog item */
+  overflow: hidden; /* Hide any content that overflows */
+  position: relative;
+}
+
+.blog-section .blog-item::after {
+  content: '...'; /* Add ellipsis for clipped content */
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 1.2rem;
+  color: #d0d7de;
+}
+
+.blog-section h3 {
+  margin: 0 0 0.5rem 0;
+  color: #f0f6fc;
+}
+
+.blog-section p {
+  margin: 0 0 1rem 0;
+  color: #d0d7de;
+}
+
+.blog-section button {
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.blog-section button:hover {
+  transform: translateY(-2px);
+}
+
+
+
+.blog-section button.edit {
+  background-color: #f1c40f;
+  width: auto;
+  color: white;
+}
+
+.blog-section button.edit:hover {
+  background-color: #f39c12;
+}
+
+.blog-section button.delete {
+  background-color: #e74c3c;
+  width: auto;
+  color: white;
+}
+
+.blog-section button.delete:hover {
+  background-color: #c0392b;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .user-section {
+    border-right: none;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 2rem;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .user-section {
+    border-right: none;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 2rem;
+  }
+}
