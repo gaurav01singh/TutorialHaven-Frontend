@@ -12,6 +12,10 @@ import Gallery from "./Components/Layout/Gallery";
 import Login from "./Components/Auth/Login";
 import SignUp from "./Components/Auth/SingUp";
 import Compiler from "./Components/Compiler/Compiler";
+import TutorialCreate from "./Components/Tutorial/tutorialCreate";
+import TutorialList from "./Components/Tutorial/TutorialList";
+import TutorialDetail from "./Components/Tutorial/TutorialPage";
+import EditTutorial from "./Components/Tutorial/EditTutorial";
 
 
 function App() {
@@ -29,6 +33,10 @@ function App() {
       <Route path="/category/:id" element={<ByCategory />} /> 
       <Route path="/gallery" element={<Gallery />} /> 
       <Route path="/compiler" element={<Compiler />} /> 
+      <Route path="/tutorial" element={<TutorialList />} /> 
+      <Route path="/tutorial/:id" element={<TutorialDetail />} /> 
+      <Route path="/tutorial/edit/:id" element={<EditTutorial />} /> 
+      <Route path="/tutorial/create" element={<TutorialCreate />} /> 
 
       </Route>
     </Routes>

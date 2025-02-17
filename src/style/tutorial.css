@@ -1,0 +1,111 @@
+/* Tutorial Page Layout */
+.tutorial-detail-page {
+    display: flex;
+    max-width: auto;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  /* Sidebar */
+  .tutorial-sidebar {
+    width: 25%;
+    background-color: #0d1117cb;
+    padding: 20px;
+    border-radius: 5px;
+    position: sticky;
+    top: 10px;
+    height: fit-content;
+  }
+  
+  .tutorial-sidebar h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .tutorial-sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .tutorial-sidebar li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .tutorial-sidebar li:hover {
+    background-color: #222831cb;
+  }
+  
+  /* Main Content */
+  .tutorial-content {
+    width: 75%;
+    padding-left: 20px;
+  }
+  
+  .tutorial-content h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+  
+  .tutorial-content section {
+    padding: 20px;
+    border-bottom: 1px solid #0d1117cb;
+  }
+  
+  .tutorial-content section:last-child {
+    border-bottom: none;
+  }
+  .section-group textarea{
+    width: 1200px;
+    height: 300px;
+  }
+  .admin-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+  }
+  
+  .edit-btn,
+  .delete-btn {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+  }
+  
+  .edit-btn {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .delete-btn {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .delete-btn:hover {
+    background-color: #d32f2f;
+  }
+  
+  .edit-btn:hover {
+    background-color: #388e3c;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .tutorial-detail-page {
+      flex-direction: column;
+    }
+    
+    .tutorial-sidebar {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    
+    .tutorial-content {
+      width: 100%;
+    }
+  }
+  

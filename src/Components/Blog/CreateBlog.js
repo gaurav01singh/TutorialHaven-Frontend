@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
 import Gallery from "../Layout/Gallery";
 import "../../style/createblog.css";
 import "../../style/gallery.css";
 import FloatingMessage from "../Layout/FloatingMessage";
+import API from "../Api";
 
 const CreateBlog = () => {
   const navigate = useNavigate();
@@ -22,8 +23,8 @@ const CreateBlog = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(
-          "https://tutorial-haven-backend.vercel.app/api/category/get-category"
+        const response = await API.get(
+          "/category/get-category"
         );
         setCategories(response.data);
       } catch (error) {
@@ -68,14 +69,13 @@ const CreateBlog = () => {
         throw new Error("Please select at least one category");
       }
 
-      await axios.post(
-        "https://tutorial-haven-backend.vercel.app/api/blog/create",
+      await API.post(
+        "/blog/create",
         {
           title: formData.title,
           description: formData.description,
           category: formData.category
         },
-        { headers: { Authorization: token } }
       );
 
       setMessage("Blog created successfully!");

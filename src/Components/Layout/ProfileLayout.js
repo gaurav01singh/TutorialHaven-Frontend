@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import "../../style/profllelayout.css"
+import API from "../Api";
 const ProfileLayout = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
-  const [newUsername, setNewUsername] = useState("");
-  const [newPassword, setNewPassword] = useState("");
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -21,11 +20,8 @@ const ProfileLayout = ({ children }) => {
         const decodedToken = jwtDecode(token);
         const username = decodedToken.username;
 
-        const response = await axios.get(
-          `https://tutorial-haven-backend.vercel.app/api/user/${username}`,
-          {
-            headers: { Authorization: token },
-          }
+        const response = await API.get(
+          `/user/${username}`,
         );
 
         if (response.data.success) {
@@ -40,22 +36,6 @@ const ProfileLayout = ({ children }) => {
 
     fetchUserData();
   }, [navigate]);
-
-  const handleUpdate = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      await axios.put(
-        "https://tutorial-haven-backend.vercel.app/api/user/update",
-        { username: newUsername, password: newPassword },
-        { headers: { Authorization: token } }
-      );
-      alert("Profile updated successfully!");
-      setNewUsername("");
-      setNewPassword("");
-    } catch (error) {
-      console.error("Error updating profile:", error);
-    }
-  };
 
   return (
     <div className="profile-layout-container">

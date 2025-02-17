@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+
 
 import "../style/home.css";
 import ProfileLayout from "./Layout/ProfileLayout";
+import API from "./Api";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -38,12 +39,7 @@ const Home = () => {
 
   const fetchBlogs = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get("https://tutorial-haven-backend.vercel.app/api/blog/all", {
-        headers: {
-          Authorization: token,
-        },
-      });
+      const response = await API.get("/blog/all", );
       setBlogs(response.data);
       console.log(blogs)
     } catch (error) {

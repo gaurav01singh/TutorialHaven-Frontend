@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode"; // Corrected import
 import "../../style/profile.css";
 import FloatingMessage from "../Layout/FloatingMessage";
+import API from "../Api";
 
 const Profile = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
   const [blogs, setBlogs] = useState([]);
-  const [newEmail, setNewEmail] = useState("");
   const [bio, setBio] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [conformPassword, setConformPassword] = useState("");
   const [newProfilePhoto, setNewProfilePhoto] = useState("");
+  const [role, setRole] = useState("");
   const [editData, setEditData] = useState(false);
   const [socialLinks, setSocialLinks] = useState({
     linkedin: "",
@@ -36,15 +35,15 @@ const Profile = () => {
         const decodedToken = jwtDecode(token);
         const username = decodedToken.username;
 
-        const response = await axios.get(
-          `https://tutorial-haven-backend.vercel.app/api/user/${username}`,
-          { headers: { Authorization: token } }
+        const response = await API.get(
+          `/user/${username}`,
         );
 
         if (response.data.success) {
           const userData = response.data.user;
           setUser(userData);
           setBio(userData.bio)
+          setRole(userData.role)
           setSocialLinks(userData.socialLinks)
           fetchUserBlogs(userData.id);
         } else {
@@ -57,10 +56,8 @@ const Profile = () => {
 
     const fetchUserBlogs = async (userId) => {
       try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get(
-          `https://tutorial-haven-backend.vercel.app/api/blog/user/${userId}`,
-          { headers: { Authorization: token } }
+        const response = await API.get(
+          `/blog/user/${userId}`,
         );
 
         setBlogs(response.data);
@@ -83,10 +80,7 @@ const Profile = () => {
     );
     if (confirmDelete) {
       try {
-        const token = localStorage.getItem("token");
-        await axios.delete(`https://tutorial-haven-backend.vercel.app/api/blog/delete/${blogId}`, {
-          headers: { Authorization: token },
-        });
+        await API.delete(`/blog/delete/${blogId}`,);
         setMessage("Blog deleted successfully!");
         setMessageType("success");
         setBlogs(blogs.filter((blog) => blog._id !== blogId));
@@ -107,15 +101,8 @@ const Profile = () => {
 
       // Prepare the update data
       const updateData = {};
-      if (newEmail) updateData.email = newEmail;
       if (bio) updateData.bio = bio;
-      if (newPassword === conformPassword) {
-        updateData.password = newPassword;
-      } else {
-        setMessage("New Password and conform password must be same");
-        setMessageType("error");
-        return;
-      }
+      
       if (newProfilePhoto) updateData.profilePhoto = newProfilePhoto;
       // Only update social links if they're provided
       if (socialLinks.linkedin || socialLinks.instagram || socialLinks.github) {
@@ -123,23 +110,19 @@ const Profile = () => {
       }
       console.log(Object.keys(updateData).length !== 0);
       if (Object.keys(updateData).length !== 0) {
-        const response = await axios.put(
-          `https://tutorial-haven-backend.vercel.app/api/user/update/${username}`,
+        const response = await API.put(
+          `/user/update/${username}`,
           updateData,
-          { headers: { Authorization: token } }
         );
 
         setMessage("Profile updated successfully!");
         setMessageType("success");
         
-        setNewPassword("");
-        setConformPassword(""); 
         
 
         // Update user state directly
         setUser((prevUser) => ({
           ...prevUser,
-          email: newEmail || prevUser.email,
           bio: bio || prevUser.bio,
           profilePhoto: newProfilePhoto || prevUser.profilePhoto,
           socialLinks: {
@@ -164,7 +147,6 @@ const Profile = () => {
     if (!file) return;
 
     try {
-      const token = localStorage.getItem("token");
 
       // Convert image to base64
       const reader = new FileReader();
@@ -175,10 +157,9 @@ const Profile = () => {
 
         // Update profile with the new image
         try {
-          const response = await axios.put(
-            `https://tutorial-haven-backend.vercel.app/api/user/update/${user.username}`,
+          const response = await API.put(
+            `/user/update/${user.username}`,
             { profilePhoto: base64Image },
-            { headers: { Authorization: token } }
           );
 
           setUser((prev) => ({
@@ -225,29 +206,11 @@ const Profile = () => {
         <p>
           <strong>Email:</strong> {user.email}
         </p>
-        <button onClick={() => setEditData(!editData)}>Edit Data</button>
+        <button onClick={() => setEditData(!editData)}>Edit Bio</button>
 
         {editData ? (
           <>
-            <h2>Update Profile</h2>
-            <input
-              type="email"
-              placeholder="New Email"
-              value={newEmail}
-              onChange={(e) => setNewEmail(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="New Password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Conform Password"
-              value={conformPassword}
-              onChange={(e) => setConformPassword(e.target.value)}
-            />
+            <h2>Update Bio</h2>
             <input
               type="text"
               placeholder="bio"
@@ -344,7 +307,7 @@ const Profile = () => {
 
       {/* Right Section: Blog Functions */}
       <div className="blog-section">
-        <button
+        {role==="Admin"?<><button
           className="create-button"
           onClick={() => navigate("/blog/create")}
         >
@@ -354,8 +317,15 @@ const Profile = () => {
           className="create-button"
           onClick={() => navigate("/category")}
         >
-          + Create Category
-        </button>
+            + Create Category
+          </button>
+        <button
+          className="create-button"
+          onClick={() => navigate("/tutorial")}
+        >
+            Tutorial
+          </button>
+          </>:null}
 
         <h2>Your Blogs</h2>
         {blogs.length > 0 ? (

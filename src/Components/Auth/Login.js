@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+
 import "../../style/login.css"
+import API from "../Api";
 const Login = ({ toggleAuth }) => {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
@@ -16,7 +17,7 @@ const Login = ({ toggleAuth }) => {
     setError("");
 
     try {
-      const response = await axios.post("https://tutorial-haven-backend.vercel.app/api/user/login", formData);
+      const response = await API.post("/user/login", formData);
       localStorage.setItem("token", response.data.token);
       navigate("/");
     } catch (err) {

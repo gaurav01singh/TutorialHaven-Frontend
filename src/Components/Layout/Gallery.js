@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import "../../style/gallery.css";
+import API from "../Api";
 
 const Gallery = ({ onImageClick }) => {
   const navigate = useNavigate();
@@ -27,9 +27,8 @@ const Gallery = ({ onImageClick }) => {
         }
 
         const decodedToken = jwtDecode(token);
-        const response = await axios.get(
-          `https://tutorial-haven-backend.vercel.app/api/user/${decodedToken.username}`,
-          { headers: { Authorization: token } }
+        const response = await API.get(
+          `/user/${decodedToken.username}`,
         );
 
         if (response.data.success) {
@@ -59,12 +58,10 @@ const Gallery = ({ onImageClick }) => {
 
       reader.onloadend = async () => {
         const base64Image = reader.result;
-        const token = localStorage.getItem("token");
 
-        const uploadResponse = await axios.post(
-          "https://tutorial-haven-backend.vercel.app/api/user/upload-image",
+        const uploadResponse = await API.post(
+          "/user/upload-image",
           { image: base64Image },
-          { headers: { Authorization: token } }
         );
 
         if (onImageClick) onImageClick(uploadResponse.data.imageUrl);
@@ -79,11 +76,9 @@ const Gallery = ({ onImageClick }) => {
 
   const handleDelete = async (imageUrl) => {
     try {
-      const token = localStorage.getItem("token");
       // Send request to delete image
-      const deleteResponse = await axios.delete(
-        `https://tutorial-haven-backend.vercel.app/api/user/delete-image/${encodeURIComponent(imageUrl)}`,
-        { headers: { Authorization: token } }
+      const deleteResponse = await API.delete(
+        `/user/delete-image/${encodeURIComponent(imageUrl)}`,
       );
 
       if (deleteResponse.data.success) {

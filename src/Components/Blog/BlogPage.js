@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+
 import Markdown from "react-markdown";
 import "../../style/blogpage.css"; // Import the CSS fil
+import API from "../Api";
 
 const BlogPage = () => {
   const { id } = useParams();
@@ -12,11 +13,7 @@ const BlogPage = () => {
     const fetchBlog = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(`https://tutorial-haven-backend.vercel.app/api/blog/${id}`, {
-          headers: {
-            Authorization: token,
-          },
-        });
+        const response = await API.get(`/blog/${id}`, );
         setBlog(response.data);
       } catch (error) {
         console.error("Error fetching blog:", error);

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+
 import { useParams, useNavigate } from "react-router-dom";
 import "../../style/editblog.css";
 import FloatingMessage from "../Layout/FloatingMessage";
 import Gallery from "../Layout/Gallery";
 import Markdown from "react-markdown";
+import API from "../Api";
 
 const EditBlog = () => {
   const { id } = useParams();
@@ -19,12 +20,8 @@ const EditBlog = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get(
-          `https://tutorial-haven-backend.vercel.app/api/blog/${id}`,
-          {
-            headers: { Authorization: token },
-          }
+        const response = await API.get(
+          `/blog/${id}`,
         );
         setTitle(response.data.title);
         setDescription(response.data.description);
@@ -39,11 +36,9 @@ const EditBlog = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem("token");
-      await axios.put(
-        `https://tutorial-haven-backend.vercel.app/api/blog/update/${id}`,
+      await API.put(
+        `/blog/update/${id}`,
         { title, description },
-        { headers: { Authorization: token } }
       );
       setMessage("Blog updated successfully!");
       setMessageType("success");

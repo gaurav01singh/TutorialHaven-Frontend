@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import "../../style/layout.css";
-import axios from "axios";
+
+import API from "../Api";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -16,15 +17,7 @@ const Layout = () => {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get(
-          "https://tutorial-haven-backend.vercel.app/api/category/get-category",
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
+        const response = await API.get("/category/get-category");
         setCategory(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -34,6 +27,7 @@ const Layout = () => {
         }
       }
     };
+
     const checkToken = () => {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -46,7 +40,7 @@ const Layout = () => {
         if (payload.exp * 1000 < Date.now()) {
           localStorage.removeItem("token");
           setIsLogin(false);
-        }else{
+        } else {
           setIsLogin(true);
         }
       } catch (error) {
@@ -55,7 +49,7 @@ const Layout = () => {
         setIsLogin(false);
       }
     };
-    console.log(isLogin)
+
     checkToken();
     fetchCategory();
   }, [navigate]);
@@ -79,11 +73,8 @@ const Layout = () => {
                 </button>
               </li>
               <li>
-                <button
-                  className="bnt"
-                  onClick={() => navigate("/blog/create")}
-                >
-                  Create New blog
+                <button className="bnt" onClick={() => navigate("/blog/create")}>
+                  Create New Blog
                 </button>
               </li>
               <li>
@@ -100,40 +91,42 @@ const Layout = () => {
           ) : (
             <ul>
               <li>
-                <button
-                  className="bnt"
-                  onClick={() => {
-                    navigate("/login");
-                  }}
-                >
+                <button className="bnt" onClick={() => navigate("/login")}>
                   Login
                 </button>
               </li>
               <li>
-                <button
-                  className="bnt"
-                  onClick={() => {
-                    navigate("/signup");
-                  }}
-                >
-                  SignUp
+                <button className="bnt" onClick={() => navigate("/signup")}>
+                  Sign Up
                 </button>
               </li>
             </ul>
           )}
         </nav>
       </header>
-      <ul className="category">
-        {category.map((cate) => (
-          <li
-            className="category-item"
-            key={cate._id}
-            onClick={() => navigate(`/category/${cate._id}`)}
-          >
-            <p>{cate.name}</p>
-          </li>
-        ))}
-      </ul>
+
+      {/* Category Dropdown */}
+      {isLogin ? (
+        <ul className="category">
+          {category.map((cate) => (
+            <li className="category-item dropdown" key={cate._id}>
+              <p onClick={() => navigate(`/category/${cate._id}`)}>{cate.name}</p>
+              {cate.subcategories.length > 0 && (
+                <ul className="dropdown-menu">
+                  {cate.subcategories.map((sub) => (
+                    <li
+                      key={sub._id}
+                      onClick={() => navigate(`/tutorial`)}
+                    >
+                      {sub.name}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      ) : null}
 
       {/* Main Content */}
       <main className="container">

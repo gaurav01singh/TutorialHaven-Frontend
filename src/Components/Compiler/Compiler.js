@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../../style/Compiler.css";
-import axios from "axios";
+
+import API from "../Api";
 
 export default class Compiler extends Component {
   constructor(props) {
@@ -41,7 +42,7 @@ export default class Compiler extends Component {
 
     try {
       // Create a submission with base64 encoding and without waiting for results
-      const submissionResponse = await axios.post(
+      const submissionResponse = await API.post(
         "https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=true&wait=false",
         {
           source_code: this.state.input,
@@ -102,7 +103,7 @@ export default class Compiler extends Component {
 
     // Continue polling while the submission is still being processed
     while (statusDescription === "Queue" || statusDescription === "Processing") {
-      const response = await axios.get(statusUrl, {
+      const response = await API.get(statusUrl, {
         headers: {
           "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
           "x-rapidapi-key":

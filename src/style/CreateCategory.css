@@ -1,0 +1,115 @@
+/* GitHub Dark Theme Inspired Styles */
+.category-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #0d1117;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    color: #c9d1d9;
+  }
+  
+  .heading {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #58a6ff;
+  }
+  
+  input,
+  select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 5px;
+    color: #c9d1d9;
+    font-size: 16px;
+  }
+  
+  input::placeholder {
+    color: #8b949e;
+  }
+  
+  .btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #238636;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: #2ea043;
+  }
+  
+  .edit-btn {
+    padding: 5px 10px;
+    background-color: #f78166;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+    font-size: 14px;
+  }
+  
+  .edit-btn:hover {
+    background-color: #c74b3a;
+  }
+  
+  .delete-btn {
+    padding: 5px 10px;
+    background-color: #da3633;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .delete-btn:hover {
+    background-color: #b62324;
+  }
+  
+  .category-list {
+    margin-top: 20px;
+  }
+  
+  .category-heading {
+    font-size: 20px;
+    color: #58a6ff;
+  }
+  
+  .categories-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .categories-item {
+    background-color: #161b22;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border-left: 4px solid #58a6ff;
+  }
+  
+  .subcategory-list {
+    list-style-type: none;
+    padding-left: 20px;
+    margin-top: 5px;
+  }
+  
+  .subcategory-item {
+    background-color: #21262d;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border-left: 3px solid #238636;
+  }
+  
