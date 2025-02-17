@@ -1,0 +1,114 @@
+/* Tutorial List Container */
+.tutorial-list-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #0d1117;
+    color: #c9d1d9;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  }
+  
+  .tutorial-list-container h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #58a6ff;
+  }
+  
+  /* Admin Actions */
+  .admin-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    gap: 10px;
+  }
+  
+  .create-btn,
+  .edit-btn,
+  .delete-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .create-btn {
+    background-color: #238636;
+    color: white;
+  }
+  
+  .edit-btn {
+    background-color: #4c9aff;
+    color: white;
+  }
+  
+  .delete-btn {
+    background-color: #f85149;
+    color: white;
+  }
+  
+  .create-btn:hover {
+    background-color: #2ea043;
+  }
+  
+  .edit-btn:hover {
+    background-color: #3b82f6;
+  }
+  
+  .delete-btn:hover {
+    background-color: #d73a49;
+  }
+  
+  /* Tutorial List */
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .tutorial-item {
+    background-color: #161b22;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    transition: background 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .tutorial-item:hover {
+    background-color: #21262d;
+  }
+  
+  .tutorial-item div {
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    color: #58a6ff;
+  }
+  
+  .tutorial-item div:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .tutorial-list-container {
+      padding: 15px;
+    }
+  
+    .tutorial-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .admin-actions {
+      width: 100%;
+      justify-content: flex-start;
+      margin-top: 10px;
+    }
+  }
+  

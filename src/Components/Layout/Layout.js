@@ -120,7 +120,7 @@ const Layout = () => {
                   {cate.subcategories.map((sub) => (
                     <li
                       key={sub._id}
-                      onClick={() => navigate(`/tutorial`)}
+                      onClick={() => navigate(`/tutorial/category/${sub._id}`)}
                     >
                       {sub.name}
                     </li>

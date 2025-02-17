@@ -8,7 +8,7 @@ import API from '../Api';
 const ByCategory = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [blogs, setBlogs] = useState([]);
+  const [tutorials, setTutorials] = useState([]);
   const [categoryName, setCategoryName] = useState("");
 
   useEffect(() => {
@@ -16,13 +16,13 @@ const ByCategory = () => {
 
     const fetchData = async () => {
       try {
-        const [categoryRes, blogsRes] = await Promise.all([
-          API.get(`/category/${id}`),
-          API.get(`/category/blog/${id}`)
+        // const response = await API.get(`/tutorial/subcategory/${id}`)
+        const [categoryRes, tutorialRes] = await Promise.all([
+          API.get(`/subcategory/${id}`),
+          API.get(`/tutorial/subcategory/${id}`)
         ]);
-
-        setCategoryName(categoryRes.data?.name || "Unknown Category");
-        setBlogs(blogsRes.data || []);
+        setCategoryName(categoryRes.data.name)
+        setTutorials(tutorialRes.data)
       } catch (error) {
         console.error("Error fetching data:", error);
         if (error.response?.status === 401) {
@@ -37,14 +37,14 @@ const ByCategory = () => {
 
   return (
     <div className="blog-container">
-      <h1>Blogs in Category: {categoryName}</h1>
-      {blogs.length > 0 ? (
+      <h1>{categoryName}</h1>
+      {tutorials.length > 0 ? (
         <ul>
-          {blogs.map((blog) => (
-            <li className="blog-item" key={blog._id}>
-              <h3 className="blog-title">{blog.title}</h3>
-              <p className="blog-small-description">{blog.description}</p>
-              <button onClick={() => navigate(`/blog/${blog._id}`)}>Read More</button>
+          {tutorials.map((tut) => (
+            <li className="blog-item" key={tut._id}>
+              <h3 className="blog-title">{tut.title}</h3>
+              <p className="blog-small-description">{tut.description}</p>
+              <button onClick={() => navigate(`/tutorial/${tut._id}`)}>Read More</button>
             </li>
           ))}
         </ul>

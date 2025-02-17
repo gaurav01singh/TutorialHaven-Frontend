@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import API from "../Api";
 import { useNavigate } from "react-router-dom";
 import Markdown from "react-markdown";
+import "../../style/createtutorial.css";
 
 const TutorialCreate = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [subcategory, setSubcategory] = useState("");
-  const [subcategories, setSubcategories] = useState([]); // Fetch subcategories
+  const [subcategories, setSubcategories] = useState([]);
   const [sections, setSections] = useState([{ title: "", content: "" }]);
   const [toggle, setToggle] = useState(true);
 
@@ -33,11 +34,16 @@ const TutorialCreate = () => {
     setSections([...sections, { title: "", content: "" }]);
   };
 
+  const deleteSection = (index) => {
+    const newSections = sections.filter((_, i) => i !== index);
+    setSections(newSections);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await API.post("/tutorial/create", { title, subcategory, sections });
-      navigate("/"); // Redirect after creation
+      navigate("/");
     } catch (error) {
       console.error("Error creating tutorial:", error);
     }
@@ -89,6 +95,9 @@ const TutorialCreate = () => {
                 onChange={(e) => handleSectionChange(index, "content", e.target.value)}
                 required
               />
+              <button type="button" className="delete-btn" onClick={() => deleteSection(index)}>
+                Delete Section
+              </button>
             </div>
           ))}
 

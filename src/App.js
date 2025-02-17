@@ -36,6 +36,7 @@ function App() {
       <Route path="/tutorial" element={<TutorialList />} /> 
       <Route path="/tutorial/:id" element={<TutorialDetail />} /> 
       <Route path="/tutorial/edit/:id" element={<EditTutorial />} /> 
+      <Route path="/tutorial/category/:id" element={<ByCategory />} /> 
       <Route path="/tutorial/create" element={<TutorialCreate />} /> 
 
       </Route>

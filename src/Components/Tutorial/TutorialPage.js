@@ -44,7 +44,7 @@ const TutorialDetail = () => {
           <main className="tutorial-content">
             <h1>{tutorial.title}</h1>
             {tutorial.sections.map((section, index) => (
-              <section key={index} id={`section-${index}`}>
+              <section className="markdown-body" key={index} id={`section-${index}`}>
                 <Markdown>{section.title}</Markdown>
                 <Markdown>{section.content}</Markdown>
               </section>

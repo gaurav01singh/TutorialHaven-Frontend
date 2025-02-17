@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../Api";
-import "../../style/tutorial.css";
+import "../../style/tutoriallist.css";
 import Markdown from "react-markdown";
 
 const TutorialList = () => {

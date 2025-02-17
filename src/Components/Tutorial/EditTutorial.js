@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../Api";
 import Markdown from "react-markdown";
+import "../../style/tutorialedit.css";
 
 const EditTutorial = () => {
   const { id } = useParams();
