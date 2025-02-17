@@ -311,7 +311,7 @@ const Profile = () => {
           className="create-button"
           onClick={() => navigate("/blog/create")}
         >
-          + Create Blog
+          + Create Dossier
         </button>
         <button
           className="create-button"
@@ -327,7 +327,7 @@ const Profile = () => {
           </button>
           </>:null}
 
-        <h2>Your Blogs</h2>
+        <h2>Your Dossier</h2>
         {blogs.length > 0 ? (
           <ul className="blog-items">
             {blogs.map((blog) => (
