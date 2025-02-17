@@ -91,7 +91,7 @@ const EditTutorial = () => {
               onChange={(e) => handleSectionChange(index, "content", e.target.value)}
               required
             />
-            <Markdown>{section.content}</Markdown>
+            <Markdown className="markdown-body">{section.content}</Markdown>
           </div>
         ))}
 

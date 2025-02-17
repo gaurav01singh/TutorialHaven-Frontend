@@ -11,6 +11,7 @@ const TutorialCreate = () => {
   const [subcategories, setSubcategories] = useState([]);
   const [sections, setSections] = useState([{ title: "", content: "" }]);
   const [toggle, setToggle] = useState(true);
+  const [selectedSection, setSelectedSection] = useState(0);
 
   useEffect(() => {
     const fetchSubcategories = async () => {
@@ -47,14 +48,6 @@ const TutorialCreate = () => {
     } catch (error) {
       console.error("Error creating tutorial:", error);
     }
-  };
-
-  const generateMarkdown = () => {
-    return `# ${title}\n\n${
-      sections
-        .map((section, index) => `## 📌 Section ${index + 1}: ${section.title}\n\n${section.content}`)
-        .join("\n\n")
-    }`;
   };
 
   return (
@@ -105,7 +98,26 @@ const TutorialCreate = () => {
           <button type="submit">Create Tutorial</button>
         </form>
       ) : (
-        <Markdown>{generateMarkdown()}</Markdown>
+        <div className="preview-container">
+          <div className="sidebar">
+            <h1>{title}</h1>
+            <ul>
+              {sections.map((section, index) => (
+                <li
+                  key={index}
+                  className={selectedSection === index ? "active" : ""}
+                  onClick={() => setSelectedSection(index)}
+                ><Markdown>
+                  {section.title}
+                </Markdown>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="content markdown-body">
+            <Markdown>{sections[selectedSection]?.content || "Select a section to preview"}</Markdown>
+          </div>
+        </div>
       )}
     </div>
   );

@@ -7,6 +7,7 @@ import Markdown from "react-markdown";
 const TutorialDetail = () => {
   const { id } = useParams();
   const [tutorial, setTutorial] = useState(null);
+  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
 
   useEffect(() => {
     const fetchTutorial = async () => {
@@ -20,35 +21,32 @@ const TutorialDetail = () => {
     fetchTutorial();
   }, [id]);
 
-  const scrollToSection = (index) => {
-    document.getElementById(`section-${index}`).scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <div className="tutorial-detail-page">
       {tutorial ? (
         <>
           {/* Sidebar for Navigation */}
           <aside className="tutorial-sidebar">
-            <h2>{tutorial.title}</h2>
+            <h1>{tutorial.title}</h1>
             <ul>
               {tutorial.sections.map((section, index) => (
-                <li key={index} onClick={() => scrollToSection(index)}>
+                <li 
+                  key={index} 
+                  className={currentSectionIndex === index ? "active" : ""}
+                  onClick={() => setCurrentSectionIndex(index)}
+                >
                   <Markdown>{section.title}</Markdown>
                 </li>
               ))}
             </ul>
           </aside>
 
-          {/* Main Content */}
+          {/* Main Content - Display only one section at a time */}
           <main className="tutorial-content">
-            <h1>{tutorial.title}</h1>
-            {tutorial.sections.map((section, index) => (
-              <section className="markdown-body" key={index} id={`section-${index}`}>
-                <Markdown>{section.title}</Markdown>
-                <Markdown>{section.content}</Markdown>
-              </section>
-            ))}
+            <section className="markdown-body">
+              <Markdown>{tutorial.sections[currentSectionIndex].title}</Markdown>
+              <Markdown>{tutorial.sections[currentSectionIndex].content}</Markdown>
+            </section>
           </main>
         </>
       ) : (

@@ -1,6 +1,6 @@
     /* Edit Tutorial Container */
 .tutorial-edit-container {
-    max-width: 1200px;
+    max-width: 75vw;
     margin: 20px auto;
     padding: 20px;
     background-color: #0d1117;
@@ -44,7 +44,7 @@
     border-color: #58a6ff;
     box-shadow: 0 0 5px rgba(88, 166, 255, 0.5);
   }
-  
+
   /* Sections */
   h3 {
     margin-top: 20px;
@@ -64,7 +64,7 @@
   }
   
   .section-group textarea {
-    height: 100px;
+    height: 300px;
     resize: vertical;
   }
   
@@ -105,7 +105,260 @@
   button[type="submit"]:hover {
     background-color: #3b82f6;
   }
+  .markdown-body {
+    color: #c9d1d9;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    line-height: 1.6;
+  }
   
+  /* Headings */
+  .markdown-body h1,
+  .markdown-body h2,
+  .markdown-body h3,
+  .markdown-body h4,
+  .markdown-body h5,
+  .markdown-body h6 {
+    font-weight: bold;
+    line-height: 1.4;
+    margin-top: 20px;
+  }
+  
+  .markdown-body h1 {
+    font-size: 2.5em;
+  }
+  
+  .markdown-body h2 {
+    font-size: 2em;
+  }
+  
+  .markdown-body h3 {
+    font-size: 1.75em;
+  }
+  
+  .markdown-body h4 {
+    font-size: 1.5em;
+  }
+  
+  .markdown-body h5 {
+    font-size: 1.25em;
+  }
+  
+  .markdown-body h6 {
+    font-size: 1em;
+  }
+  
+  /* Paragraphs */
+  .markdown-body p {
+    margin: 10px 0;
+  }
+  
+  /* Links */
+  .markdown-body a {
+    color: #58a6ff;
+    text-decoration: none;
+  }
+  
+  .markdown-body a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Images */
+  .markdown-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin: 10px 0;
+  }
+  
+  /* Code - Inline */
+  .markdown-body code {
+    background-color: #21262d;
+    padding: 2px 4px;
+    border-radius: 4px;
+    color: #f8f8f2;
+    font-size: 0.9em;
+  }
+  
+  /* Code - Block */
+  .markdown-body pre {
+    background-color: #21262d;
+    color: #f8f8f2;
+    padding: 20px;
+    border-radius: 5px;
+    overflow-x: auto;
+  }
+  
+  .markdown-body pre code {
+    background-color: transparent;
+    color: #f8f8f2;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.9em;
+  }
+  
+  /* Blockquotes */
+  .markdown-body blockquote {
+    background-color: #161b22;
+    border-left: 5px solid #58a6ff;
+    padding: 10px 15px;
+    margin: 20px 0;
+    color: #8b949e;
+    font-style: italic;
+  }
+  
+  /* Lists */
+  .markdown-body ul,
+  .markdown-body ol {
+    margin: 10px 0;
+    padding-left: 20px;
+  }
+  
+  .markdown-body li {
+    margin-bottom: 10px;
+  }
+  
+  /* Task Lists */
+  .markdown-body ul.task-list {
+    list-style-type: none;
+  }
+  
+  .markdown-body ul.task-list li {
+    display: flex;
+    align-items: center;
+  }
+  
+  .markdown-body ul.task-list li input {
+    margin-right: 10px;
+  }
+  
+  .markdown-body ul.task-list li input[type="checkbox"] {
+    transform: scale(1.5);
+  }
+  
+  /* Horizontal Rule */
+  .markdown-body hr {
+    border: none;
+    border-top: 1px solid #444;
+    margin: 20px 0;
+  }
+  
+  /* Tables */
+  .markdown-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+  
+  .markdown-body th,
+  .markdown-body td {
+    padding: 10px;
+    border: 1px solid #444;
+    text-align: left;
+  }
+  
+  .markdown-body th {
+    background-color: #222831;
+    color: #58a6ff;
+  }
+  
+  .markdown-body td {
+    background-color: #161b22;
+  }
+  
+  .markdown-body td:hover {
+    background-color: #222831;
+  }
+  
+  /* Emphasis (italic) */
+  .markdown-body em {
+    font-style: italic;
+    color: #8b949e;
+  }
+  
+  /* Strong (bold) */
+  .markdown-body strong {
+    font-weight: bold;
+  }
+  
+  /* Strikethrough */
+  .markdown-body del {
+    text-decoration: line-through;
+    color: #8b949e;
+  }
+  
+  /* Inline math */
+  .markdown-body .math {
+    background-color: #21262d;
+    padding: 0.2em 0.5em;
+    border-radius: 4px;
+    color: #f8f8f2;
+  }
+  
+  /* Block math */
+  .markdown-body .math-block {
+    background-color: #21262d;
+    padding: 1em;
+    border-radius: 4px;
+    color: #f8f8f2;
+    display: block;
+    margin: 1em 0;
+  }
+  
+  /* Code Syntax Highlighting */
+  .markdown-body .hljs {
+    background-color: #21262d;
+    color: #f8f8f2;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+  }
+  
+  .markdown-body .hljs-inline {
+    background-color: #21262d;
+    color: #f8f8f2;
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+  
+  /* Code block specific styling */
+  .markdown-body .hljs-comment {
+    color: #6a737d;
+    font-style: italic;
+  }
+  
+  .markdown-body .hljs-keyword {
+    color: #d73a49;
+  }
+  
+  .markdown-body .hljs-string {
+    color: #32a852;
+  }
+  
+  .markdown-body .hljs-number {
+    color: #d19a66;
+  }
+  
+  .markdown-body .hljs-title,
+  .markdown-body .hljs-type {
+    color: #c678dd;
+  }
+  
+  .markdown-body .hljs-variable,
+  .markdown-body .hljs-params {
+    color: #e5c07b;
+  }
+  
+  .markdown-body .hljs-function {
+    color: #61afef;
+  }
+  
+  /* Syntax highlight for block code */
+  .markdown-body pre code.hljs {
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+  }
   /* Responsive */
   @media (max-width: 768px) {
     .tutorial-edit-container {

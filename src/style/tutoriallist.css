@@ -1,6 +1,6 @@
 /* Tutorial List Container */
 .tutorial-list-container {
-    max-width: 1200px;
+    max-width: 75vw;
     margin: 20px auto;
     padding: 20px;
     background-color: #0d1117;
