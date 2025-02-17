@@ -106,7 +106,7 @@ const CreateBlog = () => {
         <Gallery onImageClick={handleImageClick} />
       </div>
       <div className="create-blog-container">
-        <h1>Create a New Blog</h1>
+        <h1>Create a New Dossier</h1>
         {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleCreateBlog}>
           <input

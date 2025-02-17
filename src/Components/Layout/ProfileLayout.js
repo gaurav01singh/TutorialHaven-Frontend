@@ -37,25 +37,9 @@ const ProfileLayout = ({ children }) => {
     fetchUserData();
   }, [navigate]);
 
-<<<<<<< HEAD
-=======
-  const handleUpdate = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      await axios.put(
-        "https://tutorial-haven-backend.vercel.app/api/user/update",
-        { username: newUsername, password: newPassword },
-        { headers: { Authorization: token } }
-      );
-      alert("Profile Updated Successfully!");
-      setNewUsername("");
-      setNewPassword("");
-    } catch (error) {
-      console.error("Error Updating Profile:", error);
-    }
-  };
 
->>>>>>> bfe50c5b31611e820b95bb8d2c38f02267fb67ab
+
+
   return (
     <div className="profile-layout-container">
       {/* Left Section: Profile Data */}

@@ -85,7 +85,7 @@ const EditBlog = () => {
                 onChange={(e) => setDescription(e.target.value)}
                 required
               />
-              <button type="submit">Update Blog</button>
+              <button type="submit">Update Dossier</button>
             </form>
             
           </div>

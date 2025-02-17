@@ -73,18 +73,12 @@ const Layout = () => {
                 </button>
               </li>
               <li>
-<<<<<<< HEAD
-                <button className="bnt" onClick={() => navigate("/blog/create")}>
-
-                  Create New Blog
-                </button>
-=======
                 <button
                   className="bnt"
                   onClick={() => navigate("/blog/create")}
                 >
                   Create New Dossier
->>>>>>> bfe50c5b31611e820b95bb8d2c38f02267fb67ab
+
                 </button>
               </li>
               <li>

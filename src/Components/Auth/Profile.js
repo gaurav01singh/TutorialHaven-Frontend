@@ -206,7 +206,7 @@ const Profile = () => {
         <p>
           <strong>Email:</strong> {user.email}
         </p>
-        <button onClick={() => setEditData(!editData)}>Edit Bio</button>
+        
 
         {editData ? (
           <>
@@ -303,6 +303,10 @@ const Profile = () => {
             )}
           </>
         )}
+        <button className="btn" onClick={() => setEditData(!editData)}>
+  {editData ? "See Bio" : "Edit Bio"}
+</button>
+
       </div>
 
       {/* Right Section: Blog Functions */}
