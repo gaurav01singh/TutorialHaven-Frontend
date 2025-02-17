@@ -75,7 +75,9 @@ const Layout = () => {
               <li>
 <<<<<<< HEAD
                 <button className="bnt" onClick={() => navigate("/blog/create")}>
+
                   Create New Blog
+                </button>
 =======
                 <button
                   className="bnt"
