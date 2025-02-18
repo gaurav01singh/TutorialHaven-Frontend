@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import API from "../Api";
 import "../../style/tutorial.css";
 import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const TutorialDetail = () => {
   const { id } = useParams();
@@ -35,7 +36,7 @@ const TutorialDetail = () => {
                   className={currentSectionIndex === index ? "active" : ""}
                   onClick={() => setCurrentSectionIndex(index)}
                 >
-                  <Markdown>{section.title}</Markdown>
+                  <Markdown remarkPlugins={[remarkGfm]}>{section.title}</Markdown>
                 </li>
               ))}
             </ul>
@@ -44,8 +45,8 @@ const TutorialDetail = () => {
           {/* Main Content - Display only one section at a time */}
           <main className="tutorial-content">
             <section className="markdown-body">
-              <Markdown>{tutorial.sections[currentSectionIndex].title}</Markdown>
-              <Markdown>{tutorial.sections[currentSectionIndex].content}</Markdown>
+              <Markdown remarkPlugins={[[remarkGfm, {singleTilde: false}]]}>{tutorial.sections[currentSectionIndex].title}</Markdown>
+              <Markdown remarkPlugins={[[remarkGfm, {singleTilde: false}]]}>{tutorial.sections[currentSectionIndex].content}</Markdown>
             </section>
           </main>
         </>

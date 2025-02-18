@@ -1,4 +1,10 @@
     /* Edit Tutorial Container */
+.tutorial-edit-layout{
+  display: flex;
+  background-color: #0d1117;
+    color: #c9d1d9;
+}
+
 .tutorial-edit-container {
     max-width: 75vw;
     margin: 20px auto;

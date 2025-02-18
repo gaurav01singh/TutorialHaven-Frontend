@@ -3,6 +3,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import API from "../Api";
 import Markdown from "react-markdown";
 import "../../style/tutorialedit.css";
+import Gallery from "../Layout/Gallery";
+import FloatingMessage from "../Layout/FloatingMessage";
+import remarkGfm from "remark-gfm"; 
 
 const EditTutorial = () => {
   const { id } = useParams();
@@ -11,6 +14,8 @@ const EditTutorial = () => {
   const [subcategory, setSubcategory] = useState("");
   const [subcategories, setSubcategories] = useState([]);
   const [sections, setSections] = useState([{ title: "", content: "" }]);
+  const [message, setMessage] = useState("");
+    const [messageType, setMessageType] = useState("");
 
   useEffect(() => {
     const fetchTutorial = async () => {
@@ -57,8 +62,17 @@ const EditTutorial = () => {
       console.error("Error updating tutorial:", error);
     }
   };
+  const handleImageClick = (imageUrl) => {
+    navigator.clipboard.writeText(imageUrl).then(() => {
+      setMessage("Image URL copied to clipboard!");
+      setMessageType("success");
+    }).catch(err => {
+      console.error("Failed to copy image URL:", err);
+    });
+  };
 
   return (
+      <div className="tutorial-edit-layout">
     <div className="tutorial-edit-container">
       <h1>Edit Tutorial</h1>
       <form onSubmit={handleSubmit}>
@@ -91,13 +105,24 @@ const EditTutorial = () => {
               onChange={(e) => handleSectionChange(index, "content", e.target.value)}
               required
             />
-            <Markdown className="markdown-body">{section.content}</Markdown>
+            <Markdown remarkPlugins={[remarkGfm]} className="markdown-body">{section.content}</Markdown>
           </div>
         ))}
 
         <button type="button" onClick={addSection}>Add Section</button>
         <button type="submit">Update Tutorial</button>
       </form>
+      </div>
+      <div className="gallery-section">
+        <Gallery onImageClick={handleImageClick} />
+      </div>
+      {message && (
+          <FloatingMessage
+            message={message}
+            type={messageType}
+            onClose={() => setMessage("")}
+          />
+        )}
     </div>
   );
 };

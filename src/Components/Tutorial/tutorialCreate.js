@@ -5,6 +5,7 @@ import Markdown from "react-markdown";
 import "../../style/createtutorial.css";
 import Gallery from "../Layout/Gallery";
 import FloatingMessage from "../Layout/FloatingMessage";
+import remarkGfm from "remark-gfm";
 
 const TutorialCreate = () => {
   const navigate = useNavigate();
@@ -122,13 +123,13 @@ const TutorialCreate = () => {
                     className={selectedSection === index ? "active" : ""}
                     onClick={() => setSelectedSection(index)}
                   >
-                    <Markdown>{section.title}</Markdown>
+                    <Markdown remarkPlugins={[[remarkGfm, {singleTilde: false}]]}>{section.title}</Markdown>
                   </li>
                 ))}
               </ul>
             </div>
             <div className="content markdown-body">
-              <Markdown>{sections[selectedSection]?.content || "Select a section to preview"}</Markdown>
+              <Markdown remarkPlugins={[[remarkGfm, {singleTilde: false}]]}>{sections[selectedSection]?.content || "Select a section to preview"}</Markdown>
             </div>
           </div>
         )}
