@@ -56,6 +56,12 @@ const EditTutorial = () => {
     setSections([...sections, { title: "", content: "" }]);
   };
 
+  const deleteSection = (index) => {
+    if (sections.length > 1) {
+      setSections(sections.filter((_, i) => i !== index));
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -129,16 +135,32 @@ const EditTutorial = () => {
               >
                 {section.content}
               </Markdown>
+
+              {/* Delete Section Button */}
+              {sections.length > 1 && (
+                <button type="button" className="delete-section" onClick={() => deleteSection(index)}>
+                  ❌ Delete Section
+                </button>
+              )}
             </div>
           ))}
 
-          <button type="button" onClick={addSection}>Add Section</button>
+          {/* Add Section Button */}
+          <button type="button" className="add-section" onClick={addSection}>
+            ➕ Add Section
+          </button>
+
+          {/* Submit Button */}
           <button type="submit">Update Tutorial</button>
         </form>
       </div>
+      
+      {/* Gallery Section */}
       <div className="gallery-section">
         <Gallery onImageClick={handleImageClick} />
       </div>
+      
+      {/* Floating Message */}
       {message && (
         <FloatingMessage
           message={message}

@@ -6,6 +6,7 @@ import FloatingMessage from "../Layout/FloatingMessage";
 import Gallery from "../Layout/Gallery";
 import Markdown from "react-markdown";
 import API from "../Api";
+import remarkGfm from "remark-gfm";
 
 const EditBlog = () => {
   const { id } = useParams();
@@ -67,7 +68,7 @@ const EditBlog = () => {
         <Gallery onImageClick={handleImageClick} />
       </div>
       <div className="edit-blog-container">
-      <button onClick={() => setToggle(!toggle)}>View Markdown</button>
+      <button onClick={() => setToggle(!toggle)}>{toggle?("View Markdown"):("edit")}</button>
         {toggle ? (
           <div>
             <h1>Edit Blog</h1>
@@ -91,7 +92,7 @@ const EditBlog = () => {
           </div>
         ) : (
           <div className="markdown-content">
-            <Markdown>{description}</Markdown>
+            <Markdown remarkPlugins={[remarkGfm]}>{description}</Markdown>
           </div>
         )}
       </div>

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import "../../style/layout.css";
-
 import API from "../Api";
 
 const Layout = () => {
   const navigate = useNavigate();
   const [category, setCategory] = useState([]);
   const [isLogin, setIsLogin] = useState(true);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -36,7 +36,7 @@ const Layout = () => {
       }
 
       try {
-        const payload = JSON.parse(atob(token.split(".")[1])); // Decode JWT payload
+        const payload = JSON.parse(atob(token.split(".")[1]));
         if (payload.exp * 1000 < Date.now()) {
           localStorage.removeItem("token");
           setIsLogin(false);
@@ -59,69 +59,43 @@ const Layout = () => {
       {/* Header */}
       <header className="navbar">
         <h2>My Dossier</h2>
-        <nav>
-          {isLogin ? (
-            <ul>
-              <li>
-                <button className="bnt" onClick={() => navigate("/")}>
-                  Home
-                </button>
-              </li>
-              <li>
-                <button className="bnt" onClick={() => navigate("/profile")}>
-                  Profile
-                </button>
-              </li>
-              <li>
-                <button
-                  className="bnt"
-                  onClick={() => navigate("/blog/create")}
-                >
-                  Create New Dossier
 
-                </button>
-              </li>
-              <li>
-                <button className="bnt" onClick={() => navigate("/gallery")}>
-                  Gallery
-                </button>
-              </li>
-              <li>
-                <button className="bnt" onClick={handleLogout}>
-                  Logout
-                </button>
-              </li>
-            </ul>
-          ) : (
-            <ul>
-              <li>
-                <button className="bnt" onClick={() => navigate("/login")}>
-                  Login
-                </button>
-              </li>
-              <li>
-                <button className="bnt" onClick={() => navigate("/signup")}>
-                  Sign Up
-                </button>
-              </li>
-            </ul>
-          )}
+        {/* Hamburger Menu (Only visible on mobile) */}
+        <button className="hamburger" onClick={() => setDrawerOpen(!drawerOpen)}>
+          {drawerOpen ? "✖" : "☰"}
+        </button>
+
+        {/* Drawer Menu (Mobile) / Normal Nav (Desktop) */}
+        <nav className={`nav-links ${drawerOpen ? "open" : ""}`}>
+          <ul>
+            {isLogin ? (
+              <>
+                <li><button className="bnt" onClick={() => { navigate("/"); setDrawerOpen(false); }}>Home</button></li>
+                <li><button className="bnt" onClick={() => { navigate("/profile"); setDrawerOpen(false); }}>Profile</button></li>
+                <li><button className="bnt" onClick={() => { navigate("/blog/create"); setDrawerOpen(false); }}>Create New Dossier</button></li>
+                <li><button className="bnt" onClick={() => { navigate("/gallery"); setDrawerOpen(false); }}>Gallery</button></li>
+                <li><button className="bnt" onClick={() => { handleLogout(); setDrawerOpen(false); }}>Logout</button></li>
+              </>
+            ) : (
+              <>
+                <li><button className="bnt" onClick={() => { navigate("/login"); setDrawerOpen(false); }}>Login</button></li>
+                <li><button className="bnt" onClick={() => { navigate("/signup"); setDrawerOpen(false); }}>Sign Up</button></li>
+              </>
+            )}
+          </ul>
         </nav>
       </header>
 
       {/* Category Dropdown */}
-      {isLogin ? (
+      {isLogin && (
         <ul className="category">
           {category.map((cate) => (
             <li className="category-item dropdown" key={cate._id}>
-              <p onClick={() => navigate(`/category/${cate._id}`)}>{cate.name}</p>
+              <p>{cate.name}</p>
               {cate.subcategories.length > 0 && (
                 <ul className="dropdown-menu">
                   {cate.subcategories.map((sub) => (
-                    <li
-                      key={sub._id}
-                      onClick={() => navigate(`/tutorial/category/${sub._id}`)}
-                    >
+                    <li key={sub._id} onClick={() => navigate(`/tutorial/category/${sub._id}`)}>
                       {sub.name}
                     </li>
                   ))}
@@ -130,7 +104,7 @@ const Layout = () => {
             </li>
           ))}
         </ul>
-      ) : null}
+      )}
 
       {/* Main Content */}
       <main className="container">

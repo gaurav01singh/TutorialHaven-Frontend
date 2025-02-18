@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Markdown from "react-markdown";
 import "../../style/blogpage.css"; // Import the CSS fil
 import API from "../Api";
+import remarkGfm from "remark-gfm";
 
 const BlogPage = () => {
   const { id } = useParams();
@@ -29,7 +30,7 @@ const BlogPage = () => {
     <div className="github-editor">
       <h1>{blog.title}</h1>
       <div className="markdown-content">
-        <Markdown>{blog.description}</Markdown>
+        <Markdown remarkPlugins={[remarkGfm]}>{blog.description}</Markdown>
       </div>
     </div>
   );
