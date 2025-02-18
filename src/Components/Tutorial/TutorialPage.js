@@ -4,6 +4,9 @@ import API from "../Api";
 import "../../style/tutorial.css";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import rehypeRaw from "rehype-raw";
 
 const TutorialDetail = () => {
   const { id } = useParams();
@@ -36,7 +39,7 @@ const TutorialDetail = () => {
                   className={currentSectionIndex === index ? "active" : ""}
                   onClick={() => setCurrentSectionIndex(index)}
                 >
-                  <Markdown remarkPlugins={[remarkGfm]}>{section.title}</Markdown>
+                  {section.title}
                 </li>
               ))}
             </ul>
@@ -45,8 +48,26 @@ const TutorialDetail = () => {
           {/* Main Content - Display only one section at a time */}
           <main className="tutorial-content">
             <section className="markdown-body">
-              <Markdown remarkPlugins={[[remarkGfm, {singleTilde: false}]]}>{tutorial.sections[currentSectionIndex].title}</Markdown>
-              <Markdown remarkPlugins={[[remarkGfm, {singleTilde: false}]]}>{tutorial.sections[currentSectionIndex].content}</Markdown>
+              <h2>{tutorial.sections[currentSectionIndex].title}</h2>
+              <Markdown
+                remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} 
+                components={{
+                  code({ node, inline, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || "");
+                    return !inline && match ? (
+                      <SyntaxHighlighter style={atomDark} language={match[1]} PreTag="div" {...props}>
+                        {String(children).replace(/\n$/, "")}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
+              >
+                {tutorial.sections[currentSectionIndex].content}
+              </Markdown>
             </section>
           </main>
         </>

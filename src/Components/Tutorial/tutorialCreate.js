@@ -6,6 +6,9 @@ import "../../style/createtutorial.css";
 import Gallery from "../Layout/Gallery";
 import FloatingMessage from "../Layout/FloatingMessage";
 import remarkGfm from "remark-gfm";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import rehypeRaw from "rehype-raw";
 
 const TutorialCreate = () => {
   const navigate = useNavigate();
@@ -123,13 +126,31 @@ const TutorialCreate = () => {
                     className={selectedSection === index ? "active" : ""}
                     onClick={() => setSelectedSection(index)}
                   >
-                    <Markdown remarkPlugins={[[remarkGfm, {singleTilde: false}]]}>{section.title}</Markdown>
+                    {section.title}
                   </li>
                 ))}
               </ul>
             </div>
             <div className="content markdown-body">
-              <Markdown remarkPlugins={[[remarkGfm, {singleTilde: false}]]}>{sections[selectedSection]?.content || "Select a section to preview"}</Markdown>
+              <Markdown
+                remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} 
+                components={{
+                  code({ node, inline, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || "");
+                    return !inline && match ? (
+                      <SyntaxHighlighter style={atomDark} language={match[1]} PreTag="div" {...props}>
+                        {String(children).replace(/\n$/, "")}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
+              >
+                {sections[selectedSection]?.content || "Select a section to preview"}
+              </Markdown>
             </div>
           </div>
         )}

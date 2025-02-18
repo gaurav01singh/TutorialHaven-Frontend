@@ -5,7 +5,10 @@ import Markdown from "react-markdown";
 import "../../style/tutorialedit.css";
 import Gallery from "../Layout/Gallery";
 import FloatingMessage from "../Layout/FloatingMessage";
-import remarkGfm from "remark-gfm"; 
+import remarkGfm from "remark-gfm";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import rehypeRaw from "rehype-raw";
 
 const EditTutorial = () => {
   const { id } = useParams();
@@ -15,7 +18,7 @@ const EditTutorial = () => {
   const [subcategories, setSubcategories] = useState([]);
   const [sections, setSections] = useState([{ title: "", content: "" }]);
   const [message, setMessage] = useState("");
-    const [messageType, setMessageType] = useState("");
+  const [messageType, setMessageType] = useState("");
 
   useEffect(() => {
     const fetchTutorial = async () => {
@@ -62,6 +65,7 @@ const EditTutorial = () => {
       console.error("Error updating tutorial:", error);
     }
   };
+
   const handleImageClick = (imageUrl) => {
     navigator.clipboard.writeText(imageUrl).then(() => {
       setMessage("Image URL copied to clipboard!");
@@ -72,57 +76,76 @@ const EditTutorial = () => {
   };
 
   return (
-      <div className="tutorial-edit-layout">
-    <div className="tutorial-edit-container">
-      <h1>Edit Tutorial</h1>
-      <form onSubmit={handleSubmit}>
-        <label>Title:</label>
-        <input value={title} onChange={(e) => setTitle(e.target.value)} required />
+    <div className="tutorial-edit-layout">
+      <div className="tutorial-edit-container">
+        <h1>Edit Tutorial</h1>
+        <form onSubmit={handleSubmit}>
+          <label>Title:</label>
+          <input value={title} onChange={(e) => setTitle(e.target.value)} required />
 
-        <label>Subcategory:</label>
-        <select value={subcategory} onChange={(e) => setSubcategory(e.target.value)} required>
-          <option value="">Select Subcategory</option>
-          {subcategories.map((sub) => (
-            <option key={sub._id} value={sub._id}>
-              {sub.name}
-            </option>
+          <label>Subcategory:</label>
+          <select value={subcategory} onChange={(e) => setSubcategory(e.target.value)} required>
+            <option value="">Select Subcategory</option>
+            {subcategories.map((sub) => (
+              <option key={sub._id} value={sub._id}>
+                {sub.name}
+              </option>
+            ))}
+          </select>
+
+          <h3>Sections:</h3>
+          {sections.map((section, index) => (
+            <div key={index} className="section-group">
+              <input
+                type="text"
+                placeholder="Section Title"
+                value={section.title}
+                onChange={(e) => handleSectionChange(index, "title", e.target.value)}
+                required
+              />
+              <textarea
+                placeholder="Content"
+                value={section.content}
+                onChange={(e) => handleSectionChange(index, "content", e.target.value)}
+                required
+              />
+              <Markdown
+                remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} 
+                className="markdown-body"
+                components={{
+                  code({ node, inline, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || "");
+                    return !inline && match ? (
+                      <SyntaxHighlighter style={atomDark} language={match[1]} PreTag="div" {...props}>
+                        {String(children).replace(/\n$/, "")}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
+              >
+                {section.content}
+              </Markdown>
+            </div>
           ))}
-        </select>
 
-        <h3>Sections:</h3>
-        {sections.map((section, index) => (
-          <div key={index} className="section-group">
-            <input
-              type="text"
-              placeholder="Section Title"
-              value={section.title}
-              onChange={(e) => handleSectionChange(index, "title", e.target.value)}
-              required
-            />
-            <textarea
-              placeholder="Content"
-              value={section.content}
-              onChange={(e) => handleSectionChange(index, "content", e.target.value)}
-              required
-            />
-            <Markdown remarkPlugins={[remarkGfm]} className="markdown-body">{section.content}</Markdown>
-          </div>
-        ))}
-
-        <button type="button" onClick={addSection}>Add Section</button>
-        <button type="submit">Update Tutorial</button>
-      </form>
+          <button type="button" onClick={addSection}>Add Section</button>
+          <button type="submit">Update Tutorial</button>
+        </form>
       </div>
       <div className="gallery-section">
         <Gallery onImageClick={handleImageClick} />
       </div>
       {message && (
-          <FloatingMessage
-            message={message}
-            type={messageType}
-            onClose={() => setMessage("")}
-          />
-        )}
+        <FloatingMessage
+          message={message}
+          type={messageType}
+          onClose={() => setMessage("")}
+        />
+      )}
     </div>
   );
 };
