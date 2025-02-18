@@ -1,84 +1,75 @@
-/* Main Container */
-.tutorial-create-container {
-    max-width: 75vw;
-    margin: 20px auto;
-    padding: 20px;
+/* Main Layout */
+.tutorial-create-layout {
+    display: flex;
     background-color: #0d1117;
     color: #c9d1d9;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
   }
   
-  /* Button Styling */
-  button {
-    padding: 10px 15px;
-    margin-top: 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s;
-  }
-  
-  button:hover {
-    opacity: 0.9;
-  }
-  
-  button[type="button"] {
-    background-color: #238636;
-    color: white;
-  }
-  
-  button[type="submit"] {
-    background-color: #4c9aff;
-    color: white;
-  }
-  
-  /* Section Group */
-  .section-group {
-    background-color: #161b22;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    border-left: 4px solid #58a6ff;
-  }
-  
-  /* Delete Section Button */
-  .delete-btn {
-    background-color: #d32f2f;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .delete-btn:hover {
-    background-color: #b71c1c;
-  }
-  
-  /* Preview Mode */
-  .preview-container {
-    display: flex;
-   
-    background-color: #161b22;
-    border-radius: 5px;
-  }
-  
-  /* Sidebar */
-  .sidebar {
-    width: 30%;
-    background-color: #0d1117;
+  /* Tutorial Creation Section */
+  .tutorial-create-container {
+    min-width: 70%;
     padding: 20px;
     overflow-y: auto;
-    border-right: 2px solid #30363d;
+    background-color: #161b22;
   }
   
-  .sidebar h2 {
-    color: #58a6ff;
+  /* Gallery Section */
+  .gallery-section {
+    max-width: 30%;
+    background-color: #21262d;
+    padding: 20px;
+    overflow-y: auto;
+    border-left: 2px solid #30363d;
+  }
+  
+  /* Form Styles */
+  .tutorial-create-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .tutorial-create-container label {
+    font-size: 16px;
+    margin: 10px 0 5px;
+  }
+  
+  .tutorial-create-container input,
+  .tutorial-create-container select,
+  .tutorial-create-container textarea {
+    width: 100%;
+    padding: 10px;
     margin-bottom: 10px;
-    font-size: 18px;
+    background-color: #0d1117;
+    color: #c9d1d9;
+    border: 1px solid #30363d;
+    border-radius: 5px;
+  }
+  
+  .tutorial-create-container button {
+    background-color: #238636;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .tutorial-create-container button:hover {
+    background-color: #2ea043;
+  }
+  
+  /* Sidebar for Preview */
+  .preview-container {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 30%;
+    background-color: #161b22;
+    padding: 20px;
+    border-right: 2px solid #30363d;
+    overflow-y: auto;
   }
   
   .sidebar ul {
@@ -92,7 +83,6 @@
     border-radius: 5px;
     transition: background 0.3s;
     font-size: 16px;
-    color: #c9d1d9;
   }
   
   .sidebar ul li:hover {
@@ -104,23 +94,20 @@
     color: white;
   }
   
-  /* Content Area */
+  /* Content Preview */
   .content {
     width: 70%;
     padding: 20px;
     overflow-y: auto;
-    color: #c9d1d9;
   }
   
-  .content h2 {
-    color: #58a6ff;
-    margin-bottom: 10px;
-  }
   .markdown-body {
-    color: #c9d1d9;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    line-height: 1.6;
+    background-color: #161b22;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 10px;
   }
+  
   
   /* Headings */
   .markdown-body h1,
