@@ -6,7 +6,7 @@
 }
 
 .tutorial-edit-container {
-    max-width: 75vw;
+    min-width: 75vw;
     margin: 20px auto;
     padding: 20px;
     background-color: #0d1117;

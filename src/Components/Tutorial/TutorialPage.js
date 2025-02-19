@@ -12,6 +12,8 @@ const TutorialDetail = () => {
   const { id } = useParams();
   const [tutorial, setTutorial] = useState(null);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+  const [currentSubSectionIndex, setCurrentSubSectionIndex] = useState(null);
+  const [expandedSections, setExpandedSections] = useState({});
 
   useEffect(() => {
     const fetchTutorial = async () => {
@@ -25,6 +27,13 @@ const TutorialDetail = () => {
     fetchTutorial();
   }, [id]);
 
+  const toggleSection = (index) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
+
   return (
     <div className="tutorial-detail-page">
       {tutorial ? (
@@ -34,40 +43,61 @@ const TutorialDetail = () => {
             <h1>{tutorial.title}</h1>
             <ul>
               {tutorial.sections.map((section, index) => (
-                <li 
-                  key={index} 
-                  className={currentSectionIndex === index ? "active" : ""}
-                  onClick={() => setCurrentSectionIndex(index)}
-                >
-                  {section.title}
+                <li key={index}>
+                  {/* Section Title */}
+                  <div
+                    className={`section-title ${currentSectionIndex === index ? "active" : ""}`}
+                    onClick={() => {
+                      setCurrentSectionIndex(index);
+                      setCurrentSubSectionIndex(null);
+                      if (section.subSections?.length > 0) {
+                        toggleSection(index);
+                      }
+                    }}
+                  >
+                    {section.title} {section.subSections?.length > 0 && (expandedSections[index] ? "▲" : "▼")}
+                  </div>
+
+                  {/* Subsections Dropdown */}
+                  {expandedSections[index] && section.subSections?.length > 0 && (
+                    <ul className="subsection-list">
+                      {section.subSections.map((subSection, subIndex) => (
+                        <li
+                          key={subIndex}
+                          className={currentSubSectionIndex === subIndex ? "active" : ""}
+                          onClick={() => {
+                            setCurrentSectionIndex(index);
+                            setCurrentSubSectionIndex(subIndex);
+                          }}
+                        >
+                          {subSection.title}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))}
             </ul>
           </aside>
 
-          {/* Main Content - Display only one section at a time */}
+          {/* Main Content */}
           <main className="tutorial-content">
             <section className="markdown-body">
-              <h2>{tutorial.sections[currentSectionIndex].title}</h2>
-              <Markdown
-                remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} 
-                components={{
-                  code({ node, inline, className, children, ...props }) {
-                    const match = /language-(\w+)/.exec(className || "");
-                    return !inline && match ? (
-                      <SyntaxHighlighter style={atomDark} language={match[1]} PreTag="div" {...props}>
-                        {String(children).replace(/\n$/, "")}
-                      </SyntaxHighlighter>
-                    ) : (
-                      <code className={className} {...props}>
-                        {children}
-                      </code>
-                    );
-                  },
-                }}
-              >
-                {tutorial.sections[currentSectionIndex].content}
-              </Markdown>
+              {currentSubSectionIndex === null ? (
+                <>
+                  <h2>{tutorial.sections[currentSectionIndex].title}</h2>
+                  <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} components={markdownComponents}>
+                    {tutorial.sections[currentSectionIndex].content}
+                  </Markdown>
+                </>
+              ) : (
+                <>
+                  <h2>{tutorial.sections[currentSectionIndex].subSections[currentSubSectionIndex].title}</h2>
+                  <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} components={markdownComponents}>
+                    {tutorial.sections[currentSectionIndex].subSections[currentSubSectionIndex].content}
+                  </Markdown>
+                </>
+              )}
             </section>
           </main>
         </>
@@ -76,6 +106,21 @@ const TutorialDetail = () => {
       )}
     </div>
   );
+};
+
+const markdownComponents = {
+  code({ node, inline, className, children, ...props }) {
+    const match = /language-(\w+)/.exec(className || "");
+    return !inline && match ? (
+      <SyntaxHighlighter style={atomDark} language={match[1]} PreTag="div" {...props}>
+        {String(children).replace(/\n$/, "")}
+      </SyntaxHighlighter>
+    ) : (
+      <code className={className} {...props}>
+        {children}
+      </code>
+    );
+  },
 };
 
 export default TutorialDetail;

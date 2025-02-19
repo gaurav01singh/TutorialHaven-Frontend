@@ -15,9 +15,10 @@ const TutorialCreate = () => {
   const [title, setTitle] = useState("");
   const [subcategory, setSubcategory] = useState("");
   const [subcategories, setSubcategories] = useState([]);
-  const [sections, setSections] = useState([{ title: "", content: "" }]);
+  const [sections, setSections] = useState([{ title: "", content: "", subSections: [] }]);
   const [toggle, setToggle] = useState(true);
-  const [selectedSection, setSelectedSection] = useState(0);
+  const [expandedSection, setExpandedSection] = useState(null);
+  const [selectedSubSection, setSelectedSubSection] = useState(null);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
 
@@ -39,12 +40,30 @@ const TutorialCreate = () => {
     setSections(newSections);
   };
 
+  const handleSubSectionChange = (sectionIndex, subSectionIndex, field, value) => {
+    const newSections = [...sections];
+    newSections[sectionIndex].subSections[subSectionIndex][field] = value;
+    setSections(newSections);
+  };
+
   const addSection = () => {
-    setSections([...sections, { title: "", content: "" }]);
+    setSections([...sections, { title: "", content: "", subSections: [] }]);
   };
 
   const deleteSection = (index) => {
     const newSections = sections.filter((_, i) => i !== index);
+    setSections(newSections);
+  };
+
+  const addSubSection = (sectionIndex) => {
+    const newSections = [...sections];
+    newSections[sectionIndex].subSections.push({ title: "", content: "" });
+    setSections(newSections);
+  };
+
+  const deleteSubSection = (sectionIndex, subSectionIndex) => {
+    const newSections = [...sections];
+    newSections[sectionIndex].subSections.splice(subSectionIndex, 1);
     setSections(newSections);
   };
 
@@ -91,24 +110,46 @@ const TutorialCreate = () => {
             </select>
 
             <h3>Sections:</h3>
-            {sections.map((section, index) => (
-              <div key={index} className="section-group">
+            {sections.map((section, sectionIndex) => (
+              <div key={sectionIndex} className="section-group">
                 <input
                   type="text"
                   placeholder="Section Title"
                   value={section.title}
-                  onChange={(e) => handleSectionChange(index, "title", e.target.value)}
+                  onChange={(e) => handleSectionChange(sectionIndex, "title", e.target.value)}
                   required
                 />
                 <textarea
                   placeholder="Content"
                   value={section.content}
-                  onChange={(e) => handleSectionChange(index, "content", e.target.value)}
+                  onChange={(e) => handleSectionChange(sectionIndex, "content", e.target.value)}
                   required
                 />
-                <button type="button" className="delete-btn" onClick={() => deleteSection(index)}>
+                <button type="button" className="delete-btn" onClick={() => deleteSection(sectionIndex)}>
                   Delete Section
                 </button>
+                <button type="button" onClick={() => addSubSection(sectionIndex)}>Add Sub-section</button>
+
+                {section.subSections.map((subSection, subSectionIndex) => (
+                  <div key={subSectionIndex} className="subsection-group">
+                    <input
+                      type="text"
+                      placeholder="Sub-section Title"
+                      value={subSection.title}
+                      onChange={(e) => handleSubSectionChange(sectionIndex, subSectionIndex, "title", e.target.value)}
+                      required
+                    />
+                    <textarea
+                      placeholder="Sub-section Content"
+                      value={subSection.content}
+                      onChange={(e) => handleSubSectionChange(sectionIndex, subSectionIndex, "content", e.target.value)}
+                      required
+                    />
+                    <button type="button" className="delete-btn" onClick={() => deleteSubSection(sectionIndex, subSectionIndex)}>
+                      Delete Sub-section
+                    </button>
+                  </div>
+                ))}
               </div>
             ))}
 
@@ -121,49 +162,40 @@ const TutorialCreate = () => {
               <h1>{title}</h1>
               <ul>
                 {sections.map((section, index) => (
-                  <li
-                    key={index}
-                    className={selectedSection === index ? "active" : ""}
-                    onClick={() => setSelectedSection(index)}
-                  >
-                    {section.title}
+                  <li key={index}>
+                    <div className="section-title" onClick={() => setExpandedSection(expandedSection === index ? null : index)}>
+                      {section.title} {section.subSections.length > 0 && (expandedSection === index ? "▲" : "▼")}
+                    </div>
+
+                    {/* Dropdown for Subsections */}
+                    {expandedSection === index && section.subSections.length > 0 && (
+                      <ul className="subsection-dropdown">
+                        {section.subSections.map((subSection, subIndex) => (
+                          <li
+                            key={subIndex}
+                            className={selectedSubSection === subIndex ? "active" : ""}
+                            onClick={() => setSelectedSubSection(subIndex)}
+                          >
+                            {subSection.title}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </li>
                 ))}
               </ul>
             </div>
+            
             <div className="content markdown-body">
-              <Markdown
-                remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} 
-                components={{
-                  code({ node, inline, className, children, ...props }) {
-                    const match = /language-(\w+)/.exec(className || "");
-                    return !inline && match ? (
-                      <SyntaxHighlighter style={atomDark} language={match[1]} PreTag="div" {...props}>
-                        {String(children).replace(/\n$/, "")}
-                      </SyntaxHighlighter>
-                    ) : (
-                      <code className={className} {...props}>
-                        {children}
-                      </code>
-                    );
-                  },
-                }}
-              >
-                {sections[selectedSection]?.content || "Select a section to preview"}
+              <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+                {selectedSubSection !== null
+                  ? sections[expandedSection]?.subSections[selectedSubSection]?.content || "Select a sub-section"
+                  : sections[expandedSection]?.content || "Select a section"}
               </Markdown>
             </div>
           </div>
         )}
-        {message && (
-          <FloatingMessage
-            message={message}
-            type={messageType}
-            onClose={() => setMessage("")}
-          />
-        )}
       </div>
-
-      {/* Gallery Section (Now on the Right Side) */}
       <div className="gallery-section">
         <Gallery onImageClick={handleImageClick} />
       </div>

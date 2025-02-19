@@ -16,7 +16,8 @@ const EditTutorial = () => {
   const [title, setTitle] = useState("");
   const [subcategory, setSubcategory] = useState("");
   const [subcategories, setSubcategories] = useState([]);
-  const [sections, setSections] = useState([{ title: "", content: "" }]);
+  const [sections, setSections] = useState([{ title: "", content: "", subSections: [] }]);
+  const [expandedSection, setExpandedSection] = useState(null);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
 
@@ -52,14 +53,32 @@ const EditTutorial = () => {
     setSections(newSections);
   };
 
+  const handleSubSectionChange = (sectionIndex, subSectionIndex, field, value) => {
+    const newSections = [...sections];
+    newSections[sectionIndex].subSections[subSectionIndex][field] = value;
+    setSections(newSections);
+  };
+
   const addSection = () => {
-    setSections([...sections, { title: "", content: "" }]);
+    setSections([...sections, { title: "", content: "", subSections: [] }]);
   };
 
   const deleteSection = (index) => {
     if (sections.length > 1) {
       setSections(sections.filter((_, i) => i !== index));
     }
+  };
+
+  const addSubSection = (sectionIndex) => {
+    const newSections = [...sections];
+    newSections[sectionIndex].subSections.push({ title: "", content: "" });
+    setSections(newSections);
+  };
+
+  const deleteSubSection = (sectionIndex, subSectionIndex) => {
+    const newSections = [...sections];
+    newSections[sectionIndex].subSections.splice(subSectionIndex, 1);
+    setSections(newSections);
   };
 
   const handleSubmit = async (e) => {
@@ -102,71 +121,83 @@ const EditTutorial = () => {
           <h3>Sections:</h3>
           {sections.map((section, index) => (
             <div key={index} className="section-group">
-              <input
-                type="text"
-                placeholder="Section Title"
-                value={section.title}
-                onChange={(e) => handleSectionChange(index, "title", e.target.value)}
-                required
-              />
-              <textarea
-                placeholder="Content"
-                value={section.content}
-                onChange={(e) => handleSectionChange(index, "content", e.target.value)}
-                required
-              />
-              <Markdown
-                remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} 
-                className="markdown-body"
-                components={{
-                  code({ node, inline, className, children, ...props }) {
-                    const match = /language-(\w+)/.exec(className || "");
-                    return !inline && match ? (
-                      <SyntaxHighlighter style={atomDark} language={match[1]} PreTag="div" {...props}>
-                        {String(children).replace(/\n$/, "")}
-                      </SyntaxHighlighter>
-                    ) : (
-                      <code className={className} {...props}>
-                        {children}
-                      </code>
-                    );
-                  },
-                }}
-              >
-                {section.content}
-              </Markdown>
+              <div className="section-header" onClick={() => setExpandedSection(expandedSection === index ? null : index)}>
+                <span>{section.title || "Untitled Section"}</span>
+                <span>{expandedSection === index ? "▲" : "▼"}</span>
+              </div>
 
-              {/* Delete Section Button */}
-              {sections.length > 1 && (
-                <button type="button" className="delete-section" onClick={() => deleteSection(index)}>
-                  ❌ Delete Section
-                </button>
+              {expandedSection === index && (
+                <>
+                  <input
+                    type="text"
+                    placeholder="Section Title"
+                    value={section.title}
+                    onChange={(e) => handleSectionChange(index, "title", e.target.value)}
+                    required
+                  />
+                  <textarea
+                    placeholder="Section Content"
+                    value={section.content}
+                    onChange={(e) => handleSectionChange(index, "content", e.target.value)}
+                    required
+                  />
+                  <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} className="markdown-body">
+                    {section.content}
+                  </Markdown>
+
+                  <button type="button"  onClick={() => addSubSection(index)}>➕ Add Sub-section</button>
+
+                  {section.subSections.map((subSection, subIndex) => (
+                    <div key={subIndex} className="subsection-group">
+                      <input
+                        type="text"
+                        placeholder="Sub-section Title"
+                        value={subSection.title}
+                        onChange={(e) => handleSubSectionChange(index, subIndex, "title", e.target.value)}
+                        required
+                      />
+                      <textarea
+                        placeholder="Sub-section Content"
+                        value={subSection.content}
+                        onChange={(e) => handleSubSectionChange(index, subIndex, "content", e.target.value)}
+                        required
+                      />
+                      <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} className="markdown-body">
+                        {subSection.content}
+                      </Markdown>
+
+                      <button type="button" className="delete-btn" onClick={() => deleteSubSection(index, subIndex)}>
+                        ❌ Delete Sub-section
+                      </button>
+                    </div>
+                  ))}
+
+                  {sections.length > 1 && (
+                    <button type="button" className="delete-btn" onClick={() => deleteSection(index)}>
+                      ❌ Delete Section
+                    </button>
+                  )}
+                </>
               )}
             </div>
           ))}
 
-          {/* Add Section Button */}
           <button type="button" className="add-section" onClick={addSection}>
             ➕ Add Section
           </button>
 
-          {/* Submit Button */}
           <button type="submit">Update Tutorial</button>
         </form>
       </div>
-      
+
       {/* Gallery Section */}
       <div className="gallery-section">
         <Gallery onImageClick={handleImageClick} />
       </div>
-      
+
       {/* Floating Message */}
       {message && (
-        <FloatingMessage
-          message={message}
-          type={messageType}
-          onClose={() => setMessage("")}
-        />
+        <FloatingMessage message={message} type={messageType} onClose={() => setMessage("")} />
       )}
     </div>
   );
