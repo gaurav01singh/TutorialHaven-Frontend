@@ -94,7 +94,7 @@ const EditTutorial = () => {
     e.preventDefault();
     try {
       await API.put(`/tutorial/update/${id}`, { title, category, subcategory, templateImg, sections });
-      navigate(`/tutorial/${id}`);
+      
     } catch (error) {
       console.error("Error updating tutorial:", error);
     }
