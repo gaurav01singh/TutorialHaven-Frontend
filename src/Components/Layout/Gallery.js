@@ -110,7 +110,7 @@ const Gallery = ({ onImageClick }) => {
 
       <div className="image-grid">
         {user?.images?.map((image, index) => (
-          <div key={index} className="image-item" onClick={() => onImageClick(image)}>
+          <div key={index} className="image-item">
             <img src={image} alt={`Uploaded ${index + 1}`} className="gallery-image" />
             <button className="delete-img" onClick={() => handleDelete(image)}>
               Delete
