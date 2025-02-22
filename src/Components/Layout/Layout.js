@@ -59,7 +59,7 @@ const Layout = () => {
     <>
       {/* Header */}
       <header className="navbar">
-        <h2>My Dossier</h2>
+        <h2 onClick={() => { navigate("/"); setDrawerOpen(false); }}>My Dossier</h2>
 
         {/* Hamburger Menu (Only visible on mobile) */}
         <button className="hamburger" onClick={() => setDrawerOpen(!drawerOpen)}>
@@ -71,7 +71,6 @@ const Layout = () => {
           <ul>
             {isLogin ? (
               <>
-                <li><button className="bnt" onClick={() => { navigate("/"); setDrawerOpen(false); }}>Home</button></li>
                 <li><button className="bnt" onClick={() => { navigate("/profile"); setDrawerOpen(false); }}>Profile</button></li>
                 <li><button className="bnt" onClick={() => { navigate("/blog/create"); setDrawerOpen(false); }}>Create New Dossier</button></li>
                 <li><button className="bnt" onClick={() => { navigate("/gallery"); setDrawerOpen(false); }}>Gallery</button></li>

@@ -13,356 +13,219 @@ import rehypeRaw from "rehype-raw";
 const EditTutorial = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    title: "",
-    category: "",
-    subcategory: "",
-    templateImg: "",
-    sections: [{ title: "", content: "", subSections: [] }],
-  });
-  const [categories, setCategories] = useState([]);
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState(""); // Added category state
+  const [subcategory, setSubcategory] = useState("");
+  const [templateImg, setTemplateImg] = useState(""); // Added templateImg state
   const [subcategories, setSubcategories] = useState([]);
-  const [toggle, setToggle] = useState(true); // Edit mode by default
+  const [categories, setCategories] = useState([]); // Added categories state
+  const [sections, setSections] = useState([{ title: "", content: "", subSections: [] }]);
   const [expandedSection, setExpandedSection] = useState(null);
-  const [selectedSubSection, setSelectedSubSection] = useState(null);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchTutorial = async () => {
       try {
-        const [tutorialRes, categoryRes, subcategoryRes] = await Promise.all([
-          API.get(`/tutorial/${id}`),
+        const response = await API.get(`/tutorial/${id}`);
+        const { title, category, subcategory, sections, templateImg } = response.data;
+        setTitle(title);
+        setCategory(category?._id || ""); // Populate category if it exists
+        setSubcategory(subcategory?._id || "");
+        setTemplateImg(templateImg || ""); // Populate templateImg if it exists
+        setSections(sections);
+      } catch (error) {
+        console.error("Error fetching tutorial:", error);
+      }
+    };
+
+    const fetchCategoriesAndSubcategories = async () => {
+      try {
+        const [categoryRes, subcategoryRes] = await Promise.all([
           API.get("/category/get-category"),
-          API.get("/subCategory"),
+          API.get("/subcategory"),
         ]);
-        const { title, category, subcategory, templateImg, sections } = tutorialRes.data;
-        setFormData({
-          title,
-          category: category?._id || "",
-          subcategory: subcategory?._id || "",
-          templateImg: templateImg || "",
-          sections: sections.length > 0 ? sections : [{ title: "", content: "", subSections: [] }],
-        });
         setCategories(categoryRes.data);
         setSubcategories(subcategoryRes.data);
       } catch (error) {
-        setMessage("Error fetching data");
-        setMessageType("error");
-        console.error("Error fetching data:", error);
+        console.error("Error fetching categories/subcategories:", error);
       }
     };
-    fetchData();
+
+    fetchTutorial();
+    fetchCategoriesAndSubcategories();
   }, [id]);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
   const handleSectionChange = (index, field, value) => {
-    const newSections = [...formData.sections];
+    const newSections = [...sections];
     newSections[index][field] = value;
-    setFormData({ ...formData, sections: newSections });
+    setSections(newSections);
   };
 
   const handleSubSectionChange = (sectionIndex, subSectionIndex, field, value) => {
-    const newSections = [...formData.sections];
+    const newSections = [...sections];
     newSections[sectionIndex].subSections[subSectionIndex][field] = value;
-    setFormData({ ...formData, sections: newSections });
+    setSections(newSections);
   };
 
   const addSection = () => {
-    setFormData({
-      ...formData,
-      sections: [...formData.sections, { title: "", content: "", subSections: [] }],
-    });
+    setSections([...sections, { title: "", content: "", subSections: [] }]);
   };
 
   const deleteSection = (index) => {
-    if (formData.sections.length > 1) {
-      const newSections = formData.sections.filter((_, i) => i !== index);
-      setFormData({ ...formData, sections: newSections });
+    if (sections.length > 1) {
+      setSections(sections.filter((_, i) => i !== index));
     }
   };
 
   const addSubSection = (sectionIndex) => {
-    const newSections = [...formData.sections];
+    const newSections = [...sections];
     newSections[sectionIndex].subSections.push({ title: "", content: "" });
-    setFormData({ ...formData, sections: newSections });
+    setSections(newSections);
   };
 
   const deleteSubSection = (sectionIndex, subSectionIndex) => {
-    const newSections = [...formData.sections];
+    const newSections = [...sections];
     newSections[sectionIndex].subSections.splice(subSectionIndex, 1);
-    setFormData({ ...formData, sections: newSections });
-  };
-
-  const handleImageClick = (imageUrl) => {
-    navigator.clipboard
-      .writeText(imageUrl)
-      .then(() => {
-        setMessage("Image URL copied to clipboard!");
-        setMessageType("success");
-      })
-      .catch((err) => {
-        console.error("Failed to copy image URL:", err);
-      });
+    setSections(newSections);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await API.put(`/tutorial/update/${id}`, formData);
-      setMessage("Tutorial updated successfully!");
-      setMessageType("success");
-      setTimeout(() => navigate(`/tutorial/${id}`), 1500);
+      await API.put(`/tutorial/update/${id}`, { title, category, subcategory, templateImg, sections });
+      navigate(`/tutorial/${id}`);
     } catch (error) {
-      setMessage(error.response?.data?.message || "Error updating tutorial");
-      setMessageType("error");
       console.error("Error updating tutorial:", error);
     }
+  };
+
+  const handleImageClick = (imageUrl) => {
+    navigator.clipboard.writeText(imageUrl).then(() => {
+      setMessage("Image URL copied to clipboard!");
+      setMessageType("success");
+    }).catch(err => {
+      console.error("Failed to copy image URL:", err);
+    });
   };
 
   return (
     <div className="tutorial-edit-layout">
       <div className="tutorial-edit-container">
         <h1>Edit Tutorial</h1>
-        <button onClick={() => setToggle(!toggle)} className="toggle-btn">
-          {toggle ? "Preview" : "Edit"}
-        </button>
+        <form onSubmit={handleSubmit}>
+          <label>Title:</label>
+          <input value={title} onChange={(e) => setTitle(e.target.value)} required />
 
-        {toggle ? (
-          <form onSubmit={handleSubmit} className="tutorial-form">
-            <div className="form-group">
-              <label>Title:</label>
-              <input
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          <label>Category:</label>
+          <select value={category} onChange={(e) => setCategory(e.target.value)} required>
+            <option value="">Select Category</option>
+            {categories.map((cat) => (
+              <option key={cat._id} value={cat._id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
 
-            <div className="form-group">
-              <label>Category:</label>
-              <select
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select Category</option>
-                {categories.map((cat) => (
-                  <option key={cat._id} value={cat._id}>
-                    {cat.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <label>Subcategory:</label>
+          <select value={subcategory} onChange={(e) => setSubcategory(e.target.value)} required>
+            <option value="">Select Subcategory</option>
+            {subcategories
+              .filter((sub) => sub.category._id === category)
+              .map((sub) => (
+                <option key={sub._id} value={sub._id}>
+                  {sub.name}
+                </option>
+              ))}
+          </select>
 
-            <div className="form-group">
-              <label>Subcategory:</label>
-              <select
-                name="subcategory"
-                value={formData.subcategory}
-                onChange={handleChange}
-              >
-                <option value="">Select Subcategory</option>
-                {subcategories
-                  .filter((sub) => sub.category._id === formData.category)
-                  .map((sub) => (
-                    <option key={sub._id} value={sub._id}>
-                      {sub.name}
-                    </option>
-                  ))}
-              </select>
-            </div>
+          <label>Template Image URL:</label>
+          <input
+            value={templateImg}
+            onChange={(e) => setTemplateImg(e.target.value)}
+            placeholder="Enter image URL"
+          />
 
-            <div className="form-group">
-              <label>Template Image URL:</label>
-              <input
-                name="templateImg"
-                value={formData.templateImg}
-                onChange={handleChange}
-                placeholder="Enter image URL"
-              />
-            </div>
+          <h3>Sections:</h3>
+          {sections.map((section, index) => (
+            <div key={index} className="section-group">
+              <div className="section-header" onClick={() => setExpandedSection(expandedSection === index ? null : index)}>
+                <span>{section.title || "Untitled Section"}</span>
+                <span>{expandedSection === index ? "▲" : "▼"}</span>
+              </div>
 
-            <div className="sections-container">
-              <h3>Sections:</h3>
-              {formData.sections.map((section, sectionIndex) => (
-                <div key={sectionIndex} className="section-group">
+              {expandedSection === index && (
+                <>
                   <input
                     type="text"
                     placeholder="Section Title"
                     value={section.title}
-                    onChange={(e) =>
-                      handleSectionChange(sectionIndex, "title", e.target.value)
-                    }
+                    onChange={(e) => handleSectionChange(index, "title", e.target.value)}
                     required
                   />
                   <textarea
-                    placeholder="Content (Markdown supported)"
+                    placeholder="Section Content"
                     value={section.content}
-                    onChange={(e) =>
-                      handleSectionChange(sectionIndex, "content", e.target.value)
-                    }
+                    onChange={(e) => handleSectionChange(index, "content", e.target.value)}
                     required
                   />
-                  <div className="button-group">
-                    {formData.sections.length > 1 && (
-                      <button
-                        type="button"
-                        className="delete-btn"
-                        onClick={() => deleteSection(sectionIndex)}
-                      >
-                        Delete Section
-                      </button>
-                    )}
-                    <button
-                      type="button"
-                      className="add-btn"
-                      onClick={() => addSubSection(sectionIndex)}
-                    >
-                      Add Sub-section
-                    </button>
-                  </div>
+                  <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} className="markdown-body">
+                    {section.content}
+                  </Markdown>
 
-                  {section.subSections.map((subSection, subSectionIndex) => (
-                    <div key={subSectionIndex} className="subsection-group">
+                  <button type="button" onClick={() => addSubSection(index)}>➕ Add Sub-section</button>
+
+                  {section.subSections.map((subSection, subIndex) => (
+                    <div key={subIndex} className="subsection-group">
                       <input
                         type="text"
                         placeholder="Sub-section Title"
                         value={subSection.title}
-                        onChange={(e) =>
-                          handleSubSectionChange(
-                            sectionIndex,
-                            subSectionIndex,
-                            "title",
-                            e.target.value
-                          )
-                        }
+                        onChange={(e) => handleSubSectionChange(index, subIndex, "title", e.target.value)}
                         required
                       />
                       <textarea
-                        placeholder="Sub-section Content (Markdown supported)"
+                        placeholder="Sub-section Content"
                         value={subSection.content}
-                        onChange={(e) =>
-                          handleSubSectionChange(
-                            sectionIndex,
-                            subSectionIndex,
-                            "content",
-                            e.target.value
-                          )
-                        }
+                        onChange={(e) => handleSubSectionChange(index, subIndex, "content", e.target.value)}
                         required
                       />
-                      <button
-                        type="button"
-                        className="delete-btn"
-                        onClick={() => deleteSubSection(sectionIndex, subSectionIndex)}
-                      >
-                        Delete Sub-section
+                      <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} className="markdown-body">
+                        {subSection.content}
+                      </Markdown>
+
+                      <button type="button" className="delete-btn" onClick={() => deleteSubSection(index, subIndex)}>
+                        ❌ Delete Sub-section
                       </button>
                     </div>
                   ))}
-                </div>
-              ))}
 
-              <div className="form-actions">
-                <button type="button" onClick={addSection} className="add-btn">
-                  Add Section
-                </button>
-                <button type="submit" className="submit-btn">
-                  Update Tutorial
-                </button>
-              </div>
+                  {sections.length > 1 && (
+                    <button type="button" className="delete-btn" onClick={() => deleteSection(index)}>
+                      ❌ Delete Section
+                    </button>
+                  )}
+                </>
+              )}
             </div>
-          </form>
-        ) : (
-          <div className="preview-container">
-            <div className="sidebar">
-              <h1>{formData.title}</h1>
-              <ul>
-                {formData.sections.map((section, index) => (
-                  <li key={index}>
-                    <div
-                      className="section-title"
-                      onClick={() =>
-                        setExpandedSection(expandedSection === index ? null : index)
-                      }
-                    >
-                      {section.title}
-                      {section.subSections.length > 0 && (
-                        <span className="dropdown-arrow">
-                          {expandedSection === index ? "▲" : "▼"}
-                        </span>
-                      )}
-                    </div>
+          ))}
 
-                    {expandedSection === index && section.subSections.length > 0 && (
-                      <ul className="subsection-dropdown">
-                        {section.subSections.map((subSection, subIndex) => (
-                          <li
-                            key={subIndex}
-                            className={selectedSubSection === subIndex ? "active" : ""}
-                            onClick={() => setSelectedSubSection(subIndex)}
-                          >
-                            {subSection.title}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <button type="button" className="add-section" onClick={addSection}>
+            ➕ Add Section
+          </button>
 
-            <div className="content markdown-body">
-              <Markdown
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeRaw]}
-                components={{
-                  code({ node, inline, className, children, ...props }) {
-                    const match = /language-(\w+)/.exec(className || "");
-                    return !inline && match ? (
-                      <SyntaxHighlighter
-                        style={atomDark}
-                        language={match[1]}
-                        PreTag="div"
-                        {...props}
-                      >
-                        {String(children).replace(/\n$/, "")}
-                      </SyntaxHighlighter>
-                    ) : (
-                      <code className={className} {...props}>
-                        {children}
-                      </code>
-                    );
-                  },
-                }}
-              >
-                {selectedSubSection !== null
-                  ? formData.sections[expandedSection]?.subSections[
-                      selectedSubSection
-                    ]?.content
-                  : formData.sections[expandedSection]?.content || "Select a section"}
-              </Markdown>
-            </div>
-          </div>
-        )}
+          <button type="submit">Update Tutorial</button>
+        </form>
       </div>
 
+      {/* Gallery Section */}
       <div className="gallery-section">
         <Gallery onImageClick={handleImageClick} />
       </div>
 
+      {/* Floating Message */}
       {message && (
-        <FloatingMessage
-          message={message}
-          type={messageType}
-          onClose={() => setMessage("")}
-        />
+        <FloatingMessage message={message} type={messageType} onClose={() => setMessage("")} />
       )}
     </div>
   );

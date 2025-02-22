@@ -105,11 +105,11 @@ const TutorialCreate = () => {
     try {
       const response = await API.post("/tutorial/create", {
         ...formData,
-        createdBy: localStorage.getItem('userId') // Assuming you store userId in localStorage
+      
       });
       setMessage("Tutorial created successfully!");
       setMessageType("success");
-      setTimeout(() => navigate("/tutorials"), 1500);
+      setTimeout(() => navigate("/tutorial"), 1500);
     } catch (error) {
       setMessage(error.response?.data?.message || "Error creating tutorial");
       setMessageType("error");
