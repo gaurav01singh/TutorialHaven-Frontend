@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import "../../style/home.css";
 import API from '../Api';
 
-const ByCategory = () => {
+const BySubcategory = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [tutorials, setTutorials] = useState([]);
@@ -17,8 +17,8 @@ const ByCategory = () => {
     const fetchData = async () => {
       try {
         const [categoryRes, tutorialRes] = await Promise.all([
-          API.get(`/category/${id}`),
-          API.get(`/tutorial/category/${id}`)
+          API.get(`/subcategory/${id}`),
+          API.get(`/tutorial/subcategory/${id}`)
         ]);
         setCategoryName(categoryRes.data.name);
         setTutorials(tutorialRes.data);
@@ -86,4 +86,4 @@ const ByCategory = () => {
   );
 };
 
-export default ByCategory;
+export default BySubcategory;

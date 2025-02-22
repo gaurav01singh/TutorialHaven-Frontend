@@ -19,6 +19,7 @@ const Layout = () => {
       try {
         const response = await API.get("/category/get-category");
         setCategory(response.data);
+        console.log(category)
       } catch (error) {
         console.error("Error fetching categories:", error);
         if (error.response?.status === 401) {
@@ -90,12 +91,12 @@ const Layout = () => {
       {isLogin && (
         <ul className="category">
           {category.map((cate) => (
-            <li className="category-item dropdown" key={cate._id}>
-              <p>{cate.name}</p>
+            <li className="category-item dropdown" key={cate._id} >
+              <p onClick={() => navigate(`/tutorial/category/${cate._id}`)}>{cate.name}</p>
               {cate.subcategories.length > 0 && (
                 <ul className="dropdown-menu">
                   {cate.subcategories.map((sub) => (
-                    <li key={sub._id} onClick={() => navigate(`/tutorial/category/${sub._id}`)}>
+                    <li key={sub._id} onClick={() => navigate(`/tutorial/subcategory/${sub._id}`)}>
                       {sub.name}
                     </li>
                   ))}

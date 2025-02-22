@@ -16,6 +16,7 @@ import TutorialCreate from "./Components/Tutorial/tutorialCreate";
 import TutorialList from "./Components/Tutorial/TutorialList";
 import TutorialDetail from "./Components/Tutorial/TutorialPage";
 import EditTutorial from "./Components/Tutorial/EditTutorial";
+import BySubcategory from "./Components/Category/BySubcategory";
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
       <Route path="/tutorial/:id" element={<TutorialDetail />} /> 
       <Route path="/tutorial/edit/:id" element={<EditTutorial />} /> 
       <Route path="/tutorial/category/:id" element={<ByCategory />} /> 
+      <Route path="/tutorial/subcategory/:id" element={<BySubcategory />} /> 
       <Route path="/tutorial/create" element={<TutorialCreate />} /> 
 
       </Route>

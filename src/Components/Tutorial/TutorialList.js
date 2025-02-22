@@ -63,6 +63,7 @@ const TutorialList = () => {
           <li key={tutorial._id} className="tutorial-item">
             
             <div onClick={() => navigate(`/tutorial/${tutorial._id}`)}>
+            <img src={tutorial.templateImg}/>
               <Markdown>{tutorial.title}</Markdown>
             </div>
             {isAdmin==="Admin" && (

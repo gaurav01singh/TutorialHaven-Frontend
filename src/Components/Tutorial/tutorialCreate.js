@@ -12,10 +12,15 @@ import rehypeRaw from "rehype-raw";
 
 const TutorialCreate = () => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState("");
-  const [subcategory, setSubcategory] = useState("");
+  const [formData, setFormData] = useState({
+    title: "",
+    category: "",
+    subcategory: "",
+    templateImg: "",
+    sections: [{ title: "", content: "", subSections: [] }]
+  });
+  const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
-  const [sections, setSections] = useState([{ title: "", content: "", subSections: [] }]);
   const [toggle, setToggle] = useState(true);
   const [expandedSection, setExpandedSection] = useState(null);
   const [selectedSubSection, setSelectedSubSection] = useState(null);
@@ -23,151 +28,247 @@ const TutorialCreate = () => {
   const [messageType, setMessageType] = useState("");
 
   useEffect(() => {
-    const fetchSubcategories = async () => {
+    const fetchCategories = async () => {
       try {
-        const response = await API.get("/subcategory");
-        setSubcategories(response.data);
+        const [categoryRes, subcategoryRes] = await Promise.all([
+          API.get("/category/get-category"),
+          API.get("/subCategory")
+        ]);
+        setCategories(categoryRes.data);
+        setSubcategories(subcategoryRes.data);
+        
       } catch (error) {
-        console.error("Error fetching subcategories:", error);
+        setMessage("Error fetching categories");
+        setMessageType("error");
       }
     };
-    fetchSubcategories();
+    fetchCategories();
   }, []);
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const handleSectionChange = (index, field, value) => {
-    const newSections = [...sections];
+    const newSections = [...formData.sections];
     newSections[index][field] = value;
-    setSections(newSections);
+    setFormData({ ...formData, sections: newSections });
   };
 
   const handleSubSectionChange = (sectionIndex, subSectionIndex, field, value) => {
-    const newSections = [...sections];
+    const newSections = [...formData.sections];
     newSections[sectionIndex].subSections[subSectionIndex][field] = value;
-    setSections(newSections);
+    setFormData({ ...formData, sections: newSections });
   };
 
   const addSection = () => {
-    setSections([...sections, { title: "", content: "", subSections: [] }]);
+    setFormData({
+      ...formData,
+      sections: [...formData.sections, { title: "", content: "", subSections: [] }]
+    });
+    
   };
 
   const deleteSection = (index) => {
-    const newSections = sections.filter((_, i) => i !== index);
-    setSections(newSections);
+    const newSections = formData.sections.filter((_, i) => i !== index);
+    setFormData({ ...formData, sections: newSections });
   };
 
   const addSubSection = (sectionIndex) => {
-    const newSections = [...sections];
+    const newSections = [...formData.sections];
     newSections[sectionIndex].subSections.push({ title: "", content: "" });
-    setSections(newSections);
+    setFormData({ ...formData, sections: newSections });
   };
 
   const deleteSubSection = (sectionIndex, subSectionIndex) => {
-    const newSections = [...sections];
+    const newSections = [...formData.sections];
     newSections[sectionIndex].subSections.splice(subSectionIndex, 1);
-    setSections(newSections);
+    setFormData({ ...formData, sections: newSections });
+  };
+
+  const handleImageClick = (imageUrl) => {
+    navigator.clipboard
+      .writeText(imageUrl)
+      .then(() => {
+        setMessage("Image URL copied to clipboard!");
+        setMessageType("success");
+      })
+      .catch((err) => {
+        console.error("Failed to copy image URL:", err);
+      });
+    setMessage("Image selected as template!");
+    setMessageType("success");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await API.post("/tutorial/create", { title, subcategory, sections });
-      navigate("/");
+      const response = await API.post("/tutorial/create", {
+        ...formData,
+        createdBy: localStorage.getItem('userId') // Assuming you store userId in localStorage
+      });
+      setMessage("Tutorial created successfully!");
+      setMessageType("success");
+      setTimeout(() => navigate("/tutorials"), 1500);
     } catch (error) {
-      console.error("Error creating tutorial:", error);
+      setMessage(error.response?.data?.message || "Error creating tutorial");
+      setMessageType("error");
     }
   };
-
-  const handleImageClick = (imageUrl) => {
-    navigator.clipboard.writeText(imageUrl).then(() => {
-      setMessage("Image URL copied to clipboard!");
-      setMessageType("success");
-    }).catch(err => {
-      console.error("Failed to copy image URL:", err);
-    });
-  };
-
+  
   return (
     <div className="tutorial-create-layout">
       <div className="tutorial-create-container">
         <h1>Create Tutorial</h1>
-        <button onClick={() => setToggle(!toggle)}>
+        <button onClick={() => setToggle(!toggle)} className="toggle-btn">
           {toggle ? "Preview" : "Edit"}
         </button>
 
         {toggle ? (
-          <form onSubmit={handleSubmit}>
-            <label>Title:</label>
-            <input value={title} onChange={(e) => setTitle(e.target.value)} required />
+          <form onSubmit={handleSubmit} className="tutorial-form">
+            <div className="form-group">
+              <label>Title:</label>
+              <input 
+                name="title"
+                value={formData.title} 
+                onChange={handleChange} 
+                required 
+              />
+            </div>
 
-            <label>Subcategory:</label>
-            <select value={subcategory} onChange={(e) => setSubcategory(e.target.value)} required>
-              <option value="">Select Subcategory</option>
-              {subcategories.map((sub) => (
-                <option key={sub._id} value={sub._id}>
-                  {sub.name}
-                </option>
-              ))}
-            </select>
+            <div className="form-group">
+              <label>Category:</label>
+              <select 
+                name="category"
+                value={formData.category} 
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Category</option>
+                {categories.map((cat) => (
+                  <option key={cat._id} value={cat._id}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-            <h3>Sections:</h3>
-            {sections.map((section, sectionIndex) => (
-              <div key={sectionIndex} className="section-group">
-                <input
-                  type="text"
-                  placeholder="Section Title"
-                  value={section.title}
-                  onChange={(e) => handleSectionChange(sectionIndex, "title", e.target.value)}
-                  required
-                />
-                <textarea
-                  placeholder="Content"
-                  value={section.content}
-                  onChange={(e) => handleSectionChange(sectionIndex, "content", e.target.value)}
-                  required
-                />
-                <button type="button" className="delete-btn" onClick={() => deleteSection(sectionIndex)}>
-                  Delete Section
-                </button>
-                <button type="button" onClick={() => addSubSection(sectionIndex)}>Add Sub-section</button>
+            <div className="form-group">
+              <label>Subcategory:</label>
+              <select 
+                name="subcategory"
+                value={formData.subcategory} 
+                onChange={handleChange}
+              >
+                <option value="">Select Subcategory</option>
+                {subcategories
+                  .filter(sub => sub.category._id === formData.category)
+                  .map((sub) => (
+                    <option key={sub._id} value={sub._id}>
+                      {sub.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Template Image URL:</label>
+              <input name="templateImg" value={formData.templateImg} onChange={handleChange} placeholder="Enter image URL" />
+            </div>
 
-                {section.subSections.map((subSection, subSectionIndex) => (
-                  <div key={subSectionIndex} className="subsection-group">
-                    <input
-                      type="text"
-                      placeholder="Sub-section Title"
-                      value={subSection.title}
-                      onChange={(e) => handleSubSectionChange(sectionIndex, subSectionIndex, "title", e.target.value)}
-                      required
-                    />
-                    <textarea
-                      placeholder="Sub-section Content"
-                      value={subSection.content}
-                      onChange={(e) => handleSubSectionChange(sectionIndex, subSectionIndex, "content", e.target.value)}
-                      required
-                    />
-                    <button type="button" className="delete-btn" onClick={() => deleteSubSection(sectionIndex, subSectionIndex)}>
-                      Delete Sub-section
+            <div className="sections-container">
+              <h3>Sections:</h3>
+              {formData.sections.map((section, sectionIndex) => (
+                <div key={sectionIndex} className="section-group">
+                  <input
+                    type="text"
+                    placeholder="Section Title"
+                    value={section.title}
+                    onChange={(e) => handleSectionChange(sectionIndex, "title", e.target.value)}
+                    required
+                  />
+                  <textarea
+                    placeholder="Content (Markdown supported)"
+                    value={section.content}
+                    onChange={(e) => handleSectionChange(sectionIndex, "content", e.target.value)}
+                    required
+                  />
+                  <div className="button-group">
+                    <button 
+                      type="button" 
+                      className="delete-btn"
+                      onClick={() => deleteSection(sectionIndex)}
+                    >
+                      Delete Section
+                    </button>
+                    <button 
+                      type="button" 
+                      className="add-btn"
+                      onClick={() => addSubSection(sectionIndex)}
+                    >
+                      Add Sub-section
                     </button>
                   </div>
-                ))}
-              </div>
-            ))}
 
-            <button type="button" onClick={addSection}>Add Section</button>
-            <button type="submit">Create Tutorial</button>
+                  {section.subSections.map((subSection, subSectionIndex) => (
+                    <div key={subSectionIndex} className="subsection-group">
+                      <input
+                        type="text"
+                        placeholder="Sub-section Title"
+                        value={subSection.title}
+                        onChange={(e) => 
+                          handleSubSectionChange(sectionIndex, subSectionIndex, "title", e.target.value)
+                        }
+                        required
+                      />
+                      <textarea
+                        placeholder="Sub-section Content (Markdown supported)"
+                        value={subSection.content}
+                        onChange={(e) => 
+                          handleSubSectionChange(sectionIndex, subSectionIndex, "content", e.target.value)
+                        }
+                        required
+                      />
+                      <button 
+                        type="button" 
+                        className="delete-btn"
+                        onClick={() => deleteSubSection(sectionIndex, subSectionIndex)}
+                      >
+                        Delete Sub-section
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ))}
+
+              <div className="form-actions">
+                <button type="button" onClick={addSection} className="add-btn">
+                  Add Section
+                </button>
+                <button type="submit" className="submit-btn">
+                  Create Tutorial
+                </button>
+              </div>
+            </div>
           </form>
         ) : (
           <div className="preview-container">
             <div className="sidebar">
-              <h1>{title}</h1>
+              <h1>{formData.title}</h1>
               <ul>
-                {sections.map((section, index) => (
+                {formData.sections.map((section, index) => (
                   <li key={index}>
-                    <div className="section-title" onClick={() => setExpandedSection(expandedSection === index ? null : index)}>
-                      {section.title} {section.subSections.length > 0 && (expandedSection === index ? "▲" : "▼")}
+                    <div 
+                      className="section-title" 
+                      onClick={() => setExpandedSection(expandedSection === index ? null : index)}
+                    >
+                      {section.title} 
+                      {section.subSections.length > 0 && (
+                        <span className="dropdown-arrow">
+                          {expandedSection === index ? "▲" : "▼"}
+                        </span>
+                      )}
                     </div>
 
-                    {/* Dropdown for Subsections */}
                     {expandedSection === index && section.subSections.length > 0 && (
                       <ul className="subsection-dropdown">
                         {section.subSections.map((subSection, subIndex) => (
@@ -187,18 +288,49 @@ const TutorialCreate = () => {
             </div>
             
             <div className="content markdown-body">
-              <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+              <Markdown 
+                remarkPlugins={[remarkGfm]} 
+                rehypePlugins={[rehypeRaw]}
+                components={{
+                  code({node, inline, className, children, ...props}) {
+                    const match = /language-(\w+)/.exec(className || '');
+                    return !inline && match ? (
+                      <SyntaxHighlighter
+                        style={atomDark}
+                        language={match[1]}
+                        PreTag="div"
+                        {...props}
+                      >
+                        {String(children).replace(/\n$/, '')}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    );
+                  }
+                }}
+              >
                 {selectedSubSection !== null
-                  ? sections[expandedSection]?.subSections[selectedSubSection]?.content || "Select a sub-section"
-                  : sections[expandedSection]?.content || "Select a section"}
+                  ? formData.sections[expandedSection]?.subSections[selectedSubSection]?.content 
+                  : formData.sections[expandedSection]?.content || "Select a section"}
               </Markdown>
             </div>
           </div>
         )}
       </div>
+
       <div className="gallery-section">
         <Gallery onImageClick={handleImageClick} />
       </div>
+
+      {message && (
+        <FloatingMessage 
+          message={message} 
+          type={messageType} 
+          onClose={() => setMessage("")}
+        />
+      )}
     </div>
   );
 };
