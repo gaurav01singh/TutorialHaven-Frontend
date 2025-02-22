@@ -200,26 +200,6 @@
   text-align: center;
 }
 
-/* Search Input Styles */
-.search-input {
-  width: 100%;
-  max-width: 500px;
-  padding: 12px 15px;
-  margin: 0 auto 30px;
-  display: block;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: border-color 0.3s ease;
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
-}
-
 /* Tutorial List Styles */
 .tutorial-items {
   list-style: none;
