@@ -12,6 +12,7 @@ const Layout = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
+    setDrawerOpen(false); // Close drawer on logout
   };
 
   useEffect(() => {
@@ -19,7 +20,6 @@ const Layout = () => {
       try {
         const response = await API.get("/category/get-category");
         setCategory(response.data);
-        console.log(category)
       } catch (error) {
         console.error("Error fetching categories:", error);
         if (error.response?.status === 401) {
@@ -74,7 +74,7 @@ const Layout = () => {
                 <li><button className="bnt" onClick={() => { navigate("/profile"); setDrawerOpen(false); }}>Profile</button></li>
                 <li><button className="bnt" onClick={() => { navigate("/blog/create"); setDrawerOpen(false); }}>Create New Dossier</button></li>
                 <li><button className="bnt" onClick={() => { navigate("/gallery"); setDrawerOpen(false); }}>Gallery</button></li>
-                <li><button className="bnt" onClick={() => { handleLogout(); setDrawerOpen(false); }}>Logout</button></li>
+                <li><button className="bnt" onClick={handleLogout}>Logout</button></li>
               </>
             ) : (
               <>
@@ -90,12 +90,12 @@ const Layout = () => {
       {isLogin && (
         <ul className="category">
           {category.map((cate) => (
-            <li className="category-item dropdown" key={cate._id} >
-              <p onClick={() => navigate(`/tutorial/category/${cate._id}`)}>{cate.name}</p>
+            <li className="category-item dropdown" key={cate._id}>
+              <p onClick={() => { navigate(`/tutorial/category/${cate._id}`); setDrawerOpen(false); }}>{cate.name}</p>
               {cate.subcategories.length > 0 && (
                 <ul className="dropdown-menu">
                   {cate.subcategories.map((sub) => (
-                    <li key={sub._id} onClick={() => navigate(`/tutorial/subcategory/${sub._id}`)}>
+                    <li key={sub._id} onClick={() => { navigate(`/tutorial/subcategory/${sub._id}`); setDrawerOpen(false); }}>
                       {sub.name}
                     </li>
                   ))}
@@ -113,7 +113,7 @@ const Layout = () => {
 
       {/* Footer */}
       <footer className="footer">
-        <p>&copy; {new Date().getFullYear()} My Dossier. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} My Dossier. All rights reserved.</p>
       </footer>
     </>
   );

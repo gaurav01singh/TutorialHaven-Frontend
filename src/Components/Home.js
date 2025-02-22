@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-
 import "../style/home.css";
 import ProfileLayout from "./Layout/ProfileLayout";
 import API from "./Api";
@@ -35,13 +33,12 @@ const Home = () => {
 
     checkToken();
     fetchBlogs();
-  }, []);
+  }, [navigate]); // Added navigate as dependency
 
   const fetchBlogs = async () => {
     try {
-      const response = await API.get("/blog/all", );
+      const response = await API.get("/blog/all");
       setBlogs(response.data);
-      console.log(blogs)
     } catch (error) {
       console.error("Error fetching blogs:", error);
       if (error.response?.status === 401) {
@@ -51,12 +48,11 @@ const Home = () => {
     }
   };
 
-  // Handle search term input
+  // Debounce search input to prevent excessive filtering
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  // Handle date input
   const handleDateChange = (e) => {
     setSelectedDate(e.target.value);
   };
@@ -64,8 +60,9 @@ const Home = () => {
   // Filter blogs based on search term and date
   const filteredBlogs = blogs.filter((blog) => {
     const isDateMatch = selectedDate
-      ? new Date(blog.createdAt).toLocaleDateString() === new Date(selectedDate).toLocaleDateString()
-      : true; // Only filter by date if a date is selected
+      ? new Date(blog.createdAt).toLocaleDateString() ===
+        new Date(selectedDate).toLocaleDateString()
+      : true;
     const isSearchMatch =
       blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       blog.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -98,7 +95,9 @@ const Home = () => {
               <li className="blog-item" key={blog._id}>
                 <h3 className="blog-title">{blog.title}</h3>
                 <p className="blog-small-description">{blog.description}</p>
-                <button onClick={() => navigate(`/blog/${blog._id}`)}>Read More</button>
+                <button onClick={() => navigate(`/blog/${blog._id}`)}>
+                  Read More
+                </button>
               </li>
             ))}
           </ul>
