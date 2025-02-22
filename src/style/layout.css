@@ -92,7 +92,7 @@ nav ul {
 }
 .category .category-item {
   border:1px solid gray;
-  border-radius: 50% 30%;
+  /* border-radius: 50% 30%; */
   padding: 1px 10px;
   color: #d9e6f8;
   background-image: linear-gradient(rgba(179,132,201,.84),rgba(57,31,91,.84)50%);
