@@ -128,21 +128,22 @@ nav ul {
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #0d1117cb;
+  background-image: linear-gradient(rgba(179,132,201,.84),rgba(57,31,91,.84)50%);
   border: 1px solid #ddd;
   border-radius: 5px;
   list-style: none;
-  padding: 5px;
+  
   min-width: 150px;
 }
 
 .dropdown-menu li {
   padding: 8px;
   cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .dropdown-menu li:hover {
-  background: #0d1117cb;
+  transform: translateY(-5px);
 }
 
 /* Navigation Styles */
