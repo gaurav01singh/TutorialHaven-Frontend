@@ -76,7 +76,7 @@
     transition: background 0.3s;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    
   }
   
   .tutorial-item:hover {
