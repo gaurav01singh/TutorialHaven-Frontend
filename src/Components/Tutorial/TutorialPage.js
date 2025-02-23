@@ -14,6 +14,7 @@ const TutorialDetail = () => {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [currentSubSectionIndex, setCurrentSubSectionIndex] = useState(null);
   const [expandedSections, setExpandedSections] = useState({});
+  const [sidebarOpen, setSidebarOpen] = useState(false); // State for sliding sidebar
 
   useEffect(() => {
     const fetchTutorial = async () => {
@@ -34,12 +35,21 @@ const TutorialDetail = () => {
     }));
   };
 
+  const toggleSidebar = () => {
+    setSidebarOpen((prev) => !prev);
+  };
+
   return (
     <div className="tutorial-detail-page">
       {tutorial ? (
         <>
+          {/* Toggle Button for Sidebar (Visible on Mobile) */}
+
+          <button className="sidebar-toggle" onClick={toggleSidebar}>
+            {sidebarOpen ? "✖" : "☰"}
+          </button>
           {/* Sidebar for Navigation */}
-          <aside className="tutorial-sidebar">
+          <aside className={`tutorial-sidebar ${sidebarOpen ? "open" : ""}`}>
             <h1>{tutorial.title}</h1>
             <ul>
               {tutorial.sections.map((section, index) => (
@@ -53,6 +63,7 @@ const TutorialDetail = () => {
                       if (section.subSections?.length > 0) {
                         toggleSection(index);
                       }
+                      setSidebarOpen(false); // Close sidebar on selection (mobile)
                     }}
                   >
                     {section.title} {section.subSections?.length > 0 && (expandedSections[index] ? "▲" : "▼")}
@@ -68,6 +79,7 @@ const TutorialDetail = () => {
                           onClick={() => {
                             setCurrentSectionIndex(index);
                             setCurrentSubSectionIndex(subIndex);
+                            setSidebarOpen(false); // Close sidebar on selection (mobile)
                           }}
                         >
                           {subSection.title}

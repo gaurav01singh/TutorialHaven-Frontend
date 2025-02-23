@@ -59,7 +59,11 @@ const Layout = () => {
     <>
       {/* Header */}
       <header className="navbar">
+        <div className="logo">
+        <img src="https://res.cloudinary.com/dyl5ibyvg/image/upload/v1740232286/vkx1pz1zozq37tlauoue.png"/>
         <h2 onClick={() => { navigate("/"); setDrawerOpen(false); }}>My Dossier</h2>
+        </div>
+        
 
         {/* Hamburger Menu (Only visible on mobile) */}
         <button className="hamburger" onClick={() => setDrawerOpen(!drawerOpen)}>
@@ -68,7 +72,7 @@ const Layout = () => {
 
         {/* Drawer Menu (Mobile) / Normal Nav (Desktop) */}
         <nav className={`nav-links ${drawerOpen ? "open" : ""}`}>
-          <ul>
+          <ul className="nav-menu">
             {isLogin ? (
               <>
                 <li><button className="bnt" onClick={() => { navigate("/profile"); setDrawerOpen(false); }}>Profile</button></li>

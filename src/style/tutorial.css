@@ -1,22 +1,37 @@
 .tutorial-detail-page {
   display: flex;
-  /* height: 100vh; */
+  min-height: 100vh; /* Ensure it takes full height */
   background-color: #0d1117;
   color: #c9d1d9;
+  position: relative; /* For positioning the toggle button */
+  
+}
+
+/* Sidebar Toggle Button (Visible on Mobile) */
+.sidebar-toggle {
+  display: none;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  z-index: 1;
 }
 
 /* Sidebar */
 .tutorial-sidebar {
   width: 30%;
   background-color: #161b22;
-  padding: 20px;
+  padding: 1rem;
   overflow-y: auto;
   border-right: 2px solid #30363d;
+  transition: left 0.3s ease-in-out; /* Smooth sliding */
 }
 
-.tutorial-sidebar h2 {
-  font-size: 18px;
-  margin-bottom: 10px;
+.tutorial-sidebar h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #f0f6fc;
 }
 
 .tutorial-sidebar ul {
@@ -25,11 +40,11 @@
 }
 
 .tutorial-sidebar ul li {
-  padding: 10px;
+  padding: 0.625rem;
   cursor: pointer;
   border-radius: 5px;
   transition: background 0.3s;
-  font-size: 16px;
+  font-size: 1rem;
   color: #c9d1d9;
 }
 
@@ -42,51 +57,24 @@
   color: white;
 }
 
+.subsection-list {
+  padding-left: 1rem;
+  margin-top: 0.5rem;
+}
+
+.subsection-list li {
+  font-size: 0.9rem;
+  padding: 0.5rem;
+}
+
 /* Main Content */
 .tutorial-content {
   width: 70%;
-  padding: 20px;
-  /* overflow-y: auto; */
+  padding: 1rem;
+  overflow-y: auto;
 }
 
-
-  /* .section-group textarea{
-    width: 75vw;
-    height: 300px;
-  } */
-  .admin-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 5px;
-  }
-  
-  .edit-btn,
-  .delete-btn {
-    padding: 5px 10px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 5px;
-  }
-  
-  .edit-btn {
-    background-color: #4caf50;
-    color: white;
-  }
-  
-  .delete-btn {
-    background-color: #f44336;
-    color: white;
-  }
-  
-  .delete-btn:hover {
-    background-color: #d32f2f;
-  }
-  
-  .edit-btn:hover {
-    background-color: #388e3c;
-  }
-  /* Markdown Styling */
+/* Markdown Styling */
 .markdown-body {
   color: #c9d1d9;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
@@ -94,268 +82,113 @@
 }
 
 /* Headings */
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
-  font-weight: bold;
-  line-height: 1.4;
-  margin-top: 20px;
-}
+.markdown-body h1 { font-size: 2.5rem; margin-top: 1.5rem; }
+.markdown-body h2 { font-size: 2rem; margin-top: 1.25rem; }
+.markdown-body h3 { font-size: 1.75rem; margin-top: 1rem; }
+.markdown-body h4 { font-size: 1.5rem; }
+.markdown-body h5 { font-size: 1.25rem; }
+.markdown-body h6 { font-size: 1rem; }
 
-.markdown-body h1 {
-  font-size: 2.5em;
-}
+/* Paragraphs, Links, Images, etc. */
+.markdown-body p { margin: 0.625rem 0; }
+.markdown-body a { color: #58a6ff; text-decoration: none; }
+.markdown-body a:hover { text-decoration: underline; }
+.markdown-body img { max-width: 100%; height: auto; border-radius: 5px; margin: 0.625rem 0; }
+.markdown-body code { background-color: #21262d; padding: 0.125rem 0.25rem; border-radius: 4px; color: #f8f8f2; font-size: 0.9rem; }
+.markdown-body pre { background-color: #21262d; color: #f8f8f2; padding: 1rem; border-radius: 5px; overflow-x: auto; }
+.markdown-body blockquote { background-color: #161b22; border-left: 5px solid #58a6ff; padding: 0.625rem 1rem; margin: 1rem 0; color: #8b949e; font-style: italic; }
+.markdown-body ul, .markdown-body ol { margin: 0.625rem 0; padding-left: 1.25rem; }
+.markdown-body li { margin-bottom: 0.625rem; }
+.markdown-body hr { border: none; border-top: 1px solid #444; margin: 1rem 0; }
+.markdown-body table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+.markdown-body th, .markdown-body td { padding: 0.625rem; border: 1px solid #444; text-align: left; }
+.markdown-body th { background-color: #222831; color: #58a6ff; }
+.markdown-body td { background-color: #161b22; }
+.markdown-body td:hover { background-color: #222831; }
 
-.markdown-body h2 {
-  font-size: 2em;
-}
-
-.markdown-body h3 {
-  font-size: 1.75em;
-}
-
-.markdown-body h4 {
-  font-size: 1.5em;
-}
-
-.markdown-body h5 {
-  font-size: 1.25em;
-}
-
-.markdown-body h6 {
-  font-size: 1em;
-}
-
-/* Paragraphs */
-.markdown-body p {
-  margin: 10px 0;
-}
-
-/* Links */
-.markdown-body a {
-  color: #58a6ff;
-  text-decoration: none;
-}
-
-.markdown-body a:hover {
-  text-decoration: underline;
-}
-
-/* Images */
-.markdown-body img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 5px;
-  margin: 10px 0;
-}
-
-/* Code - Inline */
-.markdown-body code {
-  background-color: #21262d;
-  padding: 2px 4px;
-  border-radius: 4px;
-  color: #f8f8f2;
-  font-size: 0.9em;
-}
-
-/* Code - Block */
-.markdown-body pre {
-  background-color: #21262d;
-  color: #f8f8f2;
-  padding: 20px;
-  border-radius: 5px;
-  overflow-x: auto;
-}
-
-.markdown-body pre code {
-  background-color: transparent;
-  color: #f8f8f2;
-  padding: 0;
-  border-radius: 0;
-  font-size: 0.9em;
-}
-
-/* Blockquotes */
-.markdown-body blockquote {
-  background-color: #161b22;
-  border-left: 5px solid #58a6ff;
-  padding: 10px 15px;
-  margin: 20px 0;
-  color: #8b949e;
-  font-style: italic;
-}
-
-/* Lists */
-.markdown-body ul,
-.markdown-body ol {
-  margin: 10px 0;
-  padding-left: 20px;
-}
-
-.markdown-body li {
-  margin-bottom: 10px;
-}
-
-/* Task Lists */
-.markdown-body ul.task-list {
-  list-style-type: none;
-}
-
-.markdown-body ul.task-list li {
-  display: flex;
-  align-items: center;
-}
-
-.markdown-body ul.task-list li input {
-  margin-right: 10px;
-}
-
-.markdown-body ul.task-list li input[type="checkbox"] {
-  transform: scale(1.5);
-}
-
-/* Horizontal Rule */
-.markdown-body hr {
-  border: none;
-  border-top: 1px solid #444;
-  margin: 20px 0;
-}
-
-/* Tables */
-.markdown-body table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-}
-
-.markdown-body th,
-.markdown-body td {
-  padding: 10px;
-  border: 1px solid #444;
-  text-align: left;
-}
-
-.markdown-body th {
-  background-color: #222831;
-  color: #58a6ff;
-}
-
-.markdown-body td {
-  background-color: #161b22;
-}
-
-.markdown-body td:hover {
-  background-color: #222831;
-}
-
-/* Emphasis (italic) */
-.markdown-body em {
-  font-style: italic;
-  color: #8b949e;
-}
-
-/* Strong (bold) */
-.markdown-body strong {
-  font-weight: bold;
-}
-
-/* Strikethrough */
-.markdown-body del {
-  text-decoration: line-through;
-  color: #8b949e;
-}
-
-/* Inline math */
-.markdown-body .math {
-  background-color: #21262d;
-  padding: 0.2em 0.5em;
-  border-radius: 4px;
-  color: #f8f8f2;
-}
-
-/* Block math */
-.markdown-body .math-block {
-  background-color: #21262d;
-  padding: 1em;
-  border-radius: 4px;
-  color: #f8f8f2;
-  display: block;
-  margin: 1em 0;
-}
-
-/* Code Syntax Highlighting */
-.markdown-body .hljs {
-  background-color: #21262d;
-  color: #f8f8f2;
-  padding: 15px;
-  border-radius: 5px;
-  overflow-x: auto;
-}
-
-.markdown-body .hljs-inline {
-  background-color: #21262d;
-  color: #f8f8f2;
-  padding: 2px 4px;
-  border-radius: 4px;
-}
-
-/* Code block specific styling */
-.markdown-body .hljs-comment {
-  color: #6a737d;
-  font-style: italic;
-}
-
-.markdown-body .hljs-keyword {
-  color: #d73a49;
-}
-
-.markdown-body .hljs-string {
-  color: #32a852;
-}
-
-.markdown-body .hljs-number {
-  color: #d19a66;
-}
-
-.markdown-body .hljs-title,
-.markdown-body .hljs-type {
-  color: #c678dd;
-}
-
-.markdown-body .hljs-variable,
-.markdown-body .hljs-params {
-  color: #e5c07b;
-}
-
-.markdown-body .hljs-function {
-  color: #61afef;
-}
-
-/* Syntax highlight for block code */
-.markdown-body pre code.hljs {
-  background-color: transparent;
-  color: inherit;
-  padding: 0;
-  border-radius: 0;
-}
-
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    .tutorial-detail-page {
-      flex-direction: column;
-    }
-    
-    .tutorial-sidebar {
-      width: 100%;
-      margin-bottom: 20px;
-    }
-    
-    .tutorial-content {
-      width: 100%;
-    }
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .tutorial-sidebar {
+    width: 35%;
   }
-  
+
+  .tutorial-content {
+    width: 65%;
+  }
+
+  .markdown-body h1 { font-size: 2rem; }
+  .markdown-body h2 { font-size: 1.75rem; }
+  .markdown-body h3 { font-size: 1.5rem; }
+}
+
+@media (max-width: 768px) {
+  .tutorial-detail-page {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .sidebar-toggle {
+    display: block; /* Show toggle button on mobile */
+  }
+
+  .tutorial-sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Hidden off-screen by default */
+    width: 75%;
+    max-width: 300px;
+    height: 100%;
+    z-index: 10;
+    transform: translateX(0); /* Reset transform for sliding */
+  }
+
+  .tutorial-sidebar.open {
+    left: 0; /* Slide in when open */
+  }
+
+  .tutorial-content {
+    width: 100%;
+    padding: 3rem 1rem 1rem; /* Extra top padding for toggle button */
+  }
+
+  .markdown-body {
+    font-size: 0.95rem;
+  }
+
+  .markdown-body h1 { font-size: 1.75rem; }
+  .markdown-body h2 { font-size: 1.5rem; }
+  .markdown-body h3 { font-size: 1.25rem; }
+}
+
+@media (max-width: 480px) {
+  .tutorial-sidebar {
+    width: 100%;
+    max-width: none;
+  }
+
+  .tutorial-sidebar h1 {
+    font-size: 1.25rem;
+  }
+
+  .tutorial-sidebar ul li {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+
+  .subsection-list li {
+    font-size: 0.85rem;
+    padding: 0.4rem;
+  }
+
+  .tutorial-content {
+    padding: 2.5rem 0.5rem 0.5rem;
+  }
+
+  .markdown-body {
+    font-size: 0.9rem;
+  }
+
+  .markdown-body h1 { font-size: 1.5rem; }
+  .markdown-body h2 { font-size: 1.25rem; }
+  .markdown-body h3 { font-size: 1.1rem; }
+}

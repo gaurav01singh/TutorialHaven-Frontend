@@ -27,7 +27,15 @@
   align-items: center;
   flex-wrap: wrap; /* Allow wrapping on small screens */
 }
-
+.navbar .logo{
+ display: flex;
+ align-items: center;
+ flex-wrap: wrap;
+}
+.navbar img{
+  width: 100px;
+  height: 100px;
+}
 .navbar h2 {
   color: #d9e6f8;
   font-size: 1.5rem;
@@ -50,7 +58,7 @@
   display: flex;
 }
 
-.nav-links ul {
+.nav-links .nav-menu {
   display: flex;
   gap: 1rem;
   list-style: none;
@@ -141,7 +149,6 @@
   padding: 1rem;
   margin: 0 auto;
   width: 100%;
-  max-width: 1600px; /* Cap width for large screens */
 }
 
 /* Footer */

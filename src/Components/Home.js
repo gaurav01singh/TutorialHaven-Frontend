@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/home.css";
-import ProfileLayout from "./Layout/ProfileLayout";
 import API from "./Api";
 
 const Home = () => {
@@ -71,7 +70,7 @@ const Home = () => {
   });
 
   return (
-    <ProfileLayout>
+    <>
       <div className="search-container">
         <input
           type="text"
@@ -105,7 +104,8 @@ const Home = () => {
           <p>No blogs found for your search.</p>
         )}
       </div>
-    </ProfileLayout>
+    
+        </>
   );
 };
 
