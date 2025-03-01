@@ -105,7 +105,7 @@ const EditTutorial = () => {
       });
       setMessage("Tutorial updated successfully!");
       setMessageType("success");
-      setTimeout(() => navigate(`/tutorial/${id}`), 2000);
+      
     } catch (error) {
       console.error("Error updating tutorial:", error);
       setMessage("Failed to update tutorial. Please try again.");
