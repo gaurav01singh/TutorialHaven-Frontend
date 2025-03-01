@@ -94,7 +94,7 @@
   .tutorial-item div:hover {
     text-decoration: underline;
   }
-  * Tutorial Card */
+  /* Tutorial Card */
 .tutorial-card {
   display: flex;
   align-items: center;
