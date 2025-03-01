@@ -62,8 +62,8 @@ const TutorialList = () => {
         {tutorials.map((tutorial) => (
           <li key={tutorial._id} className="tutorial-item">
             
-            <div onClick={() => navigate(`/tutorial/${tutorial._id}`)}>
-            <img src={tutorial.templateImg}/>
+            <div className="tutorial-card" onClick={() => navigate(`/tutorial/${tutorial._id}`)}>
+            <img className="tamplateImg" src={tutorial.templateImg}/>
               <Markdown>{tutorial.title}</Markdown>
             </div>
             {isAdmin==="Admin" && (

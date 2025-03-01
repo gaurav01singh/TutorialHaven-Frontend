@@ -19,6 +19,7 @@
   /* Admin Actions */
   .admin-actions {
     display: flex;
+    flex-direction: column;
     justify-content: flex-end;
     margin-bottom: 10px;
     gap: 10px;
@@ -93,6 +94,32 @@
   .tutorial-item div:hover {
     text-decoration: underline;
   }
+  * Tutorial Card */
+.tutorial-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.tamplateImg {
+  width:15rem;
+  height: 15rem;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tutorial-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tamplateImg {
+    width: 100%;
+    height: auto;
+  }
+}
   
   /* Responsive */
   @media (max-width: 768px) {
