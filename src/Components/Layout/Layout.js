@@ -24,7 +24,7 @@ const Layout = () => {
         console.error("Error fetching categories:", error);
         if (error.response?.status === 401) {
           localStorage.removeItem("token");
-          navigate("/login");
+          // navigate("/login");
         }
       }
     };
@@ -91,7 +91,7 @@ const Layout = () => {
       </header>
 
       {/* Category Dropdown */}
-      {isLogin && (
+      
         <ul className="category">
           {category.map((cate) => (
             <li className="category-item dropdown" key={cate._id}>
@@ -108,7 +108,7 @@ const Layout = () => {
             </li>
           ))}
         </ul>
-      )}
+      
 
       {/* Main Content */}
       <main className="container">

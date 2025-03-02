@@ -187,12 +187,13 @@ const EditTutorial = () => {
           >
             <option value="">Select Subcategory</option>
             {subcategories
-              .filter((sub) => sub.category._id === category)
-              .map((sub) => (
-                <option key={sub._id} value={sub._id}>
-                  {sub.name}
-                </option>
-              ))}
+  .filter((sub) => sub.category && sub.category._id === category)
+  .map((sub) => (
+    <option key={sub._id} value={sub._id}>
+      {sub.name}
+    </option>
+  ))}
+
           </select>
 
           <label>Template Image URL:</label>

@@ -10,27 +10,6 @@ const Home = () => {
   const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
-    const checkToken = () => {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        navigate("/login");
-        return;
-      }
-
-      try {
-        const payload = JSON.parse(atob(token.split(".")[1])); // Decode JWT payload
-        if (payload.exp * 1000 < Date.now()) {
-          localStorage.removeItem("token");
-          navigate("/login");
-        }
-      } catch (error) {
-        console.error("Invalid token:", error);
-        localStorage.removeItem("token");
-        navigate("/login");
-      }
-    };
-
-    checkToken();
     fetchBlogs();
   }, [navigate]); // Added navigate as dependency
 
@@ -42,7 +21,7 @@ const Home = () => {
       console.error("Error fetching blogs:", error);
       if (error.response?.status === 401) {
         localStorage.removeItem("token");
-        navigate("/login");
+        // navigate("/login");
       }
     }
   };
