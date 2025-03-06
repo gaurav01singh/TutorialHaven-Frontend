@@ -162,7 +162,7 @@ const TutorialCreate = () => {
               >
                 <option value="">Select Subcategory</option>
                 {subcategories
-                  .filter(sub => sub.category._id === formData.category)
+                  .filter(sub => sub.category?._id === formData.category)
                   .map((sub) => (
                     <option key={sub._id} value={sub._id}>
                       {sub.name}
