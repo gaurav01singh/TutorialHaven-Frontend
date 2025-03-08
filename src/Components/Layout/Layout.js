@@ -59,11 +59,10 @@ const Layout = () => {
     <>
       {/* Header */}
       <header className="navbar">
-        <div className="logo"onClick={() => { navigate("/"); setDrawerOpen(false); }}>
-        <img src="https://res.cloudinary.com/dyl5ibyvg/image/upload/v1740232286/vkx1pz1zozq37tlauoue.png"/>
-        <h2 >My Dossier</h2>
+        <div className="logo" onClick={() => { navigate("/"); setDrawerOpen(false); }}>
+          <img src="https://res.cloudinary.com/dyl5ibyvg/image/upload/v1740232286/vkx1pz1zozq37tlauoue.png" />
+          <h2>My Dossier</h2>
         </div>
-        
 
         {/* Hamburger Menu (Only visible on mobile) */}
         <button className="hamburger" onClick={() => setDrawerOpen(!drawerOpen)}>
@@ -91,24 +90,22 @@ const Layout = () => {
       </header>
 
       {/* Category Dropdown */}
-      
-        <ul className="category">
-          {category.map((cate) => (
-            <li className="category-item dropdown" key={cate._id}>
-              <p onClick={() => { navigate(`/tutorial/category/${cate._id}`); setDrawerOpen(false); }}>{cate.name}</p>
-              {cate.subcategories.length > 0 && (
-                <ul className="dropdown-menu">
-                  {cate.subcategories.map((sub) => (
-                    <li key={sub._id} onClick={() => { navigate(`/tutorial/subcategory/${sub._id}`); setDrawerOpen(false); }}>
-                      {sub.name}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
-      
+      <ul className="category">
+        {category.map((cate) => (
+          <li className="category-item dropdown" key={cate._id}>
+            <p onClick={() => { navigate(`/tutorial/category/${cate.name}`); setDrawerOpen(false); }}>{cate.name}</p>
+            {cate.subcategories.length > 0 && (
+              <ul className="dropdown-menu">
+                {cate.subcategories.map((sub) => (
+                  <li key={sub._id} onClick={() => { navigate(`/tutorial/subcategory/${sub.name}`); setDrawerOpen(false); }}>
+                    {sub.name}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
 
       {/* Main Content */}
       <main className="container">

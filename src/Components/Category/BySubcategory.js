@@ -5,21 +5,24 @@ import API from '../Api';
 
 const BySubcategory = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { name } = useParams();
   const [tutorials, setTutorials] = useState([]);
   const [filteredTutorials, setFilteredTutorials] = useState([]);
   const [categoryName, setCategoryName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    if (!id) return;
+    if (!name) return;
 
     const fetchData = async () => {
       try {
-        const [categoryRes, tutorialRes] = await Promise.all([
-          API.get(`/subcategory/${id}`),
-          API.get(`/tutorial/subcategory/${id}`)
-        ]);
+        // Fetch subcategory details first
+        const categoryRes = await API.get(`/subcategory/${name}`);
+        const subcategoryId = categoryRes.data._id;
+
+        // Fetch tutorials using the subcategory ID
+        const tutorialRes = await API.get(`/tutorial/subcategory/${subcategoryId}`);
+
         setCategoryName(categoryRes.data.name);
         setTutorials(tutorialRes.data);
         setFilteredTutorials(tutorialRes.data);
@@ -33,8 +36,7 @@ const BySubcategory = () => {
     };
 
     fetchData();
-    console.log(tutorials)
-  }, [id, navigate]);
+  }, [name, navigate]);
 
   // Search function to filter tutorials
   useEffect(() => {
@@ -50,11 +52,10 @@ const BySubcategory = () => {
         }))
         .filter(tut => tut.matchScore > 0)
         .sort((a, b) => b.matchScore - a.matchScore);
-  
+
       setFilteredTutorials(filtered);
     }
   }, [searchQuery, tutorials]);
-  
 
   return (
     <div className="tutorial-container">
@@ -72,10 +73,10 @@ const BySubcategory = () => {
       {filteredTutorials.length > 0 ? (
         <ul className="tutorial-items">
           {filteredTutorials.map((tut) => (
-            <li className="tutorial-item" key={tut._id} onClick={() => navigate(`/tutorial/${tut._id}`)}>
-              <img src={tut.templateImg}/>
+            <li className="tutorial-item" key={tut._id} onClick={() => navigate(`/tutorial/${tut.title}`)}>
+              <img src={tut.templateImg} alt="Tutorial" />
               <h3 className="tutorial-title">{tut.title}</h3>
-              <p className="tutorial-small-description">{tut.sections[0].title}</p>
+              <p className="tutorial-small-description">{tut.sections[0]?.title || "No description available"}</p>
             </li>
           ))}
         </ul>

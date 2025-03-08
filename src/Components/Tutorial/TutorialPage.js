@@ -9,24 +9,24 @@ import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import rehypeRaw from "rehype-raw";
 
 const TutorialDetail = () => {
-  const { id } = useParams();
+  const { title } = useParams();
   const [tutorial, setTutorial] = useState(null);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [currentSubSectionIndex, setCurrentSubSectionIndex] = useState(null);
   const [expandedSections, setExpandedSections] = useState({});
-  const [sidebarOpen, setSidebarOpen] = useState(false); // State for sliding sidebar
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const fetchTutorial = async () => {
       try {
-        const response = await API.get(`/tutorial/${id}`);
+        const response = await API.get(`/tutorial/${title}`);
         setTutorial(response.data);
       } catch (error) {
         console.error("Error fetching tutorial:", error);
       }
     };
     fetchTutorial();
-  }, [id]);
+  }, [title]);
 
   const toggleSection = (index) => {
     setExpandedSections((prev) => ({
@@ -44,15 +44,15 @@ const TutorialDetail = () => {
       {tutorial ? (
         <>
           {/* Toggle Button for Sidebar (Visible on Mobile) */}
-
           <button className="sidebar-toggle" onClick={toggleSidebar}>
             {sidebarOpen ? "✖" : "☰"}
           </button>
+
           {/* Sidebar for Navigation */}
           <aside className={`tutorial-sidebar ${sidebarOpen ? "open" : ""}`}>
             <h1>{tutorial.title}</h1>
             <ul>
-              {tutorial.sections.map((section, index) => (
+              {tutorial.sections?.map((section, index) => (
                 <li key={index}>
                   {/* Section Title */}
                   <div
@@ -63,7 +63,7 @@ const TutorialDetail = () => {
                       if (section.subSections?.length > 0) {
                         toggleSection(index);
                       }
-                      setSidebarOpen(false); // Close sidebar on selection (mobile)
+                      setSidebarOpen(false);
                     }}
                   >
                     {section.title} {section.subSections?.length > 0 && (expandedSections[index] ? "▲" : "▼")}
@@ -79,7 +79,7 @@ const TutorialDetail = () => {
                           onClick={() => {
                             setCurrentSectionIndex(index);
                             setCurrentSubSectionIndex(subIndex);
-                            setSidebarOpen(false); // Close sidebar on selection (mobile)
+                            setSidebarOpen(false);
                           }}
                         >
                           {subSection.title}
@@ -96,19 +96,27 @@ const TutorialDetail = () => {
           <main className="tutorial-content">
             <section className="markdown-body">
               {currentSubSectionIndex === null ? (
-                <>
-                  <h2>{tutorial.sections[currentSectionIndex].title}</h2>
-                  <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} components={markdownComponents}>
-                    {tutorial.sections[currentSectionIndex].content}
-                  </Markdown>
-                </>
+                tutorial.sections?.[currentSectionIndex] ? (
+                  <>
+                    <h2>{tutorial.sections[currentSectionIndex].title}</h2>
+                    <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} components={markdownComponents}>
+                      {tutorial.sections[currentSectionIndex].content}
+                    </Markdown>
+                  </>
+                ) : (
+                  <p>No content available.</p>
+                )
               ) : (
-                <>
-                  <h2>{tutorial.sections[currentSectionIndex].subSections[currentSubSectionIndex].title}</h2>
-                  <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} components={markdownComponents}>
-                    {tutorial.sections[currentSectionIndex].subSections[currentSubSectionIndex].content}
-                  </Markdown>
-                </>
+                tutorial.sections?.[currentSectionIndex]?.subSections?.[currentSubSectionIndex] ? (
+                  <>
+                    <h2>{tutorial.sections[currentSectionIndex].subSections[currentSubSectionIndex].title}</h2>
+                    <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} components={markdownComponents}>
+                      {tutorial.sections[currentSectionIndex].subSections[currentSubSectionIndex].content}
+                    </Markdown>
+                  </>
+                ) : (
+                  <p>No content available.</p>
+                )
               )}
             </section>
           </main>

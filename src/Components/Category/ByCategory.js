@@ -5,21 +5,22 @@ import API from '../Api';
 
 const ByCategory = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { name } = useParams();
   const [tutorials, setTutorials] = useState([]);
   const [filteredTutorials, setFilteredTutorials] = useState([]);
   const [categoryName, setCategoryName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    if (!id) return;
+    if (!name) return;
 
     const fetchData = async () => {
       try {
-        const [categoryRes, tutorialRes] = await Promise.all([
-          API.get(`/category/${id}`),
-          API.get(`/tutorial/category/${id}`)
-        ]);
+        const categoryRes = await API.get(`/category/${name}`);
+        const categoryId = categoryRes.data._id;
+    
+        const tutorialRes = await API.get(`/tutorial/category/${categoryId}`);
+    
         setCategoryName(categoryRes.data.name);
         setTutorials(tutorialRes.data);
         setFilteredTutorials(tutorialRes.data);
@@ -31,10 +32,11 @@ const ByCategory = () => {
         }
       }
     };
+    
 
     fetchData();
     console.log(tutorials)
-  }, [id, navigate]);
+  }, [name, navigate]);
 
   // Search function to filter tutorials
   useEffect(() => {
@@ -72,7 +74,7 @@ const ByCategory = () => {
       {filteredTutorials.length > 0 ? (
         <ul className="tutorial-items">
           {filteredTutorials.map((tut) => (
-            <li className="tutorial-item" key={tut._id} onClick={() => navigate(`/tutorial/${tut._id}`)}>
+            <li className="tutorial-item" key={tut._id} onClick={() => navigate(`/tutorial/${tut.title}`)}>
               <img src={tut.templateImg}/>
               <h3 className="tutorial-title">{tut.title}</h3>
               <p className="tutorial-small-description">{tut.sections[0].title}</p>

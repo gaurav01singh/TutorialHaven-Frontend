@@ -11,7 +11,7 @@ import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import rehypeRaw from "rehype-raw";
 
 const EditTutorial = () => {
-  const { id } = useParams();
+  const { tuttitle } = useParams();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -40,7 +40,7 @@ const EditTutorial = () => {
         setSubcategories(subcategoryRes.data);
 
         // Now fetch the tutorial
-        const tutorialRes = await API.get(`/tutorial/${id}`);
+        const tutorialRes = await API.get(`/tutorial/${tuttitle}`);
         const { title, category, subcategory, sections, templateImg } =
           tutorialRes.data;
         setTitle(title);
@@ -56,7 +56,7 @@ const EditTutorial = () => {
     };
 
     fetchData();
-  }, [id]);
+  }, [tuttitle]);
 
   const handleSectionChange = (index, field, value) => {
     const newSections = [...sections];
@@ -96,7 +96,7 @@ const EditTutorial = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      await API.put(`/tutorial/update/${id}`, {
+      await API.put(`/tutorial/update/${tuttitle}`, {
         title,
         category,
         subcategory,

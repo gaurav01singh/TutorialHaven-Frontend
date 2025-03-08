@@ -1,4 +1,3 @@
-
 import {Routes, Route } from "react-router-dom";
 import Layout from "./Components/Layout/Layout";
 import Home from "./Components/Home";
@@ -31,14 +30,13 @@ function App() {
       <Route path="/blog/edit/:id" element={<EditBlog />} /> 
       <Route path="/blog/create" element={<CreateBlog />} /> 
       <Route path="/category" element={<CreateCategory />} /> 
-      <Route path="/category/:id" element={<ByCategory />} /> 
       <Route path="/gallery" element={<Gallery />} /> 
       <Route path="/compiler" element={<Compiler />} /> 
       <Route path="/tutorial" element={<TutorialList />} /> 
-      <Route path="/tutorial/:id" element={<TutorialDetail />} /> 
-      <Route path="/tutorial/edit/:id" element={<EditTutorial />} /> 
-      <Route path="/tutorial/category/:id" element={<ByCategory />} /> 
-      <Route path="/tutorial/subcategory/:id" element={<BySubcategory />} /> 
+      <Route path="/tutorial/:title" element={<TutorialDetail />} /> 
+      <Route path="/tutorial/edit/:tuttitle" element={<EditTutorial />} /> 
+      <Route path="/tutorial/category/:name" element={<ByCategory />} /> 
+      <Route path="/tutorial/subcategory/:name" element={<BySubcategory />} /> 
       <Route path="/tutorial/create" element={<TutorialCreate />} /> 
 
       </Route>

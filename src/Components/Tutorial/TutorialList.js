@@ -62,13 +62,13 @@ const TutorialList = () => {
         {tutorials.map((tutorial) => (
           <li key={tutorial._id} className="tutorial-item">
             
-            <div className="tutorial-card" onClick={() => navigate(`/tutorial/${tutorial._id}`)}>
+            <div className="tutorial-card" onClick={() => navigate(`/tutorial/${tutorial.title}`)}>
             <img className="tamplateImg" src={tutorial.templateImg}/>
               <Markdown>{tutorial.title}</Markdown>
             </div>
             {isAdmin==="Admin" && (
               <div className="admin-actions">
-                <button onClick={() => navigate(`/tutorial/edit/${tutorial._id}`)} className="edit-btn">
+                <button onClick={() => navigate(`/tutorial/edit/${tutorial.title}`)} className="edit-btn">
                   Edit
                 </button>
                 <button onClick={() => handleDelete(tutorial._id)} className="delete-btn">
