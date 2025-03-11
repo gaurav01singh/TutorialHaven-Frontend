@@ -41,7 +41,7 @@ const EditTutorial = () => {
 
         // Now fetch the tutorial
         const tutorialRes = await API.get(`/tutorial/${tuttitle}`);
-        const { title, category, subcategory, sections, templateImg } =
+        const { title, category, subcategory, sections, templateImg ,_id } =
           tutorialRes.data;
         setTitle(title);
         setCategory(category?._id || "");
