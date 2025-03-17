@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import "../../style/home.css";
+import "../../style/Bycategory.css";
 import API from '../Api';
 
 const ByCategory = () => {

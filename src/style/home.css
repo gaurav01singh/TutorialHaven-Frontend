@@ -5,11 +5,14 @@
   justify-content: space-between;
   align-items: center;
   margin: 1rem 0;
-  padding: 0.625rem;
-  border-radius: 8px;
-  background-color: #161b22;
+  /* padding: 0.625rem; */
+  /* border-radius: 8px; */
+  /* background-color: #161b22; */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   gap: 0.625rem; /* Add gap for spacing */
+  background-color: #1e293b; /* Darker shade for contrast */
+  border-radius: 10px;
+  padding: 1rem;
 }
 
 .search-input,
@@ -17,7 +20,7 @@
   padding: 0.625rem;
   font-size: 1rem;
   background: transparent;
-  border: 1px solid #ccc;
+  border: 1px solid #6b7280;
   color: #888;
   border-radius: 4px;
   transition: all 0.3s ease;
@@ -46,25 +49,26 @@
 }
 
 /* Blog Container */
-.blog-container {
-  padding: 1rem 0;
+.tutorial-container {
+  padding: 1rem 1rem;
   width: 100%;
-  max-width: 1600px;
+  /* max-width: 1600px; */
   margin: 0 auto;
 }
 
-.blog-container ul {
+
+.tutorial-container ul {
   list-style: none;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid */
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); /* Responsive grid */
   gap: 1.5rem;
   margin: 0 auto;
   box-sizing: border-box;
 }
 
 /* Blog Item */
-.blog-item {
+.tutorial-item {
   background: #161b22;
   border-radius: 12px;
   padding: 1rem;
@@ -72,14 +76,26 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border: 1px solid #30363d;
   box-sizing: border-box;
+  
+}
+.tutorial-card .tamplateImg {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+}
+.tutorial-card{
+  flex-direction: column;
 }
 
-.blog-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+.tutorial-item:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
-.blog-title {
+
+.tutorial-title {
   color: #f0f6fc;
   font-size: 1.4rem;
   margin-bottom: 0.75rem;
@@ -87,7 +103,7 @@
   line-height: 1.3;
 }
 
-.blog-small-description {
+.tutorial-small-description {
   color: #c9d1d9;
   font-size: 1rem;
   line-height: 1.5;
@@ -98,7 +114,7 @@
   overflow: hidden;
 }
 
-.blog-item button {
+.tutorial-item button {
   background-color: #8543dc;
   color: white;
   border: none;
@@ -113,15 +129,15 @@
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-  .blog-container ul {
+  .tutorial-container ul {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
 
-  .blog-title {
+  .tutorial-title {
     font-size: 1.3rem;
   }
 
-  .blog-small-description {
+  .tutorial-small-description {
     font-size: 0.95rem;
   }
 }
@@ -138,21 +154,21 @@
     margin: 0.5rem 0;
   }
 
-  .blog-container ul {
+  .tutorial-container ul {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1rem;
     padding: 0 0.5rem;
   }
 
-  .blog-item {
+  .tutorial-item {
     padding: 0.75rem;
   }
 
-  .blog-title {
+  .tutorial-title {
     font-size: 1.2rem;
   }
 
-  .blog-small-description {
+  .tutorial-small-description {
     -webkit-line-clamp: 2;
   }
 }
@@ -168,26 +184,26 @@
     padding: 0.5rem;
   }
 
-  .blog-container ul {
+  .tutorial-container ul {
     grid-template-columns: 1fr;
     gap: 0.75rem;
     padding: 0 0.25rem;
   }
 
-  .blog-item {
-    padding: 0.5rem;
-    width: 94vw;
+  .tutorial-item {
+    padding: 0.75rem;
+    width: 95vw; /* Reduce overflow */
   }
 
-  .blog-title {
+  .tutorial-title {
     font-size: 1.1rem;
   }
 
-  .blog-small-description {
+  .tutorial-small-description {
     font-size: 0.9rem;
   }
 
-  .blog-item button {
+  .tutorial-item button {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
   }

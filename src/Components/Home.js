@@ -2,21 +2,23 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/home.css";
 import API from "./Api";
+import Markdown from "react-markdown";
 
 const Home = () => {
   const navigate = useNavigate();
   const [blogs, setBlogs] = useState([]);
+  const [tutorials, setTutorials] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
     fetchBlogs();
-  }, [navigate]); // Added navigate as dependency
+  }, [navigate]); 
 
   const fetchBlogs = async () => {
     try {
-      const response = await API.get("/blog/all");
-      setBlogs(response.data);
+      const response = await API.get("/tutorial/all");
+      setTutorials(response.data);
     } catch (error) {
       console.error("Error fetching blogs:", error);
       if (error.response?.status === 401) {
@@ -36,14 +38,13 @@ const Home = () => {
   };
 
   // Filter blogs based on search term and date
-  const filteredBlogs = blogs.filter((blog) => {
+  const filteredTutorials = tutorials.filter((tutorial) => {
     const isDateMatch = selectedDate
-      ? new Date(blog.createdAt).toLocaleDateString() ===
+      ? new Date(tutorial.createdAt).toLocaleDateString() ===
         new Date(selectedDate).toLocaleDateString()
       : true;
     const isSearchMatch =
-      blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      blog.description.toLowerCase().includes(searchTerm.toLowerCase());
+    tutorial.title.toLowerCase().includes(searchTerm.toLowerCase())
 
     return isSearchMatch && isDateMatch;
   });
@@ -66,21 +67,31 @@ const Home = () => {
         />
       </div>
 
-      <div className="blog-container">
-        {filteredBlogs.length > 0 ? (
-          <ul>
-            {filteredBlogs.map((blog) => (
-              <li className="blog-item" key={blog._id}>
-                <h3 className="blog-title">{blog.title}</h3>
-                <p className="blog-small-description">{blog.description}</p>
-                <button onClick={() => navigate(`/blog/${blog._id}`)}>
-                  Read More
-                </button>
-              </li>
-            ))}
-          </ul>
+      <div className="tutorial-container">
+        {filteredTutorials.length > 0 ? (
+          <ul className="tutorial-items">
+                  {filteredTutorials.map((tutorial) => (
+                    <li key={tutorial._id} className="tutorial-item">
+                      
+                      <div className="tutorial-card" onClick={() => navigate(`/tutorial/${tutorial.title}`)}>
+                      <img className="tamplateImg" src={tutorial.templateImg}/>
+                        <Markdown>{tutorial.title}</Markdown>
+                      </div>
+                      {/* {isAdmin==="Admin" && (
+                        <div className="admin-actions">
+                          <button onClick={() => navigate(`/tutorial/edit/${tutorial.title}`)} className="edit-btn">
+                            Edit
+                          </button>
+                          <button onClick={() => handleDelete(tutorial._id)} className="delete-btn">
+                            Delete
+                          </button>
+                        </div>
+                      )} */}
+                    </li>
+                  ))}
+                </ul>
         ) : (
-          <p>No blogs found for your search.</p>
+          <p>No Tutorials found for your search.</p>
         )}
       </div>
     
