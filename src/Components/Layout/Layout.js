@@ -60,8 +60,8 @@ const Layout = () => {
       {/* Header */}
       <header className="navbar">
         <div className="logo" onClick={() => { navigate("/"); setDrawerOpen(false); }}>
-          <img src="https://res.cloudinary.com/dyl5ibyvg/image/upload/v1740232286/vkx1pz1zozq37tlauoue.png" />
-          <h2>My Dossier</h2>
+          <img alt="logo" className="logo-img" src="https://res.cloudinary.com/dyl5ibyvg/image/upload/v1740232286/vkx1pz1zozq37tlauoue.png" />
+          <h2>Tutorial Haven</h2>
         </div>
 
         {/* Hamburger Menu (Only visible on mobile) */}
