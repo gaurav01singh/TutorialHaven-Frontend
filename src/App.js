@@ -33,10 +33,10 @@ function App() {
       <Route path="/gallery" element={<Gallery />} /> 
       <Route path="/compiler" element={<Compiler />} /> 
       <Route path="/tutorial" element={<TutorialList />} /> 
-      <Route path="/tutorial/:title" element={<TutorialDetail />} /> 
-      <Route path="/tutorial/edit/:tuttitle" element={<EditTutorial />} /> 
-      <Route path="/tutorial/category/:name" element={<ByCategory />} /> 
-      <Route path="/tutorial/subcategory/:name" element={<BySubcategory />} /> 
+      <Route path="/tutorial/:slug" element={<TutorialDetail />} /> 
+      <Route path="/tutorial/edit/:tutslug" element={<EditTutorial />} /> 
+      <Route path="/tutorial/category/:slug" element={<ByCategory />} /> 
+      <Route path="/tutorial/subcategory/:slug" element={<BySubcategory />} /> 
       <Route path="/tutorial/create" element={<TutorialCreate />} /> 
 
       </Route>

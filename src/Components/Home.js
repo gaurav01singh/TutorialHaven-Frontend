@@ -73,7 +73,7 @@ const Home = () => {
                   {filteredTutorials.map((tutorial) => (
                     <li key={tutorial._id} className="tutorial-item">
                       
-                      <div className="tutorial-card" onClick={() => navigate(`/tutorial/${tutorial.title}`)}>
+                      <div className="tutorial-card" onClick={() => navigate(`/tutorial/${tutorial.slug}`)}>
                       <img className="tamplateImg" src={tutorial.templateImg}/>
                         <Markdown>{tutorial.title}</Markdown>
                       </div>

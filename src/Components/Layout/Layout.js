@@ -93,11 +93,11 @@ const Layout = () => {
       <ul className="category">
         {category.map((cate) => (
           <li className="category-item dropdown" key={cate._id}>
-            <p onClick={() => { navigate(`/tutorial/category/${cate.name}`); setDrawerOpen(false); }}>{cate.name}</p>
+            <p onClick={() => { navigate(`/tutorial/category/${cate.slug}`); setDrawerOpen(false); }}>{cate.name}</p>
             {cate.subcategories.length > 0 && (
               <ul className="dropdown-menu">
                 {cate.subcategories.map((sub) => (
-                  <li key={sub._id} onClick={() => { navigate(`/tutorial/subcategory/${sub.name}`); setDrawerOpen(false); }}>
+                  <li key={sub._id} onClick={() => { navigate(`/tutorial/subcategory/${sub.slug}`); setDrawerOpen(false); }}>
                     {sub.name}
                   </li>
                 ))}

@@ -5,22 +5,22 @@ import API from '../Api';
 
 const ByCategory = () => {
   const navigate = useNavigate();
-  const { name } = useParams();
+  const { slug } = useParams();
   const [tutorials, setTutorials] = useState([]);
   const [filteredTutorials, setFilteredTutorials] = useState([]);
   const [categoryName, setCategoryName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    if (!name) return;
+    if (!slug) return;
 
     const fetchData = async () => {
       try {
-        const categoryRes = await API.get(`/category/${name}`);
+        const categoryRes = await API.get(`/category/${slug}`);
         const categoryId = categoryRes.data._id;
     
         const tutorialRes = await API.get(`/tutorial/category/${categoryId}`);
-    
+        console.log(categoryId)
         setCategoryName(categoryRes.data.name);
         setTutorials(tutorialRes.data);
         setFilteredTutorials(tutorialRes.data);
@@ -36,7 +36,7 @@ const ByCategory = () => {
 
     fetchData();
     console.log(tutorials)
-  }, [name, navigate]);
+  }, [slug, navigate]);
 
   // Search function to filter tutorials
   useEffect(() => {

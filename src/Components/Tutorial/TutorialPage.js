@@ -9,7 +9,7 @@ import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import rehypeRaw from "rehype-raw";
 
 const TutorialDetail = () => {
-  const { title } = useParams();
+  const { slug } = useParams();
   const [tutorial, setTutorial] = useState(null);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [currentSubSectionIndex, setCurrentSubSectionIndex] = useState(null);
@@ -19,14 +19,14 @@ const TutorialDetail = () => {
   useEffect(() => {
     const fetchTutorial = async () => {
       try {
-        const response = await API.get(`/tutorial/${title}`);
+        const response = await API.get(`/tutorial/${slug}`);
         setTutorial(response.data);
       } catch (error) {
         console.error("Error fetching tutorial:", error);
       }
     };
     fetchTutorial();
-  }, [title]);
+  }, [slug]);
 
   const toggleSection = (index) => {
     setExpandedSections((prev) => ({
