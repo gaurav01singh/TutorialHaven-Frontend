@@ -75,7 +75,7 @@ const Layout = () => {
             {isLogin ? (
               <>
                 <li><button className="bnt" onClick={() => { navigate("/profile"); setDrawerOpen(false); }}>Profile</button></li>
-                <li><button className="bnt" onClick={() => { navigate("/blog/create"); setDrawerOpen(false); }}>Create New Dossier</button></li>
+                <li><button className="bnt" onClick={() => { navigate("/tutorial/create"); setDrawerOpen(false); }}>Create Tutorial</button></li>
                 <li><button className="bnt" onClick={() => { navigate("/gallery"); setDrawerOpen(false); }}>Gallery</button></li>
                 <li><button className="bnt" onClick={handleLogout}>Logout</button></li>
               </>
