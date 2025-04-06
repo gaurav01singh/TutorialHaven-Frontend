@@ -73,7 +73,7 @@ const BySubcategory = () => {
       {filteredTutorials.length > 0 ? (
         <ul className="tutorial-items">
           {filteredTutorials.map((tut) => (
-            <li className="tutorial-item" key={tut._id} onClick={() => navigate(`/tutorial/${tut.title}`)}>
+            <li className="tutorial-item" key={tut._id} onClick={() => navigate(`/tutorial/${tut.slug}`)}>
               <img src={tut.templateImg} alt="Tutorial" />
               <h3 className="tutorial-title">{tut.title}</h3>
               <p className="tutorial-small-description">{tut.sections[0]?.title || "No description available"}</p>
