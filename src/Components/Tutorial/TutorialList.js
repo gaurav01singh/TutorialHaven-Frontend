@@ -58,7 +58,7 @@ const TutorialList = () => {
                 </button>
               </div>
             )}
-      <ul>
+      <ul className="tutorials">
         {tutorials.map((tutorial) => (
           <li key={tutorial._id} className="tutorial-item">
             
