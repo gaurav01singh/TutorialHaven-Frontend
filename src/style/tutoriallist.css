@@ -67,6 +67,9 @@
   ul {
     list-style: none;
     padding: 0;
+    display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
   }
   
   .tutorial-item {
