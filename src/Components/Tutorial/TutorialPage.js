@@ -21,13 +21,14 @@ const TutorialDetail = () => {
       try {
         const response = await API.get(`/tutorial/${slug}`);
         setTutorial(response.data);
+        document.title = `Tutorial Haven | ${response.data.title}`;
       } catch (error) {
         console.error("Error fetching tutorial:", error);
       }
     };
     fetchTutorial();
-    document.title = `Tutorial Haven | ${tutorial.title}`;
   }, [slug]);
+  
 
   const toggleSection = (index) => {
     setExpandedSections((prev) => ({
