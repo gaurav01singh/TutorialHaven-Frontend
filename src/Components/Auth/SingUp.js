@@ -9,6 +9,8 @@ const SignUp = ({ toggleAuth }) => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  document.title = "Tutorial Haven | Sign Up";
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };

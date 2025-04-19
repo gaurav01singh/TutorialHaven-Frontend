@@ -7,6 +7,7 @@ const Login = ({ toggleAuth }) => {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  document.title = "Tutorial Haven | Login";
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

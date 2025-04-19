@@ -20,7 +20,6 @@ const ByCategory = () => {
         const categoryId = categoryRes.data._id;
     
         const tutorialRes = await API.get(`/tutorial/category/${categoryId}`);
-        console.log(categoryId)
         setCategoryName(categoryRes.data.name);
         setTutorials(tutorialRes.data);
         setFilteredTutorials(tutorialRes.data);
@@ -33,10 +32,10 @@ const ByCategory = () => {
       }
     };
     
-
+    
     fetchData();
-    console.log(tutorials)
   }, [slug, navigate]);
+  document.title = `Tutorial Haven | ${categoryName}`;
 
   // Search function to filter tutorials
   useEffect(() => {
@@ -77,7 +76,7 @@ const ByCategory = () => {
             <li className="tutorial-item" key={tut._id} onClick={() => navigate(`/tutorial/${tut.slug}`)}>
               <img src={tut.templateImg}/>
               <h3 className="tutorial-title">{tut.title}</h3>
-              <p className="tutorial-small-description">{tut.sections[0].title}</p>
+              {/* <p className="tutorial-small-description">{tut.sections[0].title}</p> */}
             </li>
           ))}
         </ul>

@@ -26,6 +26,7 @@ const TutorialDetail = () => {
       }
     };
     fetchTutorial();
+    document.title = `Tutorial Haven | ${tutorial.title}`;
   }, [slug]);
 
   const toggleSection = (index) => {

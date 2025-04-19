@@ -23,6 +23,7 @@ const CreateCategory = () => {
   };
 
   useEffect(() => {
+    document.title = "Tutorial Haven | Create Category & Subcategory";
     fetchCategories();
   }, []);
 

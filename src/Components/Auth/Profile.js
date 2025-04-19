@@ -21,6 +21,7 @@ const Profile = () => {
   });
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
+  document.title = "Tutorial Haven | Profile";
 
   // Fetch user data on component mount
   useEffect(() => {

@@ -34,9 +34,9 @@ const BySubcategory = () => {
         }
       }
     };
-    console.log(tutorials)
     fetchData();
   }, [slug, navigate]);
+  document.title = `Tutorial Haven | ${categoryName}`;
 
   // Search function to filter tutorials
   useEffect(() => {
@@ -76,7 +76,7 @@ const BySubcategory = () => {
             <li className="tutorial-item" key={tut._id} onClick={() => navigate(`/tutorial/${tut.slug}`)}>
               <img src={tut.templateImg} alt="Tutorial" />
               <h3 className="tutorial-title">{tut.title}</h3>
-              <p className="tutorial-small-description">{tut.sections[0]?.title || "No description available"}</p>
+              {/* <p className="tutorial-small-description">{tut.sections[0]?.title || "No description available"}</p> */}
             </li>
           ))}
         </ul>

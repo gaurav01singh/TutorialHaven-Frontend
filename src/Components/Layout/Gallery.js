@@ -18,6 +18,7 @@ const Gallery = ({ onImageClick }) => {
   };
 
   useEffect(() => {
+    document.title = "Tutorial Haven | Gallery";
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem("token");

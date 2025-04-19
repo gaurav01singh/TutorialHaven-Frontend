@@ -10,6 +10,7 @@ const TutorialList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.title = "Tutorial Haven | All Tutorials";
     const fetchTutorials = async () => {
       try {
         const response = await API.get("/tutorial/all");

@@ -12,6 +12,7 @@ const Home = () => {
   const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
+    document.title = "Tutorial Haven | Home";
     fetchBlogs();
   }, [navigate]); 
 

@@ -43,6 +43,7 @@ const TutorialCreate = () => {
       }
     };
     fetchCategories();
+    document.title = "Tutorial Haven | Create Tutorial";
   }, []);
 
   const handleChange = (e) => {

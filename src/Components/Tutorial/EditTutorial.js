@@ -56,6 +56,7 @@ const EditTutorial = () => {
     };
 
     fetchData();
+    document.title = `Tutorial Haven | Edit ${title}`;
   }, [tutslug]);
 
   const handleSectionChange = (index, field, value) => {
