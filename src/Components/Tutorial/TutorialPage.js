@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import rehypeRaw from "rehype-raw";
+import { Helmet } from "react-helmet-async";
 
 const TutorialDetail = () => {
   const { slug } = useParams();
@@ -43,6 +44,10 @@ const TutorialDetail = () => {
 
   return (
     <div className="tutorial-detail-page">
+      <Helmet>
+        <title>{tutorial ? `Tutorial Haven | ${tutorial.title}` : "Tutorial Haven"}</title>
+        <meta name="description" content={tutorial ? tutorial.sections?.[0]?.content?.slice(0, 150) : "Explore tutorials on Tutorial Haven"} />
+      </Helmet>
       {tutorial ? (
         <>
           {/* Toggle Button for Sidebar (Visible on Mobile) */}
@@ -122,6 +127,20 @@ const TutorialDetail = () => {
               )}
             </section>
           </main>
+
+          <Helmet>
+            <script type="application/ld+json">
+              {JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": tutorial?.title,
+                "description": tutorial?.sections?.[0]?.content?.slice(0, 150),
+                "author": "Your Site Name",
+                "datePublished": tutorial?.createdAt,
+                "image": tutorial?.templateImg,
+              })}
+            </script>
+          </Helmet>
         </>
       ) : (
         <p>Loading tutorial...</p>
