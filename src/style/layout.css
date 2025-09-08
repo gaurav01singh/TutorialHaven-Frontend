@@ -159,7 +159,86 @@
   padding: 1rem;
   width: 100%;
 }
+/* Category Skeleton Loading Styles */
+.category-skeleton {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
 
+.skeleton-category-item {
+  padding: 12px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.skeleton-category-text {
+  height: 16px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  width: 80px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+/* Vary the width of skeleton items for more realistic look */
+.skeleton-category-item:nth-child(1) .skeleton-category-text {
+  width: 90px;
+}
+
+.skeleton-category-item:nth-child(2) .skeleton-category-text {
+  width: 110px;
+}
+
+.skeleton-category-item:nth-child(3) .skeleton-category-text {
+  width: 75px;
+}
+
+.skeleton-category-item:nth-child(4) .skeleton-category-text {
+  width: 95px;
+}
+
+.skeleton-category-item:nth-child(5) .skeleton-category-text {
+  width: 85px;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+  .skeleton-category-item {
+    border-bottom-color: #3a3a3a;
+  }
+  
+  .skeleton-category-text {
+    background: linear-gradient(90deg, #3a3a3a 25%, #4a4a4a 50%, #3a3a3a 75%);
+    background-size: 200% 100%;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .skeleton-category-item {
+    padding: 10px 15px;
+  }
+  
+  .skeleton-category-text {
+    height: 14px;
+  }
+}
 /* Responsive Design */
 @media (max-width: 1024px) {
   .navbar {

@@ -3,11 +3,22 @@ import { Outlet, useNavigate } from "react-router-dom";
 import "../../style/layout.css";
 import API from "../Api";
 
+const CategorySkeleton = () => (
+  <ul className="category category-skeleton">
+    {[...Array(3)].map((_, index) => (
+      <li key={index} className="category-item skeleton-category-item">
+        <div className="skeleton-category-text"></div>
+      </li>
+    ))}
+  </ul>
+);
+
 const Layout = () => {
   const navigate = useNavigate();
   const [category, setCategory] = useState([]);
   const [isLogin, setIsLogin] = useState(true);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [isCategoryLoading, setIsCategoryLoading] = useState(true);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -18,6 +29,7 @@ const Layout = () => {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
+        setIsCategoryLoading(true);
         const response = await API.get("/category/get-category");
         setCategory(response.data);
       } catch (error) {
@@ -26,6 +38,8 @@ const Layout = () => {
           localStorage.removeItem("token");
           // navigate("/login");
         }
+      } finally {
+        setIsCategoryLoading(false);
       }
     };
 
@@ -90,22 +104,26 @@ const Layout = () => {
       </header>
 
       {/* Category Dropdown */}
-      <ul className="category">
-        {category.map((cate) => (
-          <li className="category-item dropdown" key={cate._id}>
-            <p onClick={() => { navigate(`/tutorial/category/${cate.slug}`); setDrawerOpen(false); }}>{cate.name}</p>
-            {cate.subcategories.length > 0 && (
-              <ul className="dropdown-menu">
-                {cate.subcategories.map((sub) => (
-                  <li key={sub._id} onClick={() => { navigate(`/tutorial/subcategory/${sub.slug}`); setDrawerOpen(false); }}>
-                    {sub.name}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))}
-      </ul>
+      {isCategoryLoading ? (
+        <CategorySkeleton />
+      ) : (
+        <ul className="category">
+          {category.map((cate) => (
+            <li className="category-item dropdown" key={cate._id}>
+              <p onClick={() => { navigate(`/tutorial/category/${cate.slug}`); setDrawerOpen(false); }}>{cate.name}</p>
+              {cate.subcategories.length > 0 && (
+                <ul className="dropdown-menu">
+                  {cate.subcategories.map((sub) => (
+                    <li key={sub._id} onClick={() => { navigate(`/tutorial/subcategory/${sub.slug}`); setDrawerOpen(false); }}>
+                      {sub.name}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
 
       {/* Main Content */}
       <main className="container">

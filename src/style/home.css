@@ -127,6 +127,90 @@
   max-width: 150px; /* Cap width on larger screens */
 }
 
+/* Skeleton Loading Styles */
+.skeleton-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
+.skeleton-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  animation: skeleton-loading 1.5s infinite ease-in-out;
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-content {
+  padding: 15px;
+}
+
+.skeleton-title {
+  height: 16px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+.skeleton-title-short {
+  width: 70%;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes skeleton-loading {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Dark theme support for skeleton */
+@media (prefers-color-scheme: dark) {
+  .skeleton-card {
+    background: #2a2a2a;
+  }
+  
+  .skeleton-image,
+  .skeleton-title {
+    background: linear-gradient(90deg, #3a3a3a 25%, #4a4a4a 50%, #3a3a3a 75%);
+    background-size: 200% 100%;
+  }
+}
+
+/* Responsive skeleton */
+@media (max-width: 768px) {
+  .skeleton-container {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+  
+  .skeleton-image {
+    height: 150px;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .tutorial-container ul {
