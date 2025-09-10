@@ -228,15 +228,42 @@ const TutorialDetail = () => {
     fetchTutorial();
   }, [slug]);
 
+  // FIXED: Updated toggleSection to close other sections when opening a new one
   const toggleSection = (index) => {
-    setExpandedSections((prev) => ({
-      ...prev,
-      [index]: !prev[index],
-    }));
+    setExpandedSections((prev) => {
+      // If the section is currently expanded, just close it
+      if (prev[index]) {
+        return {
+          ...prev,
+          [index]: false,
+        };
+      }
+      
+      // If opening a new section, close all others and open only this one
+      return {
+        [index]: true, // This will close all other sections and open only the clicked one
+      };
+    });
   };
 
   const toggleSidebar = () => {
     setSidebarOpen((prev) => !prev);
+  };
+
+  // FIXED: Updated handleSectionClick to properly handle section expansion
+  const handleSectionClick = (index, section) => {
+    setCurrentSectionIndex(index);
+    setCurrentSubSectionIndex(null);
+    
+    // If the section has subsections, toggle its expansion
+    if (section.subSections?.length > 0) {
+      toggleSection(index);
+    } else {
+      // If no subsections, close all expanded sections
+      setExpandedSections({});
+    }
+    
+    setSidebarOpen(false);
   };
 
   // Show skeleton while loading
@@ -269,14 +296,7 @@ const TutorialDetail = () => {
                   {/* Section Title */}
                   <div
                     className={`section-title ${currentSectionIndex === index ? "active" : ""}`}
-                    onClick={() => {
-                      setCurrentSectionIndex(index);
-                      setCurrentSubSectionIndex(null);
-                      if (section.subSections?.length > 0) {
-                        toggleSection(index);
-                      }
-                      setSidebarOpen(false);
-                    }}
+                    onClick={() => handleSectionClick(index, section)}
                   >
                     {section.title} {section.subSections?.length > 0 && (expandedSections[index] ? "▲" : "▼")}
                   </div>
@@ -287,7 +307,7 @@ const TutorialDetail = () => {
                       {section.subSections.map((subSection, subIndex) => (
                         <li
                           key={subIndex}
-                          className={currentSubSectionIndex === subIndex ? "active" : ""}
+                          className={currentSubSectionIndex === subIndex && currentSectionIndex === index ? "active" : ""}
                           onClick={() => {
                             setCurrentSectionIndex(index);
                             setCurrentSubSectionIndex(subIndex);
