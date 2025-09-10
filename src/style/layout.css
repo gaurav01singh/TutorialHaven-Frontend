@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+
 
 /* Global Reset and Base Styles */
 * {
@@ -8,9 +8,9 @@
 }
 
 #root {
-  font-family: "Noto Serif", serif;
+  font-family: "ClashGrotesk-Variable",;
   line-height: 1.6;
-  background-color: #061122;
+  background-color: #070d0f;
   color: #c9d1d9;
   min-height: 100vh;
   display: flex;

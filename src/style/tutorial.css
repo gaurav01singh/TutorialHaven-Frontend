@@ -4,7 +4,7 @@
   background-color: #0d1117;
   color: #c9d1d9;
   position: relative; /* For positioning the toggle button */
-  
+  border-radius: 15px;
 }
 
 /* Sidebar Toggle Button (Visible on Mobile) */
@@ -26,6 +26,7 @@
   overflow-y: auto;
   border-right: 2px solid #30363d;
   transition: left 0.3s ease-in-out; /* Smooth sliding */
+  border-radius: 15px;
 }
 
 .tutorial-sidebar h1 {
@@ -72,6 +73,7 @@
   width: 70%;
   padding: 1rem;
   overflow-y: auto;
+  border-radius: 15px;
 }
 
 /* Markdown Styling */
@@ -106,6 +108,62 @@
 .markdown-body td { background-color: #161b22; }
 .markdown-body td:hover { background-color: #222831; }
 
+
+/* Skeleton Loading Styles - Matching Dark Theme */
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #21262d 25%, #30363d 50%, #21262d 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Skeleton-specific adjustments for tutorial layout */
+.tutorial-detail-page .skeleton-shimmer {
+  display: block;
+}
+
+.tutorial-sidebar .skeleton-shimmer {
+  margin-bottom: 12px;
+}
+
+.tutorial-content .skeleton-shimmer {
+  margin-bottom: 16px;
+}
+
+/* Skeleton sidebar toggle button styling */
+.tutorial-detail-page .sidebar-toggle.skeleton-shimmer {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  display: none; /* Hidden on desktop like the real toggle */
+}
+
+/* Show skeleton toggle on mobile */
+@media (max-width: 768px) {
+  .tutorial-detail-page .sidebar-toggle.skeleton-shimmer {
+    display: block;
+  }
+}
+
+/* Skeleton spacing adjustments to match your layout */
+.tutorial-sidebar .skeleton-shimmer:first-child {
+  margin-bottom: 20px; /* Match h1 margin */
+}
+
+.subsection-list .skeleton-shimmer {
+  margin-left: 16px;
+  margin-bottom: 8px;
+}
 /* Responsive Design */
 @media (max-width: 1024px) {
   .tutorial-sidebar {

@@ -73,10 +73,11 @@
   }
   
   .tutorial-item {
-    background-color: #161b22;
+    background-color: #0c2128;
     padding: 15px;
     margin-bottom: 10px;
-    border-radius: 5px;
+    border-radius: 40px;
+    border-color: transparent;
     transition: background 0.3s;
     display: flex;
     justify-content: space-between;
@@ -90,7 +91,6 @@
   .tutorial-item div {
     cursor: pointer;
     font-size: 18px;
-    font-weight: bold;
     color: #58a6ff;
   }
   
@@ -108,7 +108,7 @@
   width:15rem;
   height: 15rem;
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 /* Responsive */
