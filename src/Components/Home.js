@@ -219,7 +219,7 @@ const Home = () => {
             
             <ul className="tutorial-items">
               {filteredTutorials.map((tutorial) => (
-                console.log(tutorial),
+                
                 <li key={tutorial._id} className="tutorial-item">
                   <div className="tutorial-card" onClick={() => navigate(`/tutorial/${tutorial.slug}`)}>
                     <img 
@@ -229,7 +229,7 @@ const Home = () => {
                       loading="lazy"
                     />
                     <div className="tutorial-info">
-                      <h3>{tutorial.title}</h3>
+                      <h3 className="tutorial-title">{tutorial.title}</h3>
                       {tutorial.category && (
                         <span className="tutorial-category">{tutorial.category.name}</span>
                       )}

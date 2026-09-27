@@ -1,144 +1,503 @@
 /* Tutorial List Container */
 .tutorial-list-container {
-    max-width: 75vw;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #0d1117;
-    color: #c9d1d9;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-  }
-  
-  .tutorial-list-container h1 {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #58a6ff;
-  }
-  
-  /* Admin Actions */
-  .admin-actions {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    margin-bottom: 10px;
-    gap: 10px;
-  }
-  
-  .create-btn,
-  .edit-btn,
-  .delete-btn {
-    padding: 8px 12px;
-    font-size: 14px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  .create-btn {
-    background-color: #238636;
-    color: white;
-  }
-  
-  .edit-btn {
-    background-color: #4c9aff;
-    color: white;
-  }
-  
-  .delete-btn {
-    background-color: #f85149;
-    color: white;
-  }
-  
-  .create-btn:hover {
-    background-color: #2ea043;
-  }
-  
-  .edit-btn:hover {
-    background-color: #3b82f6;
-  }
-  
-  .delete-btn:hover {
-    background-color: #d73a49;
-  }
-  
-  /* Tutorial List */
-  .tutorials {
-    list-style: none;
-    padding: 0;
-    display: grid;
-        gap: 1.5rem;
-        grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-  }
-  
-  .tutorial-item {
-    background-color: #0c2128;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 40px;
-    border-color: transparent;
-    transition: background 0.3s;
-    display: flex;
-    justify-content: space-between;
-    
-  }
-  
-  .tutorial-item:hover {
-    background-color: #21262d;
-  }
-  
-  .tutorial-item div {
-    cursor: pointer;
-    font-size: 18px;
-    color: #58a6ff;
-  }
-  
-  .tutorial-item div:hover {
-    text-decoration: underline;
-  }
-  /* Tutorial Card */
-.tutorial-card {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background-color: #0d1117;
+  color: #c9d1d9;
+  min-height: 100vh;
+}
+
+/* Header Section */
+.tutorial-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.header-content h1 {
+  font-size: 2.5rem;
+  color: #f0f6fc;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+
+.header-stats {
+  color: #8b949e;
+  font-size: 0.9rem;
+}
+
+.total-count {
+  background-color: #21262d;
+  padding: 0.25rem 0.75rem;
+  border-radius: 16px;
+  font-weight: 500;
+}
+
+.admin-actions-header {
+  flex-shrink: 0;
+}
+
+.create-btn {
+  background-color: #238636;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.create-btn:hover {
+  background-color: #2ea043;
+  transform: translateY(-1px);
+}
+
+/* Controls Section */
+.tutorial-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.search-control {
+  flex: 1;
+  min-width: 250px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #30363d;
+  background-color: #0d1117;
+  color: #c9d1d9;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #58a6ff;
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+}
+
+.items-control {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 0.5rem;
+  color: #8b949e;
+  font-size: 0.9rem;
+}
+
+.items-per-page-select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #30363d;
+  background-color: #0d1117;
+  color: #c9d1d9;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.items-per-page-select:focus {
+  outline: none;
+  border-color: #58a6ff;
+}
+
+/* Search Results Info */
+.search-results-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  background-color: #161b22;
+  border-radius: 6px;
+  border-left: 3px solid #58a6ff;
+}
+
+.search-results-info p {
+  margin: 0;
+  color: #c9d1d9;
+  font-size: 0.9rem;
+}
+
+.clear-search-btn {
+  background-color: transparent;
+  color: #58a6ff;
+  border: 1px solid #58a6ff;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+}
+
+.clear-search-btn:hover {
+  background-color: #58a6ff;
+  color: white;
+}
+
+/* Tutorial Grid */
+.tutorials {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+}
+
+.tutorial-item {
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 35px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+  width: auto;
+}
+
+.tutorial-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border-color: #58a6ff;
+}
+
+/* Tutorial Card */
+.tutorial-card {
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tutorial-image-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
 }
 
 .tamplateImg {
-  width:15rem;
-  height: 15rem;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 10px;
+  transition: transform 0.3s ease;
 }
 
-/* Responsive */
+.tutorial-item:hover .tamplateImg {
+  transform: scale(1.05);
+}
+
+.tutorial-content {
+  padding: 1.25rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tutorial-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #f0f6fc;
+  margin: 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tutorial-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.tutorial-category {
+  display: inline-block;
+  background-color: #238636;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  width: fit-content;
+}
+
+.tutorial-author {
+  color: #58a6ff;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.tutorial-date {
+  color: #8b949e;
+  font-size: 0.8rem;
+}
+
+/* Admin Actions */
+.admin-actions {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.tutorial-item:hover .admin-actions {
+  opacity: 1;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+}
+
+.edit-btn {
+  background-color: #0969da;
+}
+
+.edit-btn:hover {
+  background-color: #0861ce;
+}
+
+.delete-btn {
+  background-color: #da3633;
+}
+
+.delete-btn:hover {
+  background-color: #c93532;
+}
+
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 3rem 0 2rem 0;
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  padding: 8px 12px;
+  border: 1px solid #30363d;
+  background-color: #21262d;
+  color: #c9d1d9;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  min-width: 40px;
+  font-weight: 500;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #30363d;
+  border-color: #58a6ff;
+}
+
+.pagination-btn.active {
+  background-color: #238636;
+  border-color: #238636;
+  color: white;
+  font-weight: 600;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-btn.dots {
+  border: none;
+  background: none;
+  cursor: default;
+  color: #8b949e;
+}
+
+/* No Tutorials State */
+.no-tutorials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  text-align: center;
+}
+
+.no-tutorials-content {
+  max-width: 400px;
+}
+
+.no-tutorials-content h3 {
+  color: #f0f6fc;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.no-tutorials-content p {
+  color: #8b949e;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* Skeleton Loading */
+.skeleton-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.skeleton-card {
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(90deg, #21262d 25%, #30363d 50%, #21262d 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-content {
+  padding: 1.25rem;
+}
+
+.skeleton-title {
+  height: 20px;
+  background: linear-gradient(90deg, #21262d 25%, #30363d 50%, #21262d 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.skeleton-title-short {
+  width: 60%;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.view-mode-toggle {
+  display: flex;
+  /* border: 1px solid #ddd; */
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.toggle-btn {
+  padding: 8px 16px;
+  border: none;
+  background: #238636;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  color: white;
+  margin: 15px 0 0 11px;
+}
+
+.toggle-btn.active {
+  background: #007bff;
+  color: rgb(255, 255, 255);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .tutorial-card {
+  .tutorial-list-header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
   }
 
-  .tamplateImg {
-    width: 100%;
-    height: auto;
+  .header-content h1 {
+    font-size: 2rem;
+  }
+
+  .tutorial-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tutorials {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .admin-actions {
+    position: static;
+    opacity: 1;
+    padding: 1rem;
+    border-top: 1px solid #30363d;
+    background-color: #0d1117;
+    justify-content: center;
+  }
+
+  .pagination {
+    gap: 4px;
+  }
+
+  .pagination-btn {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+    min-width: 32px;
   }
 }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    .tutorial-list-container {
-      padding: 15px;
-    }
-  
-    .tutorial-item {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .admin-actions {
-      width: 100%;
-      justify-content: flex-start;
-      margin-top: 10px;
-    }
+
+@media (max-width: 480px) {
+  .tutorial-list-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .header-content h1 {
+    font-size: 1.75rem;
+  }
+
+  .pagination-btn {
+    padding: 4px 6px;
+    font-size: 0.75rem;
+    min-width: 28px;
   }
   
+  .tutorial-image-container {
+    height: 150px;
+  }
+}

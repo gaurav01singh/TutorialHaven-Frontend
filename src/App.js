@@ -30,7 +30,7 @@ function App() {
       <Route path="/blog/edit/:id" element={<EditBlog />} /> 
       <Route path="/blog/create" element={<CreateBlog />} /> 
       <Route path="/category" element={<CreateCategory />} /> 
-      <Route path="/gallery" element={<Gallery />} /> 
+      <Route path="/gallery" element={<Gallery onImageClick={console.log("sayhello")}/>} /> 
       <Route path="/compiler" element={<Compiler />} /> 
       <Route path="/tutorial" element={<TutorialList />} /> 
       <Route path="/tutorial/:slug" element={<TutorialDetail />} /> 
