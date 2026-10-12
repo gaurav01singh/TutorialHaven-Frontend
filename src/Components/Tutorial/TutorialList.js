@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../Api";
 import "../../style/tutoriallist.css";
-import Markdown from "react-markdown";
 
 const SkeletonLoader = () => (
   <div className="skeleton-container">
@@ -100,12 +99,7 @@ const TutorialList = () => {
   const [viewMode, setViewMode] = useState('all'); // 'all' or 'my'
   const navigate = useNavigate();
 
-  useEffect(() => {
-    document.title = "Tutorial Haven | All Tutorials";
-    checkUserAuth();
-  }, []);
-
-  const checkUserAuth = () => {
+  const checkUserAuth = useCallback(() => {
     const token = localStorage.getItem("token");
     if (token) {
       try {
@@ -126,7 +120,12 @@ const TutorialList = () => {
     } else {
       navigate("/login");
     }
-  };
+  }, [navigate]);
+
+  useEffect(() => {
+    document.title = "Tutorial Haven | All Tutorials";
+    checkUserAuth();
+  }, [checkUserAuth]);
 
   // Fetch tutorials with pagination
   const fetchTutorials = useCallback(async (page = 1, limit = itemsPerPage, mode = viewMode) => {
@@ -181,7 +180,7 @@ const TutorialList = () => {
     if (currentUser) {
       fetchTutorials(1, itemsPerPage, viewMode);
     }
-  }, [fetchTutorials, currentUser]);
+  }, [fetchTutorials, currentUser, itemsPerPage, viewMode]);
 
   // Handle page changes
   const handlePageChange = useCallback((page) => {

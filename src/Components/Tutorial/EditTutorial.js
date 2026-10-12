@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import API from "../Api";
 import Markdown from "react-markdown";
 import "../../style/tutorialedit.css";
@@ -12,7 +12,6 @@ import rehypeRaw from "rehype-raw";
 
 const EditTutorial = () => {
   const { tutslug } = useParams();
-  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [subcategory, setSubcategory] = useState("");
@@ -29,6 +28,10 @@ const EditTutorial = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
+    document.title = title ? `Tutorial Haven | Edit ${title}` : "Tutorial Haven | Edit Tutorial";
+  }, [title]);
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         // Fetch categories and subcategories first
@@ -41,7 +44,7 @@ const EditTutorial = () => {
 
         // Now fetch the tutorial
         const tutorialRes = await API.get(`/tutorial/${tutslug}`);
-        const { title, category, subcategory, sections, templateImg ,_id } =
+        const { title, category, subcategory, sections, templateImg } =
           tutorialRes.data;
         setTitle(title);
         setCategory(category?._id || "");
@@ -56,7 +59,6 @@ const EditTutorial = () => {
     };
 
     fetchData();
-    document.title = `Tutorial Haven | Edit ${title}`;
   }, [tutslug]);
 
   const handleSectionChange = (index, field, value) => {

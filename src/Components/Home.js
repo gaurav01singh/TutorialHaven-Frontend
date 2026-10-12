@@ -2,7 +2,6 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/home.css";
 import API from "./Api";
-import Markdown from "react-markdown";
 
 const SkeletonLoader = () => (
   <div className="skeleton-container">
@@ -138,7 +137,7 @@ const Home = () => {
   // Initial load
   useEffect(() => {
     fetchTutorials(1, itemsPerPage);
-  }, [fetchTutorials]);
+  }, [fetchTutorials, itemsPerPage]);
 
   // Handle page changes
   const handlePageChange = useCallback((page) => {

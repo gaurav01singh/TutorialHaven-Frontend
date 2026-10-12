@@ -11,7 +11,7 @@ const Profile = () => {
   const [user, setUser] = useState({});
   const [blogs, setBlogs] = useState([]);
   const [bio, setBio] = useState("");
-  const [newProfilePhoto, setNewProfilePhoto] = useState("");
+  const [newProfilePhoto] = useState("");
   const [role, setRole] = useState("");
   const [editData, setEditData] = useState(false);
   const [socialLinks, setSocialLinks] = useState({
@@ -69,7 +69,7 @@ const Profile = () => {
     };
 
     fetchUserData();
-  }, [editData]);
+  }, [editData, navigate]);
 
   const handleEdit = async (blogId) => {
     navigate(`/blog/edit/${blogId}`);
@@ -111,7 +111,7 @@ const Profile = () => {
       }
       console.log(Object.keys(updateData).length !== 0);
       if (Object.keys(updateData).length !== 0) {
-        const response = await API.put(
+        await API.put(
           `/user/update/${username}`,
           updateData,
         );

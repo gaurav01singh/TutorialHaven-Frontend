@@ -8,7 +8,6 @@ const Gallery = ({ onImageClick }) => {
   const navigate = useNavigate();
   const [file, setFile] = useState([]);
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [uploading, setUploading] = useState(false);
 
@@ -42,7 +41,7 @@ const Gallery = ({ onImageClick }) => {
     };
 
     fetchUserData();
-  }, [handleFileChange]);
+  }, [navigate]);
 
   const handleUpload = async () => {
     if (!file.length) {

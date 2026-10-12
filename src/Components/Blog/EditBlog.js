@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "../../style/editblog.css";
 import FloatingMessage from "../Layout/FloatingMessage";
 import Gallery from "../Layout/Gallery";
@@ -10,7 +10,6 @@ import remarkGfm from "remark-gfm";
 
 const EditBlog = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [toggle, setToggle] = useState(true); // Fixed typo here

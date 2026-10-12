@@ -74,7 +74,7 @@ const ByCategory = () => {
         <ul className="tutorial-items">
           {filteredTutorials.map((tut) => (
             <li className="tutorial-item" key={tut._id} onClick={() => navigate(`/tutorial/${tut.slug}`)}>
-              <img src={tut.templateImg}/>
+              <img src={tut.templateImg} alt={tut.title || "Tutorial"} />
               <h3 className="tutorial-title">{tut.title}</h3>
               {/* <p className="tutorial-small-description">{tut.sections[0].title}</p> */}
             </li>

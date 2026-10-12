@@ -13,8 +13,7 @@ const BlogPage = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const response = await API.get(`/blog/${id}`, );
+        const response = await API.get(`/blog/${id}`);
         setBlog(response.data);
       } catch (error) {
         console.error("Error fetching blog:", error);

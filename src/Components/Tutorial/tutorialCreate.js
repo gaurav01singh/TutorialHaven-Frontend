@@ -104,9 +104,8 @@ const TutorialCreate = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await API.post("/tutorial/create", {
+      await API.post("/tutorial/create", {
         ...formData,
-      
       });
       setMessage("Tutorial created successfully!");
       setMessageType("success");
