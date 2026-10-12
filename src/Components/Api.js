@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://tutorial-haven-backend.vercel.app/api/"
-  // baseURL: process.env.REACT_APP_API_URL || "http://localhost:5001/api"
+  baseURL: process.env.REACT_APP_API_URL || "https://tutorial-haven-backend.vercel.app/api"
 });
 
 // Attach token to every request
