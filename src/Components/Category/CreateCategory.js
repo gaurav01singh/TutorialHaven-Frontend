@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import API from "../Api";
-import "../../style/CreateCategory.css"
+import "../../style/CreateCategory.css";
+import SEO from "../SEO/SEO";
 
 const CreateCategory = () => {
   const [name, setName] = useState("");
@@ -23,7 +24,6 @@ const CreateCategory = () => {
   };
 
   useEffect(() => {
-    document.title = "Tutorial Haven | Create Category & Subcategory";
     fetchCategories();
   }, []);
 
@@ -116,6 +116,7 @@ const CreateCategory = () => {
 
   return (
     <div className="category-container">
+      <SEO title="Manage Categories" noindex={true} />
       <h2 className="heading">Manage Categories & Subcategories</h2>
 
       {/* Create/Edit Category Form */}

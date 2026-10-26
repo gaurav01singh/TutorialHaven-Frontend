@@ -9,6 +9,7 @@ import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import rehypeRaw from "rehype-raw";
+import SEO from "../SEO/SEO";
 
 const TutorialCreate = () => {
   const navigate = useNavigate();
@@ -118,6 +119,7 @@ const TutorialCreate = () => {
   
   return (
     <div className="tutorial-create-layout">
+      <SEO title="Create Tutorial" noindex={true} />
       <div className="tutorial-create-container">
         <h1>Create Tutorial</h1>
         <button onClick={() => setToggle(!toggle)} className="toggle-btn">

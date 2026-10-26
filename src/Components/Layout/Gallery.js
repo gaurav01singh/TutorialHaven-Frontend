@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import "../../style/gallery.css";
 import API from "../Api";
+import SEO from "../SEO/SEO";
 
 const Gallery = ({ onImageClick }) => {
   const navigate = useNavigate();
@@ -17,7 +18,6 @@ const Gallery = ({ onImageClick }) => {
   };
 
   useEffect(() => {
-    document.title = "Tutorial Haven | Gallery";
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -105,6 +105,7 @@ const Gallery = ({ onImageClick }) => {
 
   return (
     <div className="gallery-container">
+      <SEO title="Gallery" noindex={true} />
       <h3>Your Uploaded Images</h3>
       {error && <div className="error-message">{error}</div>}
 

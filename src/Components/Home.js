@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/home.css";
 import API from "./Api";
+import SEO from "./SEO/SEO";
 
 const SkeletonLoader = () => (
   <div className="skeleton-container">
@@ -178,6 +179,25 @@ const Home = () => {
 
   return (
     <>
+      <SEO
+        title="Learn Programming, Web Development & AI/ML"
+        titleTemplate={false}
+        description="Explore comprehensive tutorials, programming guides, and developer projects in Web Development, React, Node.js, AI/ML, and Interview Preparation."
+        canonical="/"
+        keywords="programming tutorials, web development, coding tutorials, react, nodejs, python, ai and machine learning, developer guides, code compiler"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "Tutorial Haven",
+          "url": "https://tutorial-haven-theta.vercel.app/",
+          "description": "Learn Programming, Web Development, and AI/ML with comprehensive tutorials and an interactive compiler.",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://tutorial-haven-theta.vercel.app/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }}
+      />
       <div className="search-container">
         <input
           type="text"

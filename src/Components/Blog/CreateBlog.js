@@ -8,6 +8,7 @@ import FloatingMessage from "../Layout/FloatingMessage";
 import API from "../Api";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import SEO from "../SEO/SEO";
 
 const CreateBlog = () => {
   const navigate = useNavigate();
@@ -107,6 +108,7 @@ const CreateBlog = () => {
 
   return (
     <div className="create-blog-layout">
+      <SEO title="Create Blog" noindex={true} />
       <div className="gallery-section">
         <Gallery onImageClick={handleImageClick} />
       </div>

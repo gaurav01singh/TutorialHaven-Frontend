@@ -7,6 +7,7 @@ import Gallery from "../Layout/Gallery";
 import Markdown from "react-markdown";
 import API from "../Api";
 import remarkGfm from "remark-gfm";
+import SEO from "../SEO/SEO";
 
 const EditBlog = () => {
   const { id } = useParams();
@@ -63,6 +64,7 @@ const EditBlog = () => {
 
   return (
     <div className="edit-blog-layout">
+      <SEO title="Edit Blog" noindex={true} />
       <div className="gallery-section">
         <Gallery onImageClick={handleImageClick} />
       </div>

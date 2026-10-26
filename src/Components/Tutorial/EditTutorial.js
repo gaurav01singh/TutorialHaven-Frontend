@@ -9,6 +9,7 @@ import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import rehypeRaw from "rehype-raw";
+import SEO from "../SEO/SEO";
 
 const EditTutorial = () => {
   const { tutslug } = useParams();
@@ -27,9 +28,7 @@ const EditTutorial = () => {
   const [messageType, setMessageType] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    document.title = title ? `Tutorial Haven | Edit ${title}` : "Tutorial Haven | Edit Tutorial";
-  }, [title]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -155,6 +154,7 @@ const EditTutorial = () => {
 
   return (
     <div className="tutorial-edit-layout">
+      <SEO title={title ? `Edit ${title}` : "Edit Tutorial"} noindex={true} />
       <div className="tutorial-edit-container">
         <h1>Edit Tutorial</h1>
         <form onSubmit={handleSubmit}>

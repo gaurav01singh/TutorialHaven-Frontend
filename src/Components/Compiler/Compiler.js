@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../style/Compiler.css";
-
 import API from "../Api";
+import SEO from "../SEO/SEO";
 
 export default class Compiler extends Component {
   constructor(props) {
@@ -135,6 +135,21 @@ export default class Compiler extends Component {
   render() {
     return (
       <>
+        <SEO
+          title="Online Code Compiler & IDE"
+          description="Write, compile, and run C++, Python, Java, JavaScript, and more online in real time with the Tutorial Haven Online Code Compiler."
+          canonical="/compiler"
+          keywords="online compiler, online ide, run python online, c++ online compiler, run code in browser, coding tool"
+          schema={{
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Tutorial Haven Online Compiler",
+            "url": "https://tutorial-haven-theta.vercel.app/compiler",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "All",
+            "description": "Interactive online code editor and compiler supporting multiple programming languages."
+          }}
+        />
         <div className="row container-fluid">
           <div className="col-6 ml-4">
             <label htmlFor="solution">

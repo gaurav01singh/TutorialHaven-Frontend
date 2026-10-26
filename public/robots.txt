@@ -1,5 +1,21 @@
-
-Disallow:
+# Robots.txt for Tutorial Haven
 User-agent: *
 Allow: /
+Allow: /tutorial
+Allow: /tutorial/*
+Allow: /blog/*
+Allow: /compiler
+
+# Disallow private/authenticated dashboard and edit routes to conserve crawl budget
+Disallow: /login
+Disallow: /signup
+Disallow: /profile
+Disallow: /gallery
+Disallow: /tutorial/create
+Disallow: /tutorial/edit/
+Disallow: /blog/create
+Disallow: /blog/edit/
+Disallow: /category
+
+# Sitemap reference
 Sitemap: https://tutorial-haven-theta.vercel.app/sitemap.xml

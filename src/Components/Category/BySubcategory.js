@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import "../../style/Bycategory.css";
 import API from '../Api';
+import SEO from '../SEO/SEO';
 
 const BySubcategory = () => {
   const navigate = useNavigate();
@@ -36,7 +37,6 @@ const BySubcategory = () => {
     };
     fetchData();
   }, [slug, navigate]);
-  document.title = `Tutorial Haven | ${categoryName}`;
 
   // Search function to filter tutorials
   useEffect(() => {
@@ -59,6 +59,19 @@ const BySubcategory = () => {
 
   return (
     <div className="tutorial-container">
+      <SEO
+        title={categoryName ? `${categoryName} Tutorials` : "Subcategory Tutorials"}
+        description={`Learn ${categoryName || "programming"} step-by-step with tutorials, guides, and practical examples on Tutorial Haven.`}
+        canonical={`/tutorial/subcategory/${slug || ""}`}
+        keywords={`${categoryName}, ${categoryName} tutorials, learn ${categoryName}, programming guides`}
+        schema={categoryName ? {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": `${categoryName} Tutorials`,
+          "description": `Comprehensive tutorials in ${categoryName}`,
+          "url": `https://tutorial-haven-theta.vercel.app/tutorial/subcategory/${slug || ""}`
+        } : null}
+      />
       <h1>{categoryName}</h1>
 
       {/* Search Bar */}
@@ -74,7 +87,7 @@ const BySubcategory = () => {
         <ul className="tutorial-items">
           {filteredTutorials.map((tut) => (
             <li className="tutorial-item" key={tut._id} onClick={() => navigate(`/tutorial/${tut.slug}`)}>
-              <img src={tut.templateImg} alt="Tutorial" />
+              <img src={tut.templateImg} alt={tut.title || `${categoryName} tutorial`} />
               <h3 className="tutorial-title">{tut.title}</h3>
               {/* <p className="tutorial-small-description">{tut.sections[0]?.title || "No description available"}</p> */}
             </li>

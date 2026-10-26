@@ -7,7 +7,7 @@ import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import rehypeRaw from "rehype-raw";
-import { Helmet } from "react-helmet-async";
+import SEO from "../SEO/SEO";
 
 // Skeleton Loading Component
 const TutorialSkeleton = () => {
@@ -271,15 +271,51 @@ const TutorialDetail = () => {
     return <TutorialSkeleton />;
   }
 
+  const tutorialDescription = tutorial?.sections?.[0]?.content
+    ? tutorial.sections[0].content.slice(0, 160)
+    : `Comprehensive guide and tutorial on ${tutorial?.title || "programming"}.`;
+
+  const tutorialSchema = tutorial
+    ? {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": tutorial.title,
+        "description": tutorialDescription,
+        "image": tutorial.templateImg || "https://res.cloudinary.com/dyl5ibyvg/image/upload/v1740232286/vkx1pz1zozq37tlauoue.png",
+        "author": {
+          "@type": "Person",
+          "name": tutorial.createdBy?.username || "Tutorial Haven"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Tutorial Haven",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://res.cloudinary.com/dyl5ibyvg/image/upload/v1740232286/vkx1pz1zozq37tlauoue.png"
+          }
+        },
+        "datePublished": tutorial.createdAt,
+        "dateModified": tutorial.updatedAt || tutorial.createdAt,
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": `https://tutorial-haven-theta.vercel.app/tutorial/${tutorial.slug}`
+        }
+      }
+    : null;
+
   return (
     <div className="tutorial-detail-page">
-      <Helmet>
-        <title>{tutorial ? `Tutorial Haven | ${tutorial.title}` : "Tutorial Haven"}</title>
-        <meta 
-          name="description" 
-          content={tutorial ? tutorial.sections?.[0]?.content?.slice(0, 150) : "Explore tutorials on Tutorial Haven"} 
-        />
-      </Helmet>
+      <SEO
+        title={tutorial?.title || "Tutorial"}
+        description={tutorialDescription}
+        canonical={`/tutorial/${tutorial?.slug || slug || ""}`}
+        type="article"
+        image={tutorial?.templateImg}
+        author={tutorial?.createdBy?.username || "Tutorial Haven"}
+        publishedTime={tutorial?.createdAt}
+        modifiedTime={tutorial?.updatedAt || tutorial?.createdAt}
+        schema={tutorialSchema}
+      />
       {tutorial ? (
         <>
           {/* Toggle Button for Sidebar (Visible on Mobile) */}
@@ -361,19 +397,6 @@ const TutorialDetail = () => {
             </section>
           </main>
 
-          <Helmet>
-            <script type="application/ld+json">
-              {JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "Article",
-                "headline": tutorial?.title,
-                "description": tutorial?.sections?.[0]?.content?.slice(0, 150),
-                "author": "Your Site Name",
-                "datePublished": tutorial?.createdAt,
-                "image": tutorial?.templateImg,
-              })}
-            </script>
-          </Helmet>
         </>
       ) : (
         <p>Failed to load tutorial.</p>

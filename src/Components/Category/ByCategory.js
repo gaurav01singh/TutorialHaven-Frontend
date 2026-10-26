@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import "../../style/Bycategory.css";
 import API from '../Api';
+import SEO from '../SEO/SEO';
 
 const ByCategory = () => {
   const navigate = useNavigate();
@@ -35,7 +36,6 @@ const ByCategory = () => {
     
     fetchData();
   }, [slug, navigate]);
-  document.title = `Tutorial Haven | ${categoryName}`;
 
   // Search function to filter tutorials
   useEffect(() => {
@@ -59,6 +59,19 @@ const ByCategory = () => {
 
   return (
     <div className="tutorial-container">
+      <SEO
+        title={categoryName ? `${categoryName} Tutorials` : "Category Tutorials"}
+        description={`Explore comprehensive tutorials and guides in ${categoryName || "programming"} on Tutorial Haven.`}
+        canonical={`/tutorial/category/${slug || ""}`}
+        keywords={`${categoryName}, ${categoryName} tutorials, learn ${categoryName}, coding guides`}
+        schema={categoryName ? {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": `${categoryName} Tutorials`,
+          "description": `Comprehensive tutorials in ${categoryName}`,
+          "url": `https://tutorial-haven-theta.vercel.app/tutorial/category/${slug || ""}`
+        } : null}
+      />
       <h1>{categoryName}</h1>
 
       {/* Search Bar */}

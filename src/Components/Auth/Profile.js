@@ -5,6 +5,7 @@ import { jwtDecode } from "jwt-decode"; // Corrected import
 import "../../style/profile.css";
 import FloatingMessage from "../Layout/FloatingMessage";
 import API from "../Api";
+import SEO from "../SEO/SEO";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -21,7 +22,6 @@ const Profile = () => {
   });
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
-  document.title = "Tutorial Haven | Profile";
 
   // Fetch user data on component mount
   useEffect(() => {
@@ -184,6 +184,7 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
+      <SEO title="User Profile" noindex={true} />
       {/* Left Section: User Data */}
       <div className="user-section">
         <h1>{user.username}</h1>

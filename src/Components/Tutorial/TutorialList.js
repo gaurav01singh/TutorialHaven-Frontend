@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../Api";
 import "../../style/tutoriallist.css";
+import SEO from "../SEO/SEO";
 
 const SkeletonLoader = () => (
   <div className="skeleton-container">
@@ -231,6 +232,12 @@ const TutorialList = () => {
 
   return (
     <div className="tutorial-list-container">
+      <SEO
+        title={viewMode === 'my' ? "My Tutorials" : "All Tutorials & Learning Paths"}
+        description="Browse our comprehensive library of programming tutorials covering Web Development, React, Node.js, AI/ML, and Interview Preparation."
+        canonical="/tutorial"
+        noindex={viewMode === 'my'}
+      />
       <div className="tutorial-list-header">
         <div className="header-content">
           <h1>

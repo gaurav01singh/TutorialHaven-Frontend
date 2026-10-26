@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import "../../style/signup.css"
+import "../../style/signup.css";
 import API from "../Api";
+import SEO from "../SEO/SEO";
 
 const SignUp = ({ toggleAuth }) => {
   const [formData, setFormData] = useState({ username: "",email:"", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
-  document.title = "Tutorial Haven | Sign Up";
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,6 +29,7 @@ const SignUp = ({ toggleAuth }) => {
 
   return (
     <div className="signup-container">
+      <SEO title="Sign Up" noindex={true} />
       <h2>Signup</h2>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <form onSubmit={handleSubmit}>
